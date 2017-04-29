@@ -76,13 +76,15 @@ class CommentController extends Controller
         if (!$comment = Comment::select('id', 'tid', 'uid')->where('id', $id)->first()) {
             return redirect('/')->with('error', '没有这条回复');
         }
-
+//        dd(Comment::deleteSonComment($comment->id));
         //判断当前用户登录id是否与回帖用户id一致,一致就删除记录
         if ($uid == $comment->uid) {
             if ($comment->delete()) {
-                return redirect('topic/' . $comment->tid)->with('sucess', '删除成功');
+                //删除子评论
+                Comment::deleteSonComment($comment->id);
+                return redirect('topic/' . $comment->tid);
             } else {
-                return redirect('topic/' . $comment->tid)->with('error', '删除失败');
+                return redirect('topic/' . $comment->tid)->with('error', '删除失败 (｀・ω・´)');
             }
         }
 
@@ -90,9 +92,11 @@ class CommentController extends Controller
         if ($topic = Topic::select('uid')->find($comment->tid)) {
             if ($uid == $topic->uid) {
                 if ($comment->delete()) {
-                    return redirect('topic/' . $comment->tid)->with('sucess', '删除成功 我是所有者');
+                    //删除子评论
+                    Comment::deleteSonComment($comment->id);
+                    return redirect('topic/' . $comment->tid);
                 } else {
-                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 我是所有者');
+                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 （￣へ￣）');
                 }
             }
         }
@@ -101,9 +105,11 @@ class CommentController extends Controller
             //检测是否是管理员
             if ($user->isadmin) {
                 if ($comment->delete()) {
-                    return redirect('topic/' . $comment->tid)->with('sucess', '成功删除回帖 我是所有者');
+                    //删除子评论
+                    Comment::deleteSonComment($comment->id);
+                    return redirect('topic/' . $comment->tid);
                 } else {
-                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 我是所有者');
+                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 (〜￣△￣)〜');
                 }
             }
         }

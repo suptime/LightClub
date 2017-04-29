@@ -47,4 +47,19 @@ class Comment extends Model
         $data = Topic::objectToArray($data);
         return $data;
     }
+
+
+    /**
+     * 根据传入的pid删除对应子回复
+     * @param $pid
+     */
+    public static function deleteSonComment($pid){
+        //查询是否存在子数据
+        $count = self::where('pid',$pid)->count();
+        if (!$count) {
+            return true;
+        }
+        //删除评论
+        return self::where('pid', $pid)->delete();
+    }
 }

@@ -102,11 +102,14 @@ class TopicController extends Controller
         //判断是否有权限执行删除
         if ($uid == $topic->uid || $user->isadmin){
             //删除数据  同时删除主表与附表的数据
-            if (!($topic->delete() == DB::table('topic_details')->where('tid', $tid)->delete())) {
-                return redirect('/')->with('success', '帖子删除失败');
+            if ($topic->delete() == DB::table('topic_details')->where('tid', $tid)->delete()) {
+                //删除tid为本帖的回复
+                if ($status = Comment::where('tid',$tid)->delete()) {
+                    return redirect('/')->with('success', '删帖成功');
+                }
             }
         }
-        return redirect('/')->with('success', '帖子删除成功');
+        return redirect('/')->with('error', '删帖失败');
     }
 
     /**
