@@ -87,7 +87,7 @@ class TopicController extends Controller
      */
     public function adminTopicRemove($tid)
     {
-        //查看用户是否有权限删除
+        //查看用户是否登录
         if (!Auth::check()) {
             return redirect('user/login');
         }
@@ -100,7 +100,7 @@ class TopicController extends Controller
         //查询当前登录用户是否是管理员
         $user = User::select('uid','isadmin')->find($uid);
         //判断是否有权限执行删除
-        if ($uid == $topic->uid || $user->isadmin == 'isadmin'){
+        if ($uid == $topic->uid || $user->isadmin){
             //删除数据  同时删除主表与附表的数据
             if (!($topic->delete() == DB::table('topic_details')->where('tid', $tid)->delete())) {
                 return redirect('/')->with('success', '帖子删除失败');

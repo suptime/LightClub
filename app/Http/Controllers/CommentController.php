@@ -66,22 +66,50 @@ class CommentController extends Controller
     public function remove($id)
     {
         //判断用户是否已登录
-        if (Auth::check()) {
-            $uid = Auth::id();
-            //根据回帖id获取用户id,再根据此用户id获取贴子id
-            $comment = Comment::select('id', 'tid', 'uid')->whereRaw('id = ? AND uid = ?', [$id, $uid])->first();
-            $topic = Topic::select('uid')->whereRaw('uid = ? AND tid = ?', [$comment->uid, $comment->tid])->first();
-            $user = User::select('isadmin')->where('uid', $uid)->first();
+        if (!Auth::check()) {
+            return redirect('user/login');
+        }
+        //已登录用户获取用户id
+        $uid = Auth::id();
 
-            //判断用户是否有权限
-            //是否是自身追帖               是否为贴主               是否为管理员
-            if ($uid == $comment->uid || $uid == $topic->uid || $user['isadmin'] == 1) {
+        //根据回帖id获取用户id,再根据此用户id获取贴子id
+        if (!$comment = Comment::select('id', 'tid', 'uid')->where('id', $id)->first()) {
+            return redirect('/')->with('error', '没有这条回复');
+        }
+
+        //判断当前用户登录id是否与回帖用户id一致,一致就删除记录
+        if ($uid == $comment->uid) {
+            if ($comment->delete()) {
+                return redirect('topic/' . $comment->tid)->with('sucess', '删除成功');
+            } else {
+                return redirect('topic/' . $comment->tid)->with('error', '删除失败');
+            }
+        }
+
+        //判断是否是帖子发布者,是就删除
+        if ($topic = Topic::select('uid')->find($comment->tid)) {
+            if ($uid == $topic->uid) {
                 if ($comment->delete()) {
-                    return redirect('topic/' . $comment->tid)->with('sucess', '成功删除回帖');
+                    return redirect('topic/' . $comment->tid)->with('sucess', '删除成功 我是所有者');
+                } else {
+                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 我是所有者');
                 }
             }
         }
-        return redirect('/')->with('error', '非法操作');
+
+        if ($user = User::select('isadmin')->where('uid', $uid)->first()) {
+            //检测是否是管理员
+            if ($user->isadmin) {
+                if ($comment->delete()) {
+                    return redirect('topic/' . $comment->tid)->with('sucess', '成功删除回帖 我是所有者');
+                } else {
+                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 我是所有者');
+                }
+            }
+        }
+
+        //无权限
+        return redirect('topic/' . $comment->tid)->with('error', '删除失败 无权限');
     }
 
     /**
@@ -106,32 +134,32 @@ class CommentController extends Controller
 
             //主题点赞
             if ($type == 'topic') {
-                if (Topic::where('tid',$id)->increment('upvote', 1)) {
+                if (Topic::where('tid', $id)->increment('upvote', 1)) {
                     $msg = '您赞了本帖一下';
                     $status = 1;
-                    $num = $num+1;
-                }else{
+                    $num = $num + 1;
+                } else {
                     $msg = '点赞失败';
                 }
             }
             //回复点赞
             if ($type == 'comment') {
-                if (Comment::where('id',$id)->increment('upvote', 1)) {
+                if (Comment::where('id', $id)->increment('upvote', 1)) {
                     $msg = '您赞了一下';
                     $status = 1;
-                    $num = $num+1;
-                }else{
+                    $num = $num + 1;
+                } else {
                     $msg = '点赞失败';
                 }
             }
             //返回json
-            if ($msg){
+            if ($msg) {
                 return response()->json([
                     'status' => $status,
                     'msg' => $msg,
                     'num' => $num,
                 ]);
-            }else{
+            } else {
                 return response()->json([
                     'status' => $status,
                     'msg' => $msg,

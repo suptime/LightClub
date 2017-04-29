@@ -19,7 +19,13 @@
             <div class="topic-detail-info">
                 <span>{{ $topic['name'] }} 发表于</span>
                 <span>{{ date('Y年m月d日 H:i:s', strtotime($topic['created_at'])) }}</span>
-                <span>@if( $topic['uid'] == Auth::id() && Auth::check() )<a href="{{url('topic/update/'.$topic['tid'])}}" class="update-topic">编辑本帖</a>@endif</span>
+                {{--{{ dd(Auth::user()) }}--}}
+                <span>
+                    @if(Auth::check())
+                        @if( $topic['uid'] == Auth::id() || Auth::user()->isadmin )<a href="{{url('topic/update/'.$topic['tid'])}}" class="update-topic">编辑本帖</a>
+                        @endif
+                    @endif
+                </span>
                 <span class="topic-tag">{{ $topic['tags'] }}</span>
                 <div class="topic-watch">
                     <i class="kz-e-scan"></i><span>{{ $topic['click'] }}</span>
@@ -34,8 +40,10 @@
                     <a href="javascript:void(0)" data-sid="{{$topic['tid']}}" data-type="topic" class="commentListItem-upvote upvote"><i class="k-i-like{{$topic['upvote'] ? '-o' : ''}}"></i><span>{{$topic['upvote'] ? $topic['upvote'] : ''}}</span><cite> 赞</cite></a>
                     <a href="#comment" class="reply"><i class="k-i-com"></i><span>回复</span></a>
                     <a href="javascript:void(0)" class="favorite"><i v-else="" class="kz-e-star-o"></i><span>收藏</span></a>
-                    @if(Auth::id() == $topic['uid'] || $topic['isadmin'] == 1)
-                        <a href="{{url('topic/remove/'.$topic['tid'])}}" class="commentListItem-manage" title="删除此回帖" onclick="return confirm('确定要删除吗?')"><i class="kz-e-del-new"></i><span>删除本帖</span></a>
+                    @if(Auth::check())
+                        @if(Auth::id() == $topic['uid'] || Auth::user()->isadmin)
+                    <a href="{{url('topic/remove/'.$topic['tid'])}}" class="commentListItem-manage" title="删除此回帖" onclick="return confirm('确定要删除吗?')"><i class="kz-e-del-new"></i><span>删除本帖</span></a>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -60,8 +68,10 @@
                             <div class="commentListItem-comment-operation">
                                 <a class="commentListItem-upvote" data-sid="{{$val['id']}}" data-type="comment" title="点赞"><i class="k-i-like{{$val['upvote'] ? '-o' : ''}}"></i><span>{{$val['upvote'] ? $val['upvote'] : ''}}</span></a>
                                 <a class="commentListItem-reply top-reply" data-uid="{{$val['uid']}}" isopen="off" title="回帖"><i class="k-i-com"></i></a>
-                                @if(Auth::id() == $val['uid'] || Auth::id() == $topic['uid'] || $val['isadmin'] == 1)
+                                @if(Auth::check())
+                                    @if(Auth::id() == $val['uid'] || Auth::id() == $topic['uid'] || Auth::user()->isadmin)
                                 <a href="{{url('comment/remove/'.$val['id'])}}" class="commentListItem-manage" title="删除此回帖" onclick="return confirm('确定要删除吗?')"><i class="kz-e-del-new"></i></a>
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -84,8 +94,10 @@
                     <div class="commentListItem-comment-operation">
                         <a class="commentListItem-upvote" data-sid="{{$son['id']}}" data-type="comment" title="点赞"><i class="k-i-like{{$son['upvote'] ? '-o' : ''}}"></i><span>{{$son['upvote'] ? $son['upvote'] : ''}}</span></a>
                         <a class="commentListItem-reply son-reply" data-uid="{{$son['uid']}}" data-username="{{$son['name']}}" isopen="off" title="回帖"><i class="k-i-com"></i></a>
-                    @if(Auth::id() == $son['uid'] || Auth::id() == $topic['uid'] || $son['isadmin'] == 1)
+                        @if(Auth::check())
+                            @if(Auth::id() == $son['uid'] || Auth::id() == $topic['uid'] || Auth::user()->isadmin)
                             <a href="{{url('comment/remove/'.$son['id'])}}" class="commentListItem-manage" title="删除此回帖" onclick="return confirm('确定要删除吗?')"><i class="kz-e-del-new"></i></a>
+                            @endif
                         @endif
                     </div>
                 </div>
