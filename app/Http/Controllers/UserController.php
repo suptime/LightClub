@@ -2,74 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Topic;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class UserController extends Controller
 {
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
-    //字段配合登陆的字段
-    protected $username = 'name';
-    //登陆成功后的跳转方向
-    protected $redirectPath = '/user/home';
-    //默认退出后跳转页
-    protected $redirectAfterLogout = '/';
-    //默认登陆 URL
-    protected $loginPath = 'user/login';
-
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'getLogout']);
-    }
-
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:20',
-            'email' => 'required|email|max:255|unique:users',
-            'mobile' => 'required|regex:/^1[3578]\d{9}$/|unique:users',
-            'password' => 'required|min:6',
-            'repassword' => 'required|same:password',
-        ],[
-            'required'=> ':attribute不能为空',
-            'max'=> ':attribute过长',
-            'email'=> ':attribute格式不正确',
-            'unique'=> ':attribute已被占用',
-            'regex'=> ':attribute格式不正确',
-            'min'=> ':attribute太短',
-            'same'=> ':attribute校验失败',
-        ],[
-            'name' => '用户名',
-            'email' => '邮箱',
-            'mobile' => '手机号码',
-            'password' => '密码',
-            'repassword' => '验证密码',
-        ]);
-    }
-
-
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'mobile' => $data['mobile'],
-            'password' => bcrypt($data['password']),
-            'repassword' => bcrypt($data['repassword']),
-        ]);
-    }
-
-
     /**
-     * 会员首页
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 根据id获取对应会员发布的主题贴
+     * @param $uid
      */
-    public function main(){
-      return view('auth.user');
+    public function userSpace($uid){
+
+        $user = User::getVisitUserInfo($uid);
+        //访问用户是否存在
+        if (!$user) {
+            return redirect('/')->with('error', '无法访问主页,可能是不存在,未激活或被锁定');
+        }
+        //根据会员id获取对应主题帖
+        $topics = Topic::getCurrentUserTopics($uid, config('app.web_config.pageSize'));
+        //载入视图,分配数据
+        return view('auth.space',[
+            'user' => $user,
+            'topics' => $topics
+        ]);
     }
+
+
+
 }

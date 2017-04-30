@@ -40,7 +40,7 @@
                     <div class="topic-tags"><a href="">#二手交易</a></div>
                     <div class="topic-operation">
                         <div class="watch"><i class="kz-e-scan"></i><span>{{$row['click']}}</span></div>
-                        <div class="reply"><i class="kz-e-comment"></i><span>{{--{{ $row['reply'] }}--}}</span></div>
+                        <div class="reply"><i class="kz-e-comment"></i><span>{{ $row['reply_total'] }}</span></div>
                     </div>
                 </div>
             </div>

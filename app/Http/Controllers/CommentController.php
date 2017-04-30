@@ -23,7 +23,10 @@ class CommentController extends Controller
     public function addReply(Request $request)
     {
         $comment = new Comment();
-        $this->isLogin();   //判断用户是否已登录
+        //判断用户是否登录
+        if (!Auth::check()) {
+            return redirect('user/login');
+        }
         //获取用户id
         $uid = $request->user()->uid;
         $tids = Topic::lists('tid')->toArray();
@@ -51,6 +54,7 @@ class CommentController extends Controller
             //插入数据
             if ($comment->save()) {
                 User::setUserScore($uid);
+                Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
                 return redirect()->back()->with('success', '回帖成功,您获得了经验值与积分');
             } else {
                 return redirect()->back()->with('error', '回帖失败!');
@@ -80,8 +84,8 @@ class CommentController extends Controller
         //判断当前用户登录id是否与回帖用户id一致,一致就删除记录
         if ($uid == $comment->uid) {
             if ($comment->delete()) {
-                //删除子评论
-                Comment::deleteSonComment($comment->id);
+                Comment::deleteSonComment($comment->id);    //删除子评论
+                Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
                 return redirect('topic/' . $comment->tid);
             } else {
                 return redirect('topic/' . $comment->tid)->with('error', '删除失败 (｀・ω・´)');
@@ -92,8 +96,8 @@ class CommentController extends Controller
         if ($topic = Topic::select('uid')->find($comment->tid)) {
             if ($uid == $topic->uid) {
                 if ($comment->delete()) {
-                    //删除子评论
-                    Comment::deleteSonComment($comment->id);
+                    Comment::deleteSonComment($comment->id);    //删除子评论
+                    Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
                     return redirect('topic/' . $comment->tid);
                 } else {
                     return redirect('topic/' . $comment->tid)->with('error', '删除失败 （￣へ￣）');
@@ -105,8 +109,8 @@ class CommentController extends Controller
             //检测是否是管理员
             if ($user->isadmin) {
                 if ($comment->delete()) {
-                    //删除子评论
-                    Comment::deleteSonComment($comment->id);
+                    Comment::deleteSonComment($comment->id);    //删除子评论
+                    Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
                     return redirect('topic/' . $comment->tid);
                 } else {
                     return redirect('topic/' . $comment->tid)->with('error', '删除失败 (〜￣△￣)〜');
@@ -174,15 +178,4 @@ class CommentController extends Controller
         }
     }
 
-    /**
-     * 判断用户是否已登录
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function isLogin()
-    {
-        //判断用户是否登录
-        if (!Auth::check()) {
-            return redirect('user/login');
-        }
-    }
 }

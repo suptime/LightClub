@@ -303,6 +303,9 @@ class TopicController extends Controller
             return redirect('/')->with('error', '当前主题无法查看');
         }
 
+        //获取发布者的用户信息
+        $user = User::getVisitUserInfo($topic['uid']);
+
         //获取回帖
         $comments = Comment::getCommentsAndUsers($tid);
 
@@ -331,6 +334,7 @@ class TopicController extends Controller
             'hotTopics' => $hotTopics,
             'commentsTop' => $commentsTop,
             'commentsSon' => $commentsSon,
+            'user' => $user,
         ]);
     }
 

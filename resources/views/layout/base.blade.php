@@ -19,7 +19,7 @@
 <!--top s-->
 <div class="top">
     <div class="content mini-bar">
-        <a href=""><i class="k-i-home"></i> <span>欢迎访问laravel社区</span></a>
+        <a href=""><i class="k-i-home"></i> <span>欢迎来到豆萌社区</span></a>
         <div class="right-user">
             @if(!Auth::check())
             <a href="{{url('user/login')}}">登录</a>
@@ -68,7 +68,7 @@
             <ul class="all-tags">
                 <li class="{{ Request::getPathInfo() == '/' ? 'tag-cur' : '' }}"><a href="{{url('/')}}">网站首页</a></li>
                 @foreach($navs as $val)
-                    <li class="{{ Request::getPathInfo() == '/'.$val['catdir'] ? 'tag-cur' : '' }}"><a href="{{url($val['catdir'])}}">{{ $val['catname'] }}</a></li>
+                    <li class="{{ Request::getPathInfo() == '/'.$val['catdir'] || (isset($topic['cid']) && $topic['cid'] == $val['cid']) ? 'tag-cur' : '' }}"><a href="{{url($val['catdir'])}}">{{ $val['catname'] }}</a></li>
                 @endforeach
             </ul>
         </div>
@@ -137,7 +137,7 @@
 
 @section('footer')
 <div class="footer content">
-    <span>© 2017 SimpleBBS</span>
+    <span>© 2017 豆萌社区</span>
     <a href="" target="_blank">注册协议</a> |
     <a href="" target="_blank">关于我们</a> |
     <a class="ueg_feedback-link" href="" target="_blank">意见反馈</a> |

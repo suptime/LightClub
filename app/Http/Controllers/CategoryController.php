@@ -60,6 +60,7 @@ class CategoryController extends Controller
         $topicModel = new Topic();
         //将符合条件的主题贴查询出来
         $topics = $topicModel->getAllTopic(config('app.web_config.pageSize'), $cid, $orderBy);
+
         //查询侧栏热帖
         $hotTopics = $topicModel->getCustomTopics('click', 8);
 

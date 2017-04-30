@@ -81,7 +81,7 @@
 .topic-tags a {color: #a5a5a5;margin-right: 9px; background: #eee; padding: 2px 5px; border-radius: 3px;}
 .topic-operation {color: #b5b5b5;float: right}
 .topic-operation span {vertical-align: middle}
-.topic-operation i {color: #e3e3e3; padding-right: 4px;}
+.topic-operation i {color: #e3e3e3; padding-right: 4px;font-size: 14px}
 .watch {margin-right: 12px}
 .reply i {font-size: 14px}
 
@@ -185,16 +185,16 @@ i.k-i-like-o{color: #ff6c45}
 
 .publisher {border: 1px solid #e3e3e3;background: #fff; margin-bottom: 14px;}
 .publisher-content {padding: 0 20px;}
-.publisher-user-info {margin-top: 30px;text-align: center;font-size: 14px;color: #333;margin-bottom: 10px;}
+.publisher-user-info {margin-top: 30px;text-align: center;font-size: 14px;color: #333;margin-bottom: 15px;}
 .publisher-user-info img {width: 100px;height: 100px;border-radius: 50%;margin-bottom: 20px;}
 .publisher-level {width: 24px;height: 14px; margin-left:10px;margin-top:-3px;background-size: cover;vertical-align: middle;display: inline-block;}
-.publisher-user-birth {color: #666;font-size: 10px;margin-top: 8px;margin-bottom: 10px;text-align: center;}
-.publisher-signature {color: #666;font-size: 10px;text-align: center;padding-bottom: 14px;border-bottom: 1px solid #eee;margin-bottom: 20px;}
+.publisher-user-birth {color: #666;font-size: 12px;margin-top: 8px;margin-bottom: 10px;text-align: center;}
+.publisher-signature {color: #666;font-size: 12px; line-height:20px;text-align: center;border-bottom: 1px solid #eee;margin-bottom: 20px; padding: 0 10px 20px}
 .publisher-score {text-align: center;overflow: hidden}
 .publisher-score .score {font-size: 12px;color: #666; width: 50%;float: left}
 .publisher-score .score span {display: block; line-height: 20px;}
-.publisher-button {margin-top: 22px;height: 30px;font-size: 14px;margin-bottom: 30px;text-align: center;overflow: hidden}
-.publisher-button a {width:46%;height: 30px;line-height: 30px;text-align: center;color: #fff;border-radius: 4px; float: left;margin: 0 2%}
+.publisher-button {margin-top: 22px;font-size: 14px;margin-bottom: 30px;text-align: center;overflow: hidden}
+.publisher-button a {width:46%;height: 30px;line-height: 30px;text-align: center;color: #fff;border-radius: 4px; float: left;margin: 3% 2%}
 .publisher-button .go-page {background-color: #666;}
 .publisher-button .send-message{background-color: #3a9bf5}
 

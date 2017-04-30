@@ -59,7 +59,7 @@
                     <div class="commentListItem-user-info">
                         <span class="username">{{$val['name']}}</span>
                         <span class="user-rank-{{$val['level']}} commentListItem-level"></span>
-                        <span class="commentListItem-floor">{{$val['id']}}#</span>
+                        <span class="commentListItem-floor accusation">举报</span>
                     </div>
                     <div class="comment-bar">
                         <div class="commentListItem-comment-brief">{!! $val['comment'] !!}</div>

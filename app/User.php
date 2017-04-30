@@ -81,4 +81,17 @@ class User extends Model implements AuthenticatableContract,
         }
         return false;
     }
+
+    /**
+     * 获取访问的会员信息
+     * @param $uid
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public static function getVisitUserInfo($uid){
+        //验证会员是否存在
+        return self::select('uid','name','email','mobile','qqnum','score','grade','avstar','isadmin','status','signature')
+            ->where('status',1)
+            ->find($uid);
+    }
+
 }

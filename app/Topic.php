@@ -52,6 +52,8 @@ class Topic extends Model
      * @return array & object mixed    对象或数组
      */
     public function getAllTopic($pageSize, $cid='', $orderBy = 'created_at', $platform=''){
+
+        //后台管理列表
         if ($platform == 'admin'){
             return $this->join('categories', 'topics.cid', '=', 'categories.cid')
                 ->join('users', 'topics.uid', '=', 'users.uid')
@@ -132,5 +134,20 @@ class Topic extends Model
             $arr[] = $row->attributes;
         };
         return $arr;
+    }
+
+    /**
+     * 获取当前用户帖子
+     */
+    public static function getCurrentUserTopics($uid, $pageSize){
+        $data =  self::join('categories', 'topics.cid', '=', 'categories.cid')
+            ->join('users', 'topics.uid', '=', 'users.uid')
+            ->select('topics.*', 'categories.catname', 'categories.catdir','users.name')
+            ->where('topics.islook','=',1)
+            ->where('topics.isshow', '=',1)
+            ->where('topics.uid', '=',$uid)
+            ->orderBy('tid','desc')
+            ->paginate($pageSize);
+        return $data;
     }
 }
