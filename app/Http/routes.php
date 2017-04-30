@@ -30,8 +30,9 @@ Route::get('user/logout', ['uses' => 'Auth\AuthController@getLogout']);
 Route::get('space/{uid}', ['uses' => 'UserController@userSpace'])->where('uid', '[0-9]+');
 Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', '[0-9]+');
 
-//中间件验证用户是否已登录
+//验证用户是否已登录
 Route::group(['middleware' => 'verifyLogin'], function () {
+    Route::any('user/setting', ['uses' => 'UserController@userInfoSetting']);
 });
 
 /******************************************************************************************/

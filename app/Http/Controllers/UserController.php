@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Topic;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 
@@ -50,4 +51,12 @@ class UserController extends Controller
         ]);
     }
 
+
+    public function userInfoSetting(){
+
+        $user = User::getVisitUserInfo(Auth::id());
+        return view('auth.setting',[
+            'user'=>$user,
+        ]);
+    }
 }

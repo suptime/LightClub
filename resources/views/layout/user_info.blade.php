@@ -14,9 +14,9 @@
         </div>
         <div class="publisher-button">
             <a href="{{ url('space/'.Auth::id()) }}" class="go-page">我的主页</a>
-            <a href="javascript:void(0)" class="send-message">我的私信</a>
-            <a href="{{ url('space/'.Auth::id()) }}" class="send-message">我的收藏</a>
-            <a href="javascript:void(0)" class="send-message">个人设置</a>
+            <a href="{{ url('user/message') }}" class="send-message">我的私信</a>
+            <a href="{{ url('user/collection') }}" class="send-message">我的收藏</a>
+            <a href="{{ url('user/setting') }}" class="send-message">个人设置</a>
         </div>
     </div>
 </div>

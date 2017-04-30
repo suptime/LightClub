@@ -11,9 +11,10 @@ window.onload = function(){
                 type: 'post',
             }
         });
-
+      var editor_status = $('#single').attr('long');
+      var e_height = editor_status ? 400 : 200;
 	  layedit.build('editor-content',{
-		  height: 200
+		  height: e_height
 	  });
     });
 
