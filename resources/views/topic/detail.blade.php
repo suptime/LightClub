@@ -146,7 +146,24 @@
 
 
 @section('right')
-    @include('layout.user_info')
+    <div class="publisher">
+        <div class="publisher-content">
+            <div class="publisher-user-info"><img src="{{ $user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}" />
+                <div>{{$user->name}} <span class="user-rank-{{\App\User::getUserLevel($user->grade)}} publisher-level"></span></div>
+            </div>
+            <div class="publisher-signature">
+                {{ $user->signature ? $user->signature : '这家伙很懒,什么都没留下~' }}
+            </div>
+            <div class="publisher-score">
+                <div class="score"><span>{{$user->score}}</span><span>积分</span></div>
+                <div class="score"><span>{{$user->grade}}</span><span>经验值</span></div>
+            </div>
+            <div class="publisher-button">
+                <a href="{{ url('space/'.$user->uid) }}" class="go-page">他的主页</a>
+                <a href="{{ url('sendmsg/'.$user->uid) }}" class="send-message">给他私信</a>
+            </div>
+        </div>
+    </div>
     {{--侧栏信息--}}
     @include('topic.side')
 @parent

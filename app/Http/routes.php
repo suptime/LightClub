@@ -28,6 +28,7 @@ Route::get('user/logout', ['uses' => 'Auth\AuthController@getLogout']);
 
 //用户个人中心
 Route::get('space/{uid}', ['uses' => 'UserController@userSpace'])->where('uid', '[0-9]+');
+Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', '[0-9]+');
 
 //中间件验证用户是否已登录
 Route::group(['middleware' => 'verifyLogin'], function () {
@@ -44,10 +45,7 @@ Route::get('topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])
 
 Route::get('admin/topic/list', ['uses' => 'TopicController@adminTopicList']);
 Route::get('admin/topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+');
-Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where([
-    'tid' => '[0-9]+',
-    'operate' => '[a-z]+'
-]);
+Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where(['tid' => '[0-9]+', 'operate' => '[a-z]+' ]);
 
 /******************************************************************************************/
 

@@ -165,11 +165,11 @@
 .commentListItem-user-avatar {float: left;margin-right: 14px;}
 .commentListItem-user-avatar img {height: 40px;width: 40px;border-radius: 50%;}
 .commentListItem-item-content {margin-left: 54px;}
-.commentListItem-user-info {font-size: 14px;color: #333;margin-bottom: 15px;}
+.commentListItem-user-info {font-size: 14px;color: #333;margin-bottom: 25px;}
 .commentListItem-user-info span {display: inline-block;}
 .commentListItem-level{ vertical-align: top;margin-top: 3px;margin-left: 7px}
 .commentListItem-floor {float: right; font-size: 13px; color: #888}
-.commentListItem-comment-brief {font-size: 14px;color: #444;margin-bottom: 17px;text-overflow:ellipsis;overflow: hidden;word-wrap: break-word;line-height: 22px;}
+.commentListItem-comment-brief {font-size: 14px;color: #444;margin-bottom: 25px;text-overflow:ellipsis;overflow: hidden;word-wrap: break-word;line-height: 24px;}
 .commentListItem-time {font-size: 12px;color: #b5b5b5;}
 .commentListItem-comment-operation {font-size: 12px;float: right;position: relative;}
 .commentListItem-comment-operation a {margin-left: 15px;cursor: pointer}
@@ -224,7 +224,12 @@ i.k-i-like-o{color: #ff6c45}
 .Huialert-block > p, .Huialert-block > ul{margin-bottom: 0}
 .Huialert-block p + p{margin-top: 5px}
 
-
+.user-reply-box{ margin-bottom: 40px; border-bottom: none}
+.userTopic-list .home-reply{margin-bottom: 0!important; border-bottom: none; padding: 30px 0 0!important; line-height: 26px;font-size: 14px;}
+.userTopic-list .home-reply .comment-base-info {color: #777;}
+.userTopic-list .home-reply .comment-base-info span {padding-right: 5px;}
+.userTopic-list .home-reply .home-dacontent {margin-top: 10px;padding: 10px 15px;background-color: #f8f8f8;border-radius: 3px;word-wrap: break-word; color: #555}
+.userTopic-list .home-reply a {padding: 0 5px;color: #3a9bf5;}
 
 
 

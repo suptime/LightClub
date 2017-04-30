@@ -80,4 +80,22 @@ class Comment extends Model
         //更新
         Topic::where('tid', $tid)->update(['reply_total' => $num]);
     }
+
+    /**
+     * 根据用户id获取其回帖数据
+     * @param $uid
+     * @param $pageSize
+     * @return mixed
+     */
+    public static function getVistCurrentUserComment($uid, $pageSize){
+        return self::join('topics', 'comments.tid', '=', 'topics.tid')
+            ->select('comments.*', 'topics.title', 'topics.islook', 'topics.isshow')
+            ->where('comments.is_show', '=', 1)
+            ->where('comments.uid', '=', $uid)
+            ->where('topics.islook', '=', 1)
+            ->where('topics.isshow', '=', 1)
+            ->orderBy('comments.created_at', 'desc')
+            ->paginate($pageSize);
+    }
+
 }
