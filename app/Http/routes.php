@@ -34,6 +34,8 @@ Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', 
 Route::group(['middleware' => 'verifyLogin'], function () {
     Route::any('user/setting', ['uses' => 'UserController@userInfoSetting']);   //个人资料设置
     Route::post('attachment/upload', ['uses' => 'UploadController@uploadfile']);    //附件上传
+    Route::get('user/collection', ['uses' => 'UserController@collectionList']);   //个人收藏夹
+
     Route::any('topic/update/{tid}', ['uses' => 'TopicController@update'])->where('tid', '[0-9]+'); //修改帖子
     Route::get('topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+');   //删除帖子
 

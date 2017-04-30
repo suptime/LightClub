@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller
 {
 
+
     /**
      * 收藏帖子
      * @param Request $request
@@ -63,4 +64,7 @@ class CollectionController extends Controller
         //不是ajax请求
         return abort(404);
     }
+
+
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Collection;
 use App\Comment;
 use App\Topic;
 use App\User;
@@ -12,6 +13,17 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    protected $_uid;
+
+    public function __construct()
+    {
+        //获取登录用户id
+        if (Auth::check()){
+            $this->_uid = Auth::id();
+        }else{
+            $this->_uid = false;
+        }
+    }
 
     /**
      * 根据id获取对应会员发布的主题贴
@@ -34,7 +46,6 @@ class UserController extends Controller
     /**
      * 根据当前访问用户的id获取其所有评论
      * @param $uid
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function userReply($uid){
         //访问用户是否存在
@@ -53,10 +64,13 @@ class UserController extends Controller
     }
 
 
+    /**
+     * 用户资料修改
+     * @param Request $request
+     */
     public function userInfoSetting(Request $request){
-        $uid = Auth::id();
         //获取登录用户的信息
-        $user = User::getVisitUserInfo($uid);
+        $user = User::getVisitUserInfo($this->_uid);
         if ($request->isMethod('POST')){
             //验证数据
             $this->validate($request, User::$rules, User::$messages, User::$names);
@@ -78,7 +92,7 @@ class UserController extends Controller
             //有数据才更新
             if ($data){
                 //更新数据
-                if (User::where('uid',$uid)->update($data)) {
+                if (User::where('uid',$this->_uid)->update($data)) {
                     return redirect()->back()->with('success', '完成资料修改');
                 }else{
                     return redirect()->back()->with('error', '资料修改失败');
@@ -89,6 +103,18 @@ class UserController extends Controller
 
         return view('auth.setting',[
             'user'=>$user,
+        ]);
+    }
+
+
+    public function collectionList(){
+        //获取登录用户的信息
+        $user = User::getVisitUserInfo($this->_uid);
+        $favrates = Collection::getCollectionList($this->_uid,config('app.web_config.pageSize'));
+        return view('auth.collection',[
+            'favrates' => $favrates,
+            'user' => $user,
+            'current_uid' => $this->_uid
         ]);
     }
 }

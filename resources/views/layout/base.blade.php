@@ -37,8 +37,8 @@
                 <div class="header-user-all header-menu" id="user-menu">
                     <a href="{{url('space/'. Auth::id())}}">我的主页</a>
                     <a href="{{url('reply/'. Auth::id())}}">我的回复</a>
-                    <a href="{{url('user/collection/'. Auth::id())}}">我的收藏</a>
-                    <a href="{{url('user/setting/'. Auth::id())}}">个人设置</a>
+                    <a href="{{url('user/collection')}}">我的收藏</a>
+                    <a href="{{url('user/setting')}}">个人设置</a>
                     <a href="{{url('user/logout')}}">退出账号</a>
                 </div>
             </div>
