@@ -46,7 +46,7 @@
 .forum-content-right{float: right; width: 250px;box-sizing: border-box;}
 
 /*topic-content*/
-.topic-content{background-color: #fff;border: 1px solid #e3e3e3;}
+.topic-content{background-color: #fff;border: 1px solid #e3e3e3; min-height: 540px}
 .topic-type{overflow: hidden;padding: 20px 25px 9px;}
 .topic-type .type-content{float: left;margin-top: 9px;}
 .topic-type .type-content a{color: #8c8c8c;font-size: 15px;margin-right: 30px;}

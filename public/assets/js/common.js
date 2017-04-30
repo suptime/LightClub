@@ -7,8 +7,8 @@ window.onload = function(){
 	  var layedit = layui.layedit;
         layedit.set({
             uploadImage: {
-                url: '/topic/uploadfile',
-                type: 'post',
+                url: '/attachment/upload',
+                type: 'post'
             }
         });
       var editor_status = $('#single').attr('long');
@@ -79,7 +79,7 @@ $(function () {
             $(place).html(str);
             /*loading editor*/
             layui.use('layedit', function(){ var layedits = layui.layedit;
-			 layedits.set({ uploadImage: { url: '/topic/uploadfile', type: 'post'}
+			 layedits.set({ uploadImage: { url: '/attachment/upload', type: 'post'}
 			 });
 			 layedits.build('editor-content-'+comid,{ height: 140 });
             });
@@ -89,8 +89,9 @@ $(function () {
             $(this).attr('isopen','off')
         }
     });
-    
+
+    //关闭提示信息
     $('.Huialert .icon-remove').on('click',function () {
 		$(this).closest('.message-tips').remove();
-    })
+    });
 });

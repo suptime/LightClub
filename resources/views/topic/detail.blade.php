@@ -39,7 +39,12 @@
                     <a href="javascript:void(0)" class="report" style="display: none;">举报</a>
                     <a href="javascript:void(0)" data-sid="{{$topic['tid']}}" data-type="topic" class="commentListItem-upvote upvote"><i class="k-i-like{{$topic['upvote'] ? '-o' : ''}}"></i><span>{{$topic['upvote'] ? $topic['upvote'] : ''}}</span><cite> 赞</cite></a>
                     <a href="#comment" class="reply"><i class="k-i-com"></i><span>回复</span></a>
-                    <a href="javascript:void(0)" class="favorite"><i v-else="" class="kz-e-star-o"></i><span>收藏</span></a>
+                    <a href="javascript:void(0)" id="change-favorite" class="favorite">
+                        @if($fav)
+                            <i class="kz-e-star" style="color: #ffdd65"></i><span>已收藏</span></a>
+                        @else
+                            <i class="kz-e-star-o"></i><span>收藏</span></a>
+                        @endif
                     @if(Auth::check())
                         @if(Auth::id() == $topic['uid'] || Auth::user()->isadmin)
                     <a href="{{url('topic/remove/'.$topic['tid'])}}" class="commentListItem-manage" title="删除此回帖" onclick="return confirm('确定要删除吗?')"><i class="kz-e-del-new"></i><span>删除本帖</span></a>
@@ -52,7 +57,7 @@
             @forelse($commentsTop as $val)
                 @if($val['pid'] == 0)
             <div class="commentListItem-topic-item">
-                <a href="{{url('user/home/'.$val['uid'])}}" class="commentListItem-user-avatar">
+                <a href="{{url('space/'.$val['uid'])}}" target="_blank" class="commentListItem-user-avatar">
                     <img src="{{ $val['avstar'] ? $val['avstar'] : asset('assets/img/default.jpg')}}" />
                 </a>
                 <div class="commentListItem-item-content comtop">
@@ -172,6 +177,7 @@
 @section('script')
 <script>
 $(function () {
+    //点赞
     $('.commentListItem-upvote').on('click',function () {
         var This = $(this);
         var span = This.find('span');
@@ -187,6 +193,28 @@ $(function () {
                 layer.msg(data.msg);
             }
         },'json')
+    });
+
+    //添加删除收藏
+    $('#change-favorite').on('click', function () {
+        var icon = $(this).find('i');
+        var ispan = $(this).find('span');
+        $.post("{{ url('collection/change') }}",{tid:"{{ $topic['tid'] }}"},function (data) {
+            if (data.status){
+                if (data.type == 'add') {
+                    console.debug(icon,ispan);
+                    icon.attr("class","kz-e-star");
+                    icon.css('color','#ffdd65');
+                    ispan.text('已收藏');
+                }else {
+                    icon.attr("class","kz-e-star-o");
+                    icon.css('color','');
+                    ispan.text('收藏');
+                }
+            }else {
+                layer.msg(data.msg);
+            }
+        },'json');
     })
 })
 </script>

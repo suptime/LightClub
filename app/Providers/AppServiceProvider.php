@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 或者直接使用 \DB::
+        /*DB::listen(function($sql, $bindings, $time) {
+            dump($sql);
+        });*/
         //获取所有分类
         $data = Category::select('cid','catname','catdir')->where('status', '=', 1)->get()->toArray();
         //共享视图数据

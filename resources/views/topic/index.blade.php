@@ -22,7 +22,7 @@
 @forelse($topics as $row)
     <!--topic-item s-->
         <div class="topic-item">
-   <div class="user-avatar"><img src="{{ $row['avstar'] ? $row['avstar'] : asset('assets/img/default.jpg') }}" /></div>
+   <div class="user-avatar"><a href="{{ url('space/'.$row['uid']) }}" target="_blank"><img src="{{ $row['avstar'] ? $row['avstar'] : asset('assets/img/default.jpg') }}" /></a></div>
             <!--topic-content-item s-->
             <div class="brief-content">
                 <div class="topic-top">

@@ -14,28 +14,22 @@
 
     <!--topic-list s-->
     <div class="topic-list userTopic-list">
-        <form class="layui-form user-update-setting" action="">
+        <form class="layui-form user-update-setting" action="" method="post">
+            {{ csrf_field() }}
             <div class="layui-form-item">
                 <label class="layui-form-label">头像</label>
                 <div class="layui-input-inline">
                     <img id="show-avstar" src="{{ $user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}" width="120" height="120" />
                 </div>
+                <div class="layui-form-mid layui-word-aux">{{ $errors->first('avstar') }}</div>
             </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label">上传头像</label>
                 <div class="layui-input-inline">
-                    <input type="file" name="file" class="layui-upload-file">
+                    <input type="file" name="userface" class="layui-upload-file">
                     <input type="hidden" name="avstar" id="avstar" value="" />
                 </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">邮箱</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="email" lay-verify="email" autocomplete="off" value="{{ $user->email }}" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">此邮箱用于找回密码与激活验证</div>
             </div>
 
             <div class="layui-form-item">
@@ -44,7 +38,7 @@
                     <div class="layui-input-inline">
                         <input type="tel" name="mobile" lay-verify="phone" autocomplete="off" value="{{ $user->mobile }}" class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请填写11手机号码</div>
+                    <div class="layui-form-mid layui-word-aux">{{ $errors->first('mobile') ? $errors->first('mobile') :'请填写11手机号码' }}</div>
                 </div>
             </div>
 
@@ -54,7 +48,7 @@
                     <div class="layui-input-inline">
                         <input type="tel" name="qqnum" lay-verify="qq" autocomplete="off" value="{{ $user->qqnum }}" class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请填写您常用的QQ号码</div>
+                    <div class="layui-form-mid layui-word-aux">{{ $errors->first('qqnum') ? $errors->first('qqnum') :'请填写您常用的QQ号码' }}</div>
                 </div>
             </div>
 
@@ -63,7 +57,7 @@
                 <div class="layui-input-inline">
                     <input type="password" name="password" lay-verify="pass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">请填写6到12位密码,不改请留空</div>
+                <div class="layui-form-mid layui-word-aux">{{ $errors->first('password') ? $errors->first('password') :'请填写6到18位密码,不改请留空' }}</div>
             </div>
 
             <div class="layui-form-item">
@@ -71,20 +65,21 @@
                 <div class="layui-input-inline">
                     <input type="password" name="repassword" lay-verify="pass" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+                <div class="layui-form-mid layui-word-aux">{{ $errors->first('repassword') ? $errors->first('repassword') :'请填写6到18位密码' }}</div>
             </div>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">性别</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                </div>
-            </div>
+            {{--<div class="layui-form-item">--}}
+                {{--<label class="layui-form-label">性别</label>--}}
+                {{--<div class="layui-input-block">--}}
+                    {{--<input type="radio" name="user[sex]" value="男" title="男" checked="">--}}
+                    {{--<input type="radio" name="user[sex]" value="女" title="女">--}}
+                {{--</div>--}}
+            {{--</div>--}}
+
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">个性签名</label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" name="signature" class="layui-textarea">{{ $user->signature }}</textarea>
+                    <textarea placeholder="请输入内容" name="signature" class="layui-textarea">{{ $user->signature }}</textarea>{{ $errors->first('signature') }}
                 </div>
             </div>
 
@@ -119,22 +114,12 @@
 </div>
 <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
 <script>
-layui.use(['form'], function(){
-    var form = layui.form();
-    //自定义验证规则
-    form.verify({
-        title: function(value){
-            if(value.length < 5){
-                return '标题至少得5个字符啊';
-            }
-        }
-        ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-    });
-});
+layui.use(['form'], function(){ var form = layui.form(); });
 layui.use('upload', function(){
     layui.upload({
-        url: "{{ url('topic/uploadfile') }}",
+        url: "{{ url('attachment/upload') }}",
         ext: 'jpg|png|gif',
         success: function(data){
             $('#avstar').val(data.data.src);

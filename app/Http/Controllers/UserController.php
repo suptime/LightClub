@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Topic;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -52,9 +53,40 @@ class UserController extends Controller
     }
 
 
-    public function userInfoSetting(){
+    public function userInfoSetting(Request $request){
+        $uid = Auth::id();
+        //获取登录用户的信息
+        $user = User::getVisitUserInfo($uid);
+        if ($request->isMethod('POST')){
+            //验证数据
+            $this->validate($request, User::$rules, User::$messages, User::$names);
+            //接收数据
+            $data = [
+                'avstar' => $request->avstar,
+                'mobile' => $request->mobile,
+                'qqnum' => $request->qqnum,
+                'password' => $request->password,
+                'signature' => $request->signature,
+            ];
 
-        $user = User::getVisitUserInfo(Auth::id());
+            //去除空数据
+            foreach ($data as $k => $v){
+                if (trim($v) == false || $user[$k] == $v){
+                    unset($data[$k]);
+                }
+            }
+            //有数据才更新
+            if ($data){
+                //更新数据
+                if (User::where('uid',$uid)->update($data)) {
+                    return redirect()->back()->with('success', '完成资料修改');
+                }else{
+                    return redirect()->back()->with('error', '资料修改失败');
+                }
+            }
+            return redirect()->back()->with('error', '您没修改任何资料');
+        }
+
         return view('auth.setting',[
             'user'=>$user,
         ]);

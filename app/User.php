@@ -38,6 +38,30 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
+    //验证规则
+    public static $rules = [
+        'mobile'=>'required|regex:/^1[3578]\d{9}$/',
+        'qqnum'=>'regex:/^\d{5,10}$/',
+        'password'=>'min:6',
+        'repassword'=>'same:password',
+        'signature'=>'max:100'
+    ];
+    public static $messages = [
+        'required'=>':attribute不能为空',
+        'regex'=>':attribute不合法',
+        'unique'=>':attribute已存在',
+        'min'=>':attribute太短',
+        'same'=>':attribute不正确',
+        'signature'=>':attribute太长',
+        'confirmed'=>':attribute不正确',
+    ];
+    public static $names = [
+        'mobile'=>'手机号码',
+        'qqnum'=>'QQ号',
+        'password'=>'密码',
+        'repassword'=>'确认密码',
+        'signature'=>'签名'
+    ];
 
     /**
      * 根据用户积分获取用户等级

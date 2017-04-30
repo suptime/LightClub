@@ -12,7 +12,9 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        '/topic/uploadfile',
+        'topic/uploadfile',
         'comment/upvote',
+        'attachment/upload',
+        'collection/change',
     ];
 }

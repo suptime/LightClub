@@ -10,19 +10,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use DB;
-use Illuminate\Http\Response;
-use Storage;
-use Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
     public $model;
-
-    private $mimeType = ['image/jpeg', 'image/png', 'image/gif'];
-
 
     /**
      * 初始化保存模型对象
@@ -52,7 +47,6 @@ class TopicController extends Controller
      * 主题审核状态修改,包括加精/取消加精,置顶/取消置顶, 审核/取消审核, 封禁/取消封禁
      * @param $tid  主题帖id
      * @param $operate  操作类型,为数据库对应字段
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function adminTopicExamine($tid, $operate)
     {
@@ -169,7 +163,6 @@ class TopicController extends Controller
      * 用户编辑主题帖
      * @param Request $request
      * @param $tid
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function update(Request $request, $tid)
     {
@@ -220,74 +213,6 @@ class TopicController extends Controller
     }
 
     /**
-     * 根据用户id增加用户积分与经验
-     * @param $uid  用户id
-     */
-  /*  public function setUserScore($uid)
-    {
-        DB::table('users')->where('uid', $uid)->increment('score', 5);
-        DB::table('users')->where('uid', $uid)->increment('grade', 20);
-    }*/
-
-
-    /**
-     * 编辑器ajax请求上传图片
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function uploadfile(Request $request)
-    {
-        if ($request->isMethod('POST')) {
-            $file = $request->file('file');
-
-            //验证文件是否合法
-            if ($file->isValid()) {
-                $mime = $file->getClientMimeType();
-                $ext = $file->getClientOriginalExtension();
-                $realPath = $file->getRealPath();    //临时文件的绝对路径
-
-                //验证mime类型是否合法
-                if (!in_array($mime, $this->mimeType)) {
-                    return response()->json([
-                        'code' => 1,
-                        'msg' => '文件类型不合法',
-                        'data' => [
-                            'src' => ''
-                        ]
-                    ]);
-                }
-
-                //构造文件保存路径
-                $fileName = date('Ym/', time()) . uniqid() . '.' . $ext;
-                //保存文件
-                $bool = Storage::disk('upload')->put($fileName, file_get_contents($realPath));
-
-                //判断文件保存结果
-                if ($bool) {
-                    return response()->json([
-                        'code' => 0,
-                        'msg' => '',
-                        'data' => [
-                            'src' => '/uploads/images/' . $fileName
-                        ]
-                    ]);
-                } else {
-                    return response()->json([
-                        'code' => 1,
-                        'msg' => '文件上传失败',
-                        'data' => [
-                            'src' => ''
-                        ]
-                    ]);
-                }
-            }
-        }
-
-        return redirect('/');
-    }
-
-
-    /**
      * 帖子详情页
      * @param $tid 帖子id
      */
@@ -328,6 +253,12 @@ class TopicController extends Controller
         //新增浏览数
         Topic::where('tid', $tid)->increment('click', 1);
 
+        $logingUid = Auth::id();
+        $fav = false;
+        if (isset($logingUid)){
+            $fav = \App\Collection::getCollectionStatus($tid, $logingUid);
+        }
+
         //载入视图,分配数据
         return view('topic.detail', [
             'topic' => $topic,
@@ -335,6 +266,7 @@ class TopicController extends Controller
             'commentsTop' => $commentsTop,
             'commentsSon' => $commentsSon,
             'user' => $user,
+            'fav' => $fav,
         ]);
     }
 
