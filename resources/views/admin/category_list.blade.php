@@ -12,7 +12,7 @@
 <div class="layui-form">
  <table class="layui-table">
             <tr style="background: #f5f5f5">
-                <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+                <th width="3%"><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
                 <th class="text-center">分类ID</th>
                 <th class="text-center">分类名称</th>
                 <th class="text-center">分类路径</th>

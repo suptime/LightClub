@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Collection;
 use App\Comment;
+use App\MessageMain;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
@@ -118,6 +119,23 @@ class UserController extends Controller
         $favrates = Collection::getCollectionList($this->_uid,config('app.web_config.pageSize'));
         return view('auth.collection',[
             'favrates' => $favrates,
+            'user' => $user,
+            'current_uid' => $this->_uid
+        ]);
+    }
+
+    /**
+     * 获取系统消息
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function systemMessages()
+    {
+        $notices = MessageMain::getMsgList(config('app.web_config.pageSize'));
+        dd($notices);
+        //获取登录用户的信息
+        $user = User::getVisitUserInfo($this->_uid);
+        return view('auth.notice',[
+            'notices' => $notices,
             'user' => $user,
             'current_uid' => $this->_uid
         ]);

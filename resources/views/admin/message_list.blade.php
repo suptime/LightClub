@@ -13,35 +13,28 @@
 <div class="layui-form">
  <table class="layui-table">
             <tr style="background: #f5f5f5">
-                <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+                <th width="3%"><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
                 <th class="text-center">发送者</th>
-                <th class="text-center">发给谁</th>
-                <th class="text-center">消息类型</th>
-                <th class="text-center">消息标题</th>
-                <th class="text-center" width="40%">消息内容</th>
+                <th class="text-center" width="23%">发给谁</th>
+                <th class="text-center" width="35%">消息标题</th>
                 <th class="text-center">全站</th>
                 <th class="text-center">发送时间</th>
-                <th class="text-center">操作</th>
+                <th class="text-center" width="12%">操作</th>
             </tr>
             @foreach($messages as $row)
                 <tr>
                     <td class="layui-ali text-center"><input type="checkbox" name="tid" value="{{ $row['id'] }}" lay-skin="primary"></td>
                     <td class="text-center">{{ $row['name'] }}</td>
-                    <td class="text-center">{{ $row['send_to'] ? $row['send_to'] : '所有人' }}</td>
-                    <td class="text-center">
-                        @if($row['msg_type'] == 1)
-                            私信
-                        @elseif($row['msg_type'] == 2)
-                            通知
-                        @elseif($row['msg_type'] == 3)
-                            公告
-                        @endif
+                    <td class="text-center" title="{{ $row['send_to'] }}">{{ $row['send_to'] ? str_limit($row['send_to'],30) : '所有人' }}</td>
+                    <td><span class="msg-title">{{ $row['msg_title'] }}</span>
+                        <div class="msg-content" style="display: none">
+                            <p style="padding: 20px; line-height: 26px;">{{ $row['msg_content'] }}</p>
+                        </div>
                     </td>
-                    <td>{{ $row['msg_title'] }}</td>
-                    <td>{{ $row['msg_content'] }}</td>
                     <td class="text-center">{!!  $row['isall'] ? '<i class="layui-icon" style="color:#5FB878">&#x1005;</i>' : '<i class="layui-icon" style="color:#FF5722">&#x1007;</i>' !!}</td>
                     <td class="text-center">{{ date('Y-m-d', $row['created_at']) }}</td>
                     <td class="text-center">
+                        <a href="javascript:;" class="view-msg layui-btn layui-btn-mini layui-btn-normal"><i class="layui-icon">&#xe615;</i> 详细</a>
                         <a href="{{ url('admin/message/remove', ['id' => $row['id']]) }}" onclick="return confirm('确定要删除此消息吗?')" class="layui-btn layui-btn-mini layui-btn-danger">删除</a>
                     </td>
                 </tr>
@@ -65,6 +58,17 @@
                 });
                 form.render('checkbox');
             });
+
+
+            $('.view-msg').on('click',function () {
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['600px', '340px'], //宽高
+                    title: '信息详情',
+                    content: $(this).closest('tr').find('.msg-content').html()
+                });
+            })
 
         });
     </script>

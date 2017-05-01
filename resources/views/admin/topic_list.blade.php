@@ -10,13 +10,13 @@
     <table class="layui-table">
         <thead>
         <tr>
-            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+            <th width="3%"><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
             <th width="5%">TID</th>
             <th>标题</th>
             <th width="8%">分类</th>
             <th>作者</th>
             <th width="5%">显示</th>
-            <th>浏览</th>
+            <th width="5%">浏览</th>
             <th width="10%">发布时间</th>
             <th width="22%">操作</th>
         </tr>

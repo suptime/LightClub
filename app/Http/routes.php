@@ -39,7 +39,8 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::post('attachment/upload', ['uses' => 'UploadController@uploadfile']);    //附件上传
 
     Route::any('user/setting', ['uses' => 'UserController@userInfoSetting']);   //个人资料设置
-    Route::any('user/messages', ['uses' => 'messageController@messageList']);    //附件上传
+    Route::get('user/messages', ['uses' => 'messageUserController@index']);    //私信
+    Route::get('user/notice', ['uses' => 'UserController@systemMessages']);    //系统消息
 
     Route::get('user/collection', ['uses' => 'UserController@collectionList']);   //个人收藏夹
     Route::post('collection/change', ['uses' => 'CollectionController@changeCollection']);

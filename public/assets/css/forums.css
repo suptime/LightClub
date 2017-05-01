@@ -233,6 +233,10 @@ i.k-i-like-o{color: #ff6c45}
 
 .user-update-setting{ font-size: 14px; margin: 30px 0 50px;}
 .collection-remove{ float: right; color: #888;}
+.msg-time{ display:block; height:52px; line-height:52px;float: right; font-size: 12px;}
+.msg-time i{color: #3a9bf5}
+.layui-colla-title{ height: 52px; line-height: 52px;}
+.layui-colla-content{ background: #fcfcfc;padding: 30px;line-height: 30px; border-top: 1px solid #eee;}
 
 
 

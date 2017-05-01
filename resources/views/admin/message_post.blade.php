@@ -1,7 +1,7 @@
 @extends('admin.common_admin')
 @section('content')
 <div class="mbnav">
-    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>发送新消息</cite></a></span>
+    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>新建系统通知</cite></a></span>
 </div>
 
 @include('layout.message')
@@ -9,28 +9,25 @@
 <form class="layui-form" method="post" action="">
     {{ csrf_field() }}
 
-    <div class="layui-form-item">
-        <label class="layui-form-label">消息类型</label>
+    <div class="layui-form-item" id="msg_title">
+        <label class="layui-form-label">标题</label>
         <div class="layui-input-inline">
-            <select name="msg_type" lay-filter="msg" id="msg-type">
-                <option value="2">系统通知</option>
-                <option value="3">网站公告</option>
-            </select>
+            <input type="text" name="msg_title"  autocomplete="off"  class="layui-input" value="" />
         </div>
+        <div class="layui-form-mid layui-word-aux">标题不能为空</div>
     </div>
 
-    <div class="layui-form-item" id="msg_title">
-        <label class="layui-form-label">消息标题</label>
+    <div class="layui-form-item" id="send_to">
+        <label class="layui-form-label">发送给</label>
         <div class="layui-input-inline">
-            <input type="text" name="msg_title" lay-verify="msg_title" autocomplete="off"  class="layui-input" value="" />
+            <textarea name="send_to" style="width: 500px;" placeholder="格式为 admin|admin1 系统默认留空为全站消息" class="layui-textarea"></textarea>
         </div>
-        <div class="layui-form-mid layui-word-aux"></div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">消息内容</label>
         <div class="layui-input-block">
-            <textarea name="msg_content" style="width: 500px; height: 200px;" class="layui-textarea"></textarea>
+            <textarea name="msg_content" style="width: 500px; height: 200px;" placeholder="消息内容不能为空" class="layui-textarea"></textarea>
         </div>
     </div>
 

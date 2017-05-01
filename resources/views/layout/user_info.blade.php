@@ -17,6 +17,7 @@
             <a href="{{ url('user/message') }}" class="send-message">我的私信</a>
             <a href="{{ url('user/collection') }}" class="send-message">我的收藏</a>
             <a href="{{ url('user/setting') }}" class="send-message">个人设置</a>
+            <a href="{{ url('user/notice') }}" class="send-message">系统通知</a>
         </div>
     </div>
 </div>
