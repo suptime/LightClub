@@ -16,5 +16,6 @@ class VerifyCsrfToken extends BaseVerifier
         'comment/upvote',
         'attachment/upload',
         'collection/change',
+        'user/notice'
     ];
 }

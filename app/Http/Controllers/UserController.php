@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Collection;
 use App\Comment;
 use App\MessageMain;
+use App\MessageUser;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
@@ -130,8 +131,7 @@ class UserController extends Controller
      */
     public function systemMessages()
     {
-        $notices = MessageMain::getMsgList(config('app.web_config.pageSize'));
-        dd($notices);
+        $notices = MessageUser::getSystemMessageData($this->_uid, config('app.web_config.pageSize'));
         //获取登录用户的信息
         $user = User::getVisitUserInfo($this->_uid);
         return view('auth.notice',[
