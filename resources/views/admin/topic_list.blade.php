@@ -1,6 +1,10 @@
 @extends('admin.common_admin')
 @section('content')
-@include('layout.message')
+    <div class="mbnav">
+        <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>帖子列表</cite></a></span>
+    </div>
+
+    @include('layout.message')
 
 <div class="layui-form">
     <table class="layui-table">

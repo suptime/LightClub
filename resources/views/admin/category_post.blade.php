@@ -1,10 +1,7 @@
 @extends('admin.common_admin')
 @section('content')
-    <div>
-        <span class="layui-breadcrumb">
-          <a href="/">首页</a>
-          <a><cite>新增分类</cite></a>
-        </span>
+    <div class="mbnav">
+        <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>添加 / 修改分类</cite></a></span>
     </div>
 
     @include('layout.message')

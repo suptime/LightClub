@@ -1,10 +1,13 @@
 @extends('admin.common_admin')
 
 @section('content')
+<div class="mbnav">
+    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>消息 / 通知 / 私信列表</cite></a></span>
+</div>
+
 @include('layout.message')
-    <!-- 失败提示框
-    <!-- 自定义内容区域 -->
-<div style="">
+
+<div>
     <a href="{{url('admin/message/add')}}" class="layui-btn layui-btn-small layui-btn-normal">发送新消息</a>
 </div>
 <div class="layui-form">

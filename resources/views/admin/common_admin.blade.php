@@ -11,13 +11,14 @@
     @show
 </head>
 <body>
-
+<div class="layui-layout-admin">
 <!-- 头部 -->
 @section('header')
 <div class="header" style="position: fixed;top: 0; width: 100%; z-index: 100000">
 <ul class="layui-nav" style="padding: 0">
     <div style="float: right">
         <li class="layui-nav-item"><a href="{{ url('/') }}" target="_blank">访问首页</a></li>
+        <li class="layui-nav-item"><a href="{{ url('space/'. Auth::id()) }}" target="_blank"><i class="layui-icon">&#xe612;</i> {{ Auth::user()->name }}</a></li>
         <li class="layui-nav-item"><a href="{{ url('user/logout') }}">退出</a></li>
     </div>
 
@@ -45,31 +46,31 @@
 </div>
 @show
 <!-- 中间内容区局 -->
-<div class="layui-main" style="width: auto; margin-top: 80px">
-    <div class="layui-bg-black layui-side" style="float: left;top: 60px;width: 150px;">
+<div class="layui-main" style="width: auto; margin-top: 62px">
+    <div class="layui-bg-black layui-side" style="position: fixed;width: 150px;">
     @section('leftmenu')
         <div class="layui-side-scroll">
         <ul class="layui-nav layui-nav-tree" lay-filter="demo" style="width: 150px;">
             <li class="layui-nav-item layui-nav-itemed">
-                <a href="javascript:;">文档管理</a>
+                <a href="javascript:;"><i class="layui-icon">&#xe629;</i> 文档管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="{{ url('admin/category/list') }}" class="{{ Request::getPathInfo() != '/admin/category/list' ? '' : 'layui-this'}}">栏目分类</a></dd>
-                    <dd><a href="{{ url('admin/topic/list') }}" class="{{ Request::getPathInfo() != '/admin/topic/list' ? '' : 'layui-this'}}">主题贴管理</a></dd>
-                    <dd><a href="">回帖管理</a></dd>
-                    <dd><a href="">收藏夹管理</a></dd>
-                    <dd><a href="">用户管理</a></dd>
-                    <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}">消息通知管理</a></dd>
+                    <dd><a href="{{ url('admin/category/list') }}" class="{{ Request::getPathInfo() != '/admin/category/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe622;</i> 栏目分类</a></dd>
+                    <dd><a href="{{ url('admin/topic/list') }}" class="{{ Request::getPathInfo() != '/admin/topic/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe621;</i> 主题贴管理</a></dd>
+                    <dd><a href=""><i class="layui-icon">&#xe611;</i> 回帖管理</a></dd>
+                    <dd><a href=""><i class="layui-icon">&#xe600;</i> 收藏管理</a></dd>
+                    <dd><a href=""><i class="layui-icon">&#xe613;</i> 用户管理</a></dd>
+                    <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe63a;</i> 消息通知管理</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">系统设置</a>
+                <a href="javascript:;"><i class="layui-icon">&#xe614;</i> 系统设置</a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本信息</a></dd>
                     <dd><a href="">邮件设置</a></dd>
                     <dd><a href="">附件设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="javascript:;">关于系统</a></li>
+            <li class="layui-nav-item"><a href="javascript:;"><i class="layui-icon">&#xe60b;</i> 关于系统</a></li>
         </ul>
         </div>
     @show
@@ -85,6 +86,7 @@
 @section('footer')
 
 @show
+</div>
 <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript">

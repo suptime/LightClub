@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9493d5f6-63aa-4ac9-b42c-3b1260377680" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.md" afterPath="$PROJECT_DIR$/readme.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/assets/css/layui.admin.min.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/views/admin/topic_examine.blade.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/category_list.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/category_list.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/category_post.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/category_post.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/common_admin.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/common_admin.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/message_list.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/message_list.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/message_post.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/message_post.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/admin/topic_list.blade.php" afterPath="$PROJECT_DIR$/resources/views/admin/topic_list.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,47 +38,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MessageMainController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/MessageMainController.php">
+      <file leaf-file-name="common_admin.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/admin/common_admin.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state relative-caret-position="125">
+              <caret line="20" column="52" lean-forward="true" selection-start-line="20" selection-start-column="52" selection-end-line="20" selection-end-column="52" />
               <folding>
-                <element signature="e#40#60#0#PHP" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#0#4270#0#Blade" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageMain.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/MessageMain.php">
+      <file leaf-file-name="layui.admin.min.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/assets/plugs/layui/css/layui.admin.min.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="62" column="41" lean-forward="false" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
+            <state relative-caret-position="176">
+              <caret line="1" column="22845" lean-forward="false" selection-start-line="1" selection-start-column="22845" selection-end-line="1" selection-end-column="22845" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="readme.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/readme.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="510">
-                <caret line="16" column="63" lean-forward="false" selection-start-line="16" selection-start-column="63" selection-end-line="16" selection-end-column="63" />
-                <folding />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -87,9 +73,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$row-&gt;</find>
-      <find>$topic-&gt;</find>
-      <find>.topic-list</find>
       <find>reply-editor</find>
       <find>editor-content</find>
       <find>Response</find>
@@ -117,6 +100,9 @@
       <find>layui-breadcrumb</find>
       <find>ca</find>
       <find>.layui-table th</find>
+      <find>.layui-layout-admin .layui-main</find>
+      <find>60px</find>
+      <find>.layui-form-select dl</find>
     </findStrings>
     <replaceStrings>
       <replace>attribute</replace>
@@ -171,20 +157,20 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/CategoryController.php" />
         <option value="$PROJECT_DIR$/app/Topic.php" />
         <option value="$PROJECT_DIR$/app/MessageUser.php" />
-        <option value="$PROJECT_DIR$/public/assets/css/layui.admin.min.css" />
         <option value="$PROJECT_DIR$/resources/views/layout/message.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/category_list.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/topic_list.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layout/user_nav.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/category_post.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/admin/message_post.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/MessageMainController.php" />
         <option value="$PROJECT_DIR$/app/MessageMain.php" />
+        <option value="$PROJECT_DIR$/readme.md" />
+        <option value="$PROJECT_DIR$/public/assets/css/layui.admin.min.css" />
+        <option value="$PROJECT_DIR$/resources/views/admin/category_list.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin/category_post.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin/message_list.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin/message_post.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/admin/topic_list.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/common_admin.blade.php" />
         <option value="$PROJECT_DIR$/public/assets/plugs/layui/css/layui.admin.min.css" />
-        <option value="$PROJECT_DIR$/resources/views/admin/message_list.blade.php" />
-        <option value="$PROJECT_DIR$/readme.md" />
       </list>
     </option>
   </component>
@@ -765,12 +751,12 @@
       <workItem from="1493355733925" duration="44512000" />
       <workItem from="1493432918467" duration="46121000" />
       <workItem from="1493526815931" duration="47612000" />
-      <workItem from="1493606957358" duration="33277000" />
+      <workItem from="1493606957358" duration="36364000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="269254000" />
+    <option name="totallyTimeSpent" value="272341000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -838,13 +824,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/errors/503.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="34" lean-forward="false" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/errors/404.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
@@ -1121,29 +1100,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/css/layui.admin.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layout/base.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="88" selection-end-column="6" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/category_list.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="7" column="76" lean-forward="false" selection-start-line="7" selection-start-column="76" selection-end-line="7" selection-end-column="76" />
-          <folding>
-            <element signature="e#267#1902#0#HTML" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1171,60 +1132,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/topic_list.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/layout/message.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="9" column="6" lean-forward="false" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/category_post.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="9" column="30" lean-forward="false" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/message_post.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="34" column="71" lean-forward="false" selection-start-line="34" selection-start-column="71" selection-end-line="34" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/common_admin.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="59" column="48" lean-forward="false" selection-start-line="59" selection-start-column="48" selection-end-line="59" selection-end-column="48" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/admin/message_list.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="41" column="106" lean-forward="false" selection-start-line="41" selection-start-column="106" selection-end-line="41" selection-end-column="106" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/plugs/layui/css/layui.admin.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="1" column="17285" lean-forward="false" selection-start-line="1" selection-start-column="17285" selection-end-line="1" selection-end-column="17285" />
           <folding />
         </state>
       </provider>
@@ -1247,14 +1158,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/readme.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1263,6 +1166,89 @@
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/css/layui.admin.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="0" column="2929" lean-forward="false" selection-start-line="0" selection-start-column="2929" selection-end-line="0" selection-end-column="2929" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="41" column="29" lean-forward="false" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/topic_examine.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="61">
+          <caret line="12" column="44" lean-forward="true" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/category_list.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="6" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/category_post.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="87" lean-forward="false" selection-start-line="3" selection-start-column="87" selection-end-line="3" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/message_list.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="90" lean-forward="false" selection-start-line="4" selection-start-column="90" selection-end-line="4" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/topic_list.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="88" lean-forward="false" selection-start-line="3" selection-start-column="88" selection-end-line="3" selection-end-column="88" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/message_post.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="85" lean-forward="false" selection-start-line="3" selection-start-column="85" selection-end-line="3" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/admin/common_admin.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="20" column="52" lean-forward="true" selection-start-line="20" selection-start-column="52" selection-end-line="20" selection-end-column="52" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#0#4270#0#Blade" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/plugs/layui/css/layui.admin.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="1" column="22845" lean-forward="false" selection-start-line="1" selection-start-column="22845" selection-end-line="1" selection-end-column="22845" />
+          <folding />
         </state>
       </provider>
     </entry>

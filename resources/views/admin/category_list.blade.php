@@ -2,8 +2,10 @@
 
 @section('content')
 @include('layout.message')
-    <!-- 失败提示框
-    <!-- 自定义内容区域 -->
+<div class="mbnav">
+    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>分类列表</cite></a></span>
+</div>
+
 <div style="">
     <a href="{{url('admin/category/add')}}" class="layui-btn layui-btn-small layui-btn-normal">添加分类</a>
 </div>
@@ -26,7 +28,7 @@
                     <td class="text-center">{{ $cate['catname'] }}</td>
                     <td class="text-center">{{ $cate['catdir'] }}</td>
                     <td class="text-center">{{ $cateModel->getStatus('status', $cate['status']) }}</td>
-                    <td class="text-center">{{ $cate['parent_id'] }}</td>
+                    <td class="text-center">{{ $cate['parent_id'] ? $cate['parent_id'] : '无' }}</td>
                     <td class="text-center">{{ $cateModel->getStatus('channel', $cate['ischannel']) }}</td>
                     <td class="text-center">
                         <a href="{{ url('admin/category/update', ['cid' => $cate['cid']]) }}" class="btn btn-success btn-sm">编辑</a>

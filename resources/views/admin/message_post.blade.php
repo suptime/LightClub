@@ -1,12 +1,10 @@
 @extends('admin.common_admin')
 @section('content')
-    <div class="mbnav">
-        <span class="layui-breadcrumb">
-          <a href="/">首页</a>
-          <a><cite>发送消息</cite></a>
-        </span>
-    </div>
-    @include('layout.message')
+<div class="mbnav">
+    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>发送新消息</cite></a></span>
+</div>
+
+@include('layout.message')
 
 <form class="layui-form" method="post" action="">
     {{ csrf_field() }}
@@ -26,7 +24,7 @@
         <div class="layui-input-inline">
             <input type="text" name="msg_title" lay-verify="msg_title" autocomplete="off"  class="layui-input" value="" />
         </div>
-        <div class="layui-form-mid layui-word-aux">消息标题非必填</div>
+        <div class="layui-form-mid layui-word-aux"></div>
     </div>
 
     <div class="layui-form-item">
