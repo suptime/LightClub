@@ -1,19 +1,10 @@
-<!-- 成功提示框 -->
-@if (Session::has('success'))
-<div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong> {{ Session::get('success') }}!</strong>
-</div>
+@if( Session::has('success') )
+    <div class="content message-tips">
+        <div class="Huialert Huialert-success"><span class="icon-remove">×</span>{{ Session::get('success') }}</div>
+    </div>
 @endif
-
-@if (Session::has('error'))
-    <!-- 失败提示框 -->
-<div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>{{ Session::get('error') }}!</strong>
-</div>
+@if( Session::has('error') )
+    <div class="content message-tips">
+        <div class="Huialert Huialert-danger"><span class="icon-remove">×</span>{{ Session::get('error') }}</div>
+    </div>
 @endif

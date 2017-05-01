@@ -30,7 +30,11 @@ Route::get('user/logout', ['uses' => 'Auth\AuthController@getLogout']);
 Route::get('space/{uid}', ['uses' => 'UserController@userSpace'])->where('uid', '[0-9]+');
 Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', '[0-9]+');
 
-//验证用户是否已登录
+Route::get('topic/add', ['uses' => 'TopicController@add']);
+Route::get('topic/{tid}', ['uses' => 'TopicController@detail'])->where('tid', '[0-9]+');
+
+
+//需要验证用户登录后操作的路由
 Route::group(['middleware' => 'verifyLogin'], function () {
     Route::post('attachment/upload', ['uses' => 'UploadController@uploadfile']);    //附件上传
 
@@ -41,14 +45,13 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::post('collection/change', ['uses' => 'CollectionController@changeCollection']);
     Route::get('user/collection/remove/{tid}&{id}', ['uses' => 'CollectionController@remove'])->where(['tid'=>'[0-9]+','id','[0-9]+']);
 
-
+    Route::post('topic/add', ['uses' => 'TopicController@add']);
     Route::any('topic/update/{tid}', ['uses' => 'TopicController@update'])->where('tid', '[0-9]+'); //修改帖子
     Route::get('topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+');   //删除帖子
 
+    Route::any('comment/add', ['uses' => 'CommentController@addReply']);
     Route::get('comment/remove/{id}', ['uses' => 'CommentController@remove'])->where('id', '[0-9]+');   //删除回帖
     Route::post('comment/upvote', ['uses' => 'CommentController@upvote']);  //点赞
-
-
 
     Route::get('admin/topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+'); //后台删除帖子
     Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where(['tid' => '[0-9]+', 'operate' => '[a-z]+' ]);     //后台审核,加精,置顶操作
@@ -59,22 +62,9 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::any('admin/category/update/{cid}', ['uses' => 'CategoryController@update'])->where('cid', '[0-9]+');
     Route::get('admin/category/remove/{cid}', ['uses' => 'CategoryController@remove'])->where('cid', '[0-9]+');
 
+    Route::any('admin/message/add', ['uses' => 'MessageMainController@add']);
+    Route::any('admin/message/list', ['uses' => 'MessageMainController@index']);
+
+
+
 });
-
-/******************************************************************************************/
-
-Route::any('topic/add', ['uses' => 'TopicController@add']);
-Route::get('topic/{tid}', ['uses' => 'TopicController@detail'])->where('tid', '[0-9]+');
-
-Route::any('comment/add', ['uses' => 'CommentController@addReply']);
-
-
-
-
-
-
-
-
-
-
-
