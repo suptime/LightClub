@@ -8,7 +8,8 @@
     <div class="userTopic-head">
         <a href="{{url('space/'.$user->uid)}}" class="topic-cur">话题</a>
         <a href="{{url('reply/'.$user->uid)}}">回复</a>
-        {!!  Auth::check() ? '<a href="'.url('user/messages').'">私信</a>' : ''  !!}
+        {!!  $current_uid ? '<a href="'.url('user/collection').'">收藏</a>' : ''  !!}
+        {!!  $current_uid ? '<a href="'.url('user/messages').'">私信</a>' : ''  !!}
     </div>
 
     <!--topic-list s-->

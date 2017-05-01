@@ -2,9 +2,6 @@
 @section('title'){{$user->name}}的个人主页@stop
 @section('keywords') 个人主页 @stop
 @section('description') 个人主页 @stop
-@section('style')
-<link rel="stylesheet" href="{{ asset('assets/plugs/layui/css/layui.css') }}" />
-@stop
 
 @section('left')
 <div class="topic-content">
@@ -21,7 +18,6 @@
                 <div class="layui-input-inline">
                     <img id="show-avstar" src="{{ $user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}" width="120" height="120" />
                 </div>
-                <div class="layui-form-mid layui-word-aux">{{ $errors->first('avstar') }}</div>
             </div>
 
             <div class="layui-form-item">
@@ -30,6 +26,7 @@
                     <input type="file" name="userface" class="layui-upload-file">
                     <input type="hidden" name="avstar" id="avstar" value="" />
                 </div>
+                <div class="layui-form-mid layui-word-aux">头像尺寸比例为1:1,最大130x130,请保持长宽比</div>
             </div>
 
             <div class="layui-form-item">

@@ -1,16 +1,16 @@
 @extends('layout.base')
 
-@section('title') {{ $title }} @stop
-@section('keywords') {{ $keywords }} @stop
-@section('description') {{ $description }} @stop
+@section('title') {{ $classInfo['title'] }} @stop
+@section('keywords') {{ $classInfo['keywords'] }} @stop
+@section('description') {{ $classInfo['description'] }} @stop
 
 @section('left')
     <div class="topic-content">
         <div class="topic-type">
             <div class="type-content">
-                <a href="" class="type-cur">最新发布</a>
-                <a href="?type=replay">最后回复</a>
-                <a href="?type=hot">最热话题</a>
+                <a href="{{ url($classInfo['catdir']) }}" {!! $type_arg == false ? 'class="type-cur"' : '' !!}>最新发布</a>
+                <a href="?type=reply" {!! isset($type_arg['type']) && $type_arg['type'] == 'reply' ? 'class="type-cur"' : '' !!}>最后回复</a>
+                <a href="?type=hot"  {!! isset($type_arg['type']) && $type_arg['type'] == 'hot' ? 'class="type-cur"' : '' !!}  >最热话题</a>
             </div>
             <a href="{{url('topic/add')}}" class="pub-button">
                 <i class="k-i-edit"></i><span class="pub-text">发布话题</span>

@@ -36,7 +36,7 @@ class CategoryController extends Controller
         $type = $request->type;    //获取请求排序参数
 
         //判断请求参数是否合法    排序参数为time,repley,hot,只有满足这三个参数才可以定义排序
-        $orderTypes = ['time' => 'created_at', 'reply' => 'reply_num', 'hot' => 'click'];
+        $orderTypes = ['time' => 'created_at', 'reply' => 'reply_num', 'hot' => 'reply_total'];
         $keys = array_keys($orderTypes);    //将key取出来
         if (isset($type) && in_array($type, $keys)) {
             $orderBy = $orderTypes[$type];
@@ -48,13 +48,17 @@ class CategoryController extends Controller
             if (!$category = $this->model->where('catdir', $catdir)->first()) {
                 return abort(404); //如果查询结果不存在,返回404错误
             }
-
-            //获取栏目TKD
-            $title = $category->catname;
-            $keywords = $category->keywords;
-            $description = $category->description;
-            $cid = $category->cid;  //获得分类id
+            $cid = $category->cid;
         }
+
+        //获取栏目TKD
+        $classInfo = [
+            'title' => isset($category->catname) ? $category->catname : '',
+            'catdir' => isset($category->catdir) ? $category->catdir : '',
+            'keywords' => isset($category->keywords) ? $category->keywords : '',
+            'description' => isset($category->description) ? $category->description : '',
+            'cid' => isset($cid) ? $cid : '/',  //获得分类id
+        ];
 
         //查询主题贴,创建Topic对象
         $topicModel = new Topic();
@@ -69,9 +73,8 @@ class CategoryController extends Controller
             'topics' => $topics,
             'type_arg' => $type_arg,
             'hotTopics' => $hotTopics,
-            'title' => isset($title) ? $title : '',
-            'keywords' => isset($keywords) ? $keywords : '',
-            'description' => isset($description) ? $description : '',
+            'classInfo' => $classInfo,
+            'type_arg' => $type_arg,
         ]);
     }
 

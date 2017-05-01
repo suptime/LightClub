@@ -28,12 +28,12 @@
                 </div>
 
                 <div class="topic-info">
+                    <span><a href="javascript:;" onclick="window.open('{{ url('user/collection/remove/'.$val['tid'].'&'.$val['id']) }}', '_self'); return confirm('确定要移除收藏夹吗?')" class="collection-remove">移除收藏夹</a></span>
                     <span class="topic-person">此贴于 {{ date('Y年m月d日', strtotime($val['created_at'])) }} 加入收藏</span>
                     <div class="topic-operation">
                         <div class="watch"><i class="kz-e-scan"></i><span>{{ $val['click'] }}</span></div>
                         <div class="reply"><i class="kz-e-comment"></i><span>{{ $val['reply_total'] }}</span></div>
                     </div>
-                    <span><a href="">从收藏夹移除</a> </span>
                 </div>
             </div>
         </div>

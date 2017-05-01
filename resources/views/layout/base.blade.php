@@ -10,6 +10,7 @@
 <meta name="description" content="@yield('description','laravel轻社区')">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/layout.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/ui.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugs/layui/css/layui.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/forums.css') }}" />
 @section('style')
 @show
@@ -143,7 +144,6 @@
     <a class="ueg_feedback-link" href="" target="_blank">意见反馈</a> |
     <a href="" target="_blank">网络谣言警示</a>
 </div>
-<link rel="stylesheet" href="{{ asset('assets/plugs/layui/css/layui.css') }}" />
 <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>

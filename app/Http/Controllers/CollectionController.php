@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 
 use App\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CollectionController extends Controller
 {
@@ -18,7 +19,8 @@ class CollectionController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|void
      */
-    public function changeCollection(Request $request){
+    public function changeCollection(Request $request)
+    {
         //判断是否是ajax请求
         if ($request->ajax()) {
             //创建model对象
@@ -28,25 +30,25 @@ class CollectionController extends Controller
             $conllectionModel->uid = $request->user()->uid;
 
             //查询数据库中是否包含有收藏的记录
-            $conllection = Collection::where('tid',$request->tid)->where('uid',$request->user()->uid)->first();
-            if (count($conllection)){
+            $conllection = Collection::where('tid', $request->tid)->where('uid', $request->user()->uid)->first();
+            if (count($conllection)) {
                 //如果存在,就删除此记录
                 if ($conllection->delete()) {
                     $status = 1;
                     $msg = '取消收藏成功';
                     $type = 'del';
-                }else{
+                } else {
                     $status = 0;
                     $msg = '取消收藏失败';
                     $type = '';
                 }
-            }else{
+            } else {
                 //如果不存在记录,就将获取的数据插入到数据表中
                 if ($conllectionModel->save()) {
                     $status = 1;
                     $msg = '添加收藏成功';
                     $type = 'add';
-                }else{
+                } else {
                     $status = 0;
                     $msg = '取消收藏失败';
                     $type = '';
@@ -54,11 +56,7 @@ class CollectionController extends Controller
             }
 
             //返回json
-            return response()->json([
-                'status' => $status,
-                'msg' => $msg,
-                'type' => $type,
-            ]);
+            return response()->json(['status' => $status, 'msg' => $msg, 'type' => $type]);
         }
 
         //不是ajax请求
@@ -66,5 +64,16 @@ class CollectionController extends Controller
     }
 
 
-
+    /**
+     * 根据条件删除收藏夹数据
+     * @param $tid
+     * @param $id
+     */
+    public function remove($tid)
+    {
+        if ($result = Collection::deletCollection($tid, Auth::id())) {
+            return redirect('user/collection')->with('success', '删除收藏成功');
+        }
+        return redirect('user/collection')->with('error', '删除收藏失败');
+    }
 }

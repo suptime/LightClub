@@ -32,9 +32,15 @@ Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', 
 
 //验证用户是否已登录
 Route::group(['middleware' => 'verifyLogin'], function () {
-    Route::any('user/setting', ['uses' => 'UserController@userInfoSetting']);   //个人资料设置
     Route::post('attachment/upload', ['uses' => 'UploadController@uploadfile']);    //附件上传
+
+    Route::any('user/setting', ['uses' => 'UserController@userInfoSetting']);   //个人资料设置
+    Route::any('user/messages', ['uses' => 'messageController@messageList']);    //附件上传
+
     Route::get('user/collection', ['uses' => 'UserController@collectionList']);   //个人收藏夹
+    Route::post('collection/change', ['uses' => 'CollectionController@changeCollection']);
+    Route::get('user/collection/remove/{tid}&{id}', ['uses' => 'CollectionController@remove'])->where(['tid'=>'[0-9]+','id','[0-9]+']);
+
 
     Route::any('topic/update/{tid}', ['uses' => 'TopicController@update'])->where('tid', '[0-9]+'); //修改帖子
     Route::get('topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+');   //删除帖子
@@ -42,7 +48,7 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::get('comment/remove/{id}', ['uses' => 'CommentController@remove'])->where('id', '[0-9]+');   //删除回帖
     Route::post('comment/upvote', ['uses' => 'CommentController@upvote']);  //点赞
 
-    Route::post('collection/change', ['uses' => 'CollectionController@changeCollection']);
+
 
     Route::get('admin/topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+'); //后台删除帖子
     Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where(['tid' => '[0-9]+', 'operate' => '[a-z]+' ]);     //后台审核,加精,置顶操作

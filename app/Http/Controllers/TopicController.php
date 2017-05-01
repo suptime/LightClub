@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class TopicController extends Controller
 {
     public $model;
+    private $_uid;
 
     /**
      * 初始化保存模型对象
@@ -26,6 +27,14 @@ class TopicController extends Controller
     public function __construct()
     {
         $this->model = new Topic();
+
+        //用户已登录就获取用户id
+        if (Auth::check()) {
+            //获取用户id
+            $this->_uid = Auth::id();
+        } else {
+            $this->_uid = false;
+        }
     }
 
 
@@ -81,26 +90,17 @@ class TopicController extends Controller
      */
     public function adminTopicRemove($tid)
     {
-        //查看用户是否登录
-        if (!Auth::check()) {
-            return redirect('user/login');
-        }
-        //获取用户id
-        $uid = Auth::id();
         //查找数据是否存在 && 帖子发布者是否是当前登录用户
         if (!$topic = Topic::find($tid)) {
             return abort(404);
         }
         //查询当前登录用户是否是管理员
-        $user = User::select('uid','isadmin')->find($uid);
+        $user = User::select('uid', 'isadmin')->find($this->_uid);
         //判断是否有权限执行删除
-        if ($uid == $topic->uid || $user->isadmin){
-            //删除数据  同时删除主表与附表的数据
-            if ($topic->delete() == DB::table('topic_details')->where('tid', $tid)->delete()) {
-                //删除tid为本帖的回复
-                if ($status = Comment::where('tid',$tid)->delete()) {
-                    return redirect('/')->with('success', '删帖成功');
-                }
+        if ($this->_uid == $topic->uid || $user->isadmin) {
+            $rs = Topic::deleteTopicAboutData($topic, $tid);
+            if ($rs) {
+                return redirect('/')->with('success', '删帖成功');
             }
         }
         return redirect('/')->with('error', '删帖失败');
@@ -114,18 +114,13 @@ class TopicController extends Controller
     {
         //判断请求类型
         if ($request->isMethod('POST')) {
-            //判断用户是否登录
-            if (!$user = $request->user()) {
-                return redirect('user/login');
-            }
-
             //验证数据
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
 
             //获取数据
             $this->model->title = $request->title;
             $this->model->cid = $request->cid;
-            $this->model->uid = $user->uid;
+            $this->model->uid = $this->_uid;
 
             $content = $request->input('content');
 
@@ -148,7 +143,7 @@ class TopicController extends Controller
             //判断数据是否插入成功
             if ($bool) {
                 //发贴成功增加会员积分
-                User::setUserScore($user->uid);
+                User::setUserScore($this->_uid);
                 return redirect('topic/' . $tid)->with('success', '主题发表成功');
             } else {
                 return redirect()->back()->with('error', '发布失败');
@@ -166,23 +161,26 @@ class TopicController extends Controller
      */
     public function update(Request $request, $tid)
     {
-
         //检测数据是否存在
         if (!$topic = $this->model->find($tid)) {
-            abort(404);
+            return abort(404);
+        }
+        //根据uid获取一条用户记录
+        $userInfo = User::getVisitUserInfo($this->_uid);
+        //判断是否是发布者和管理员
+        if ($topic->uid != $this->_uid && !$userInfo->isadmin) {
+            return redirect('topic/' . $tid)->with('error', '对不起,您无权限编辑此贴');
         }
 
         //判断请求类型
         if ($request->isMethod('POST')) {
             //验证数据合法性
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
-
+            //准备模型数据
             $topic->title = $request->title;
             $topic->cid = $request->cid;
-
             //获取修改后的内容
             $content = $request->input('content');
-
             //判断是否为图文贴
             $topic->ispic = $this->model->isAssetImage($content);
 
@@ -204,16 +202,18 @@ class TopicController extends Controller
             }
         }
 
+        //查询数据准备赋值给视图
         $topic->content = DB::table('topic_details')->where('tid', $tid)->value('content');
         $topic->catname = Category::where('cid', $topic->cid)->value('catname');
 
+        //引入视图
         return view('topic.update', [
             'topic' => $topic,
         ]);
     }
 
     /**
-     * 帖子详情页
+     * 主题帖子详情浏览页面
      * @param $tid 帖子id
      */
     public function detail($tid)
@@ -224,39 +224,47 @@ class TopicController extends Controller
         $topic['content'] = DB::table('topic_details')->where('tid', $tid)->value('content');
 
         //判断数据是否符合审核与封禁条件
-        if ($topic['isshow'] != 1 || $topic['islook'] != 1){
-            return redirect('/')->with('error', '当前主题无法查看');
+        if ($topic['isshow'] != 1 || $topic['islook'] != 1) {
+            return redirect('/')->with('error', '当前帖子无法查看');
         }
 
         //获取发布者的用户信息
         $user = User::getVisitUserInfo($topic['uid']);
+
+        //获取当前登录用户的判断信息
+        if ($this->_uid){
+            //uid存在,就去查询获取数据
+            $userInfo = User::getVisitUserInfo($this->_uid);
+            $currentUser['isadmin'] = $userInfo->isadmin;
+        }else{
+            $currentUser['isadmin'] = false;
+        }
+        $currentUser['uid'] = $this->_uid;
 
         //获取回帖
         $comments = Comment::getCommentsAndUsers($tid);
 
         //将顶级回复取出来
         $commentsTop = $commentsSon = [];
-        foreach ($comments as $v){
+        foreach ($comments as $v) {
             $v['level'] = User::getUserLevel($v['grade']);
             if ($v['pid'] == false) {
                 $commentsTop[] = $v;
-            }else{
+            } else {
                 $commentsSon[] = $v;
             }
         }
 
         //顶级回复贴分页
         $commentsTop = $this->getCousetPagination($commentsTop, config('app.web_config.pageSize'));
-
         //查询侧栏热帖
         $hotTopics = $this->model->getCustomTopics('click', 8);
         //新增浏览数
         Topic::where('tid', $tid)->increment('click', 1);
 
-        $logingUid = Auth::id();
         $fav = false;
-        if (isset($logingUid)){
-            $fav = \App\Collection::getCollectionStatus($tid, $logingUid);
+        if ($this->_uid) {
+            $fav = \App\Collection::getCollectionStatus($tid, $this->_uid);
         }
 
         //载入视图,分配数据
@@ -267,6 +275,7 @@ class TopicController extends Controller
             'commentsSon' => $commentsSon,
             'user' => $user,
             'fav' => $fav,
+            'currentUser' => $currentUser,
         ]);
     }
 
@@ -286,14 +295,14 @@ class TopicController extends Controller
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         //判断分页是否大于总页数
         $totalPage = ceil($total / $perPage);
-        $totalPage =  $totalPage ? $totalPage : 1;
-        if($currentPage > $totalPage){
+        $totalPage = $totalPage ? $totalPage : 1;
+        if ($currentPage > $totalPage) {
             return abort(404);
         }
         //获取当前需要显示的数据列表
         $item = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
         //创建一个新的分页方法
-        $topComments= new LengthAwarePaginator($item, $total, $perPage, $currentPage, [
+        $topComments = new LengthAwarePaginator($item, $total, $perPage, $currentPage, [
             //设定个要分页的url地址。也可以手动通过 $paginator ->setPath('路径') 设置
             'path' => Paginator::resolveCurrentPath(),
             'pageName' => 'page',

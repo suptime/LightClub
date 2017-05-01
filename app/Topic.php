@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Topic extends Model
 {
@@ -51,13 +52,18 @@ class Topic extends Model
      * @param string $orderBy   排序方式
      * @return array & object mixed    对象或数组
      */
-    public function getAllTopic($pageSize, $cid='', $orderBy = 'created_at', $platform=''){
-
+    public function getAllTopic($pageSize, $cid='', $orderBy = 'tid', $platform=''){
+        if ($orderBy == 'reply_total'){
+            $istop = 'reply_total';
+        }else{
+            $istop = 'topics.istop';
+        }
         //后台管理列表
         if ($platform == 'admin'){
             return $this->join('categories', 'topics.cid', '=', 'categories.cid')
                 ->join('users', 'topics.uid', '=', 'users.uid')
                 ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
+                ->orderBy($istop,'desc')
                 ->orderBy($orderBy,'desc')
                 ->paginate($pageSize);
         }
@@ -71,6 +77,7 @@ class Topic extends Model
                 })
                 ->join('users', 'topics.uid', '=', 'users.uid')
                 ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
+                ->orderBy($istop,'desc')
                 ->orderBy($orderBy,'desc')
                 ->paginate($pageSize);
         }else{
@@ -83,6 +90,7 @@ class Topic extends Model
                                             })
                 ->join('users', 'topics.uid', '=', 'users.uid')
                 ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
+                ->orderBy($istop,'desc')
                 ->orderBy($orderBy,'desc')
                 ->paginate($pageSize);
         }
@@ -149,5 +157,27 @@ class Topic extends Model
             ->orderBy('tid','desc')
             ->paginate($pageSize);
         return $data;
+    }
+
+    /**
+     * 根据条件删除所有表中关联有当前帖子的数据
+     * @param $topic    object    topic实例
+     * @param $tid  integer     帖子id
+     * @return bool  boolen     返回状态值
+     */
+    public static function deleteTopicAboutData($topic, $tid){
+        //删除主表数据
+        $topicRs = $topic->delete();
+        //删除附表数据
+        $topicDetailRs = DB::table('topic_details')->where('tid', $tid)->delete();
+        //删除tid的回帖
+        $commentRs = Comment::where('tid',$tid)->delete();
+        //删除收藏夹数据
+        $collectionRs = \App\Collection::where('tid',$tid)->delete();
+        if ($topicRs == true && $topicDetailRs == true && $commentRs == true && $collectionRs ==true){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

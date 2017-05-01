@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    protected $_uid;
+    private $_uid;
 
     public function __construct()
     {
@@ -39,7 +39,8 @@ class UserController extends Controller
         //载入视图,分配数据
         return view('auth.space',[
             'user' => $user,
-            'topics' => $topics
+            'topics' => $topics,
+            'current_uid' => $this->_uid
         ]);
     }
 
@@ -59,7 +60,8 @@ class UserController extends Controller
         //载入视图,分配数据
         return view('auth.reply',[
             'user' => $user,
-            'comments' => $comments
+            'comments' => $comments,
+            'current_uid' => $this->_uid
         ]);
     }
 
@@ -103,10 +105,13 @@ class UserController extends Controller
 
         return view('auth.setting',[
             'user'=>$user,
+            'current_uid' => $this->_uid
         ]);
     }
 
-
+    /**
+     * 获取登录用户的收藏夹
+     */
     public function collectionList(){
         //获取登录用户的信息
         $user = User::getVisitUserInfo($this->_uid);
