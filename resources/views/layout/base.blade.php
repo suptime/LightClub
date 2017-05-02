@@ -27,11 +27,11 @@
             <a class="cut-off">|</a>
             <a href="{{url('user/register')}}">注册</a>
             @else
-            <a href="{{ url('user/letters') }}" class="header-im-show">
+            <a href="{{ url('user/letters') }}" class="header-im-show" title="我的私信">
                 <i class="kz-e-envelope"></i>
                 <span class="header-notice-point"></span>
             </a>
-            <a href="{{ url('user/notice') }}" class="header-notice-show" title="系统消息">
+            <a href="{{ url('user/notice') }}" class="header-notice-show" title="系统通知">
                 <i class="k-i-remind"></i>
                 <span class="header-notice-point"></span>
             </a>
