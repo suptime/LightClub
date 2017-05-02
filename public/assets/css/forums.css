@@ -15,7 +15,7 @@
 .header-arrow, .header-worra {display: inline-block;width: 0;height: 0;border-left: 4px solid transparent;border-right: 4px solid transparent;border-top: 5px solid #fff;}
 .header-worra {transform: rotate(180deg);-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);-o-transform: rotate(180deg);-ms-transform: rotate(180deg);transition: All .3s ease-in-out;-webkit-transition: All .3s ease-in-out;-moz-transition: All .3s ease-in-out;-o-transition: All .3s ease-in-out;}
 .header-user-all {display: none;background: #fff;border: 1px solid #e3e3e3;border-top:none;box-shadow: 0 1px 4px 0 rgba(0,0,0,.15);position: absolute;right: -1px;z-index: 10;}
-
+.header-notice-point {float: right;position: absolute;top: 7px;right:-4px;height: 6px;width: 6px;background: #ef5350;border: 1px solid #fff;border-radius: 50%;}
 /*下拉菜单*/
 .header-user-head .header-num { color: #54c4fe;}
 .header-menu a {display: block;float: none; padding: 0 20px; color: #333;font-size: 14px;line-height: 32px;}

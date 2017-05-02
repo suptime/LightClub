@@ -9,7 +9,7 @@
             <a href="{{url('space/'.$user->uid)}}">话题</a>
             <a href="{{url('reply/'.$user->uid)}}" class="topic-cur">回复</a>
             {!!  $current_uid ? '<a href="'.url('user/collection').'">收藏</a>' : ''  !!}
-            {!!  $current_uid ? '<a href="'.url('user/messages').'">私信</a>' : ''  !!}
+            {!!  $current_uid ? '<a href="'.url('user/letters').'">私信</a>' : ''  !!}
         </div>
 
         <!--topic-list s-->
@@ -43,5 +43,5 @@
 
 @section('right')
     {{--会员资料卡--}}
-    @include('layout.user_info')
+    @include('layout.public_user')
 @stop

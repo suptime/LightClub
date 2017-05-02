@@ -10,6 +10,7 @@ use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Http\Controllers\Controller;
 
@@ -20,9 +21,9 @@ class UserController extends Controller
     public function __construct()
     {
         //获取登录用户id
-        if (Auth::check()){
+        if (Auth::check()) {
             $this->_uid = Auth::id();
-        }else{
+        } else {
             $this->_uid = false;
         }
     }
@@ -31,18 +32,22 @@ class UserController extends Controller
      * 根据id获取对应会员发布的主题贴
      * @param $uid
      */
-    public function userSpace($uid){
+    public function userSpace($uid)
+    {
         //访问用户是否存在
         if (!$user = User::getVisitUserInfo($uid)) {
             return redirect('/')->with('error', '无法访问主页,可能是不存在,未激活或被锁定');
         }
         //根据会员id获取对应主题帖
         $topics = Topic::getCurrentUserTopics($user->uid, config('app.web_config.pageSize'));
+        //当前页面是否是登录会员的
+        $isLoginStatus = ($uid == $this->_uid) ? true : false;
         //载入视图,分配数据
-        return view('auth.space',[
+        return view('auth.space', [
             'user' => $user,
             'topics' => $topics,
-            'current_uid' => $this->_uid
+            'current_uid' => $this->_uid,
+            'isLoginStatus' => $isLoginStatus
         ]);
     }
 
@@ -50,20 +55,22 @@ class UserController extends Controller
      * 根据当前访问用户的id获取其所有评论
      * @param $uid
      */
-    public function userReply($uid){
+    public function userReply($uid)
+    {
         //访问用户是否存在
         if (!$user = User::getVisitUserInfo($uid)) {
             return redirect('/')->with('error', '无法访问主页,可能是不存在,未激活或被锁定');
         }
-
         //根据会员id获取其发布的回帖
         $comments = Comment::getVistCurrentUserComment($user->uid, config('app.web_config.pageSize'));
-
+        //当前页面是否是登录会员的
+        $isLoginStatus = ($uid == $this->_uid) ? true : false;
         //载入视图,分配数据
-        return view('auth.reply',[
+        return view('auth.reply', [
             'user' => $user,
             'comments' => $comments,
-            'current_uid' => $this->_uid
+            'current_uid' => $this->_uid,
+            'isLoginStatus' => $isLoginStatus
         ]);
     }
 
@@ -72,12 +79,18 @@ class UserController extends Controller
      * 用户资料修改
      * @param Request $request
      */
-    public function userInfoSetting(Request $request){
+    public function userInfoSetting(Request $request)
+    {
         //获取登录用户的信息
-        $user = User::getVisitUserInfo($this->_uid);
-        if ($request->isMethod('POST')){
+        $user = User::getUpdateUserData($this->_uid);
+        if ($request->isMethod('POST')) {
             //验证数据
             $this->validate($request, User::$rules, User::$messages, User::$names);
+            //对比数据库的密码,是否匹配
+            $oldPassword = $request->oldpassword;
+            if (!Hash::check($oldPassword, $user->password)) {
+                return redirect('user/setting')->with('error', '旧密码错误,无法修改资料');
+            }
             //接收数据
             $data = [
                 'avstar' => $request->avstar,
@@ -88,25 +101,32 @@ class UserController extends Controller
             ];
 
             //去除空数据
-            foreach ($data as $k => $v){
-                if (trim($v) == false || $user[$k] == $v){
+            foreach ($data as $k => $v) {
+                if (trim($v) == false || $user[$k] == $v) {
                     unset($data[$k]);
                 }
             }
             //有数据才更新
-            if ($data){
+            if ($data) {
+                //密码加密
+                if (isset($data['password'])) {
+                    if ($data['password'] != $request->repassword){
+                        return redirect('user/setting')->with('error', '新密码验证失败');
+                    }
+                    //验证通过,加密新密码
+                    $data['password'] = bcrypt($data['password']);
+                }
+
                 //更新数据
-                if (User::where('uid',$this->_uid)->update($data)) {
-                    return redirect()->back()->with('success', '完成资料修改');
-                }else{
-                    return redirect()->back()->with('error', '资料修改失败');
+                if (User::where('uid', $this->_uid)->update($data)) {
+                    return redirect('user/setting')->with('success', '完成资料修改');
                 }
             }
-            return redirect()->back()->with('error', '您没修改任何资料');
+            return redirect('user/setting')->with('error', '修改失败,您没修改任何资料');
         }
 
-        return view('auth.setting',[
-            'user'=>$user,
+        return view('auth.setting', [
+            'user' => $user,
             'current_uid' => $this->_uid
         ]);
     }
@@ -114,11 +134,12 @@ class UserController extends Controller
     /**
      * 获取登录用户的收藏夹
      */
-    public function collectionList(){
+    public function collectionList()
+    {
         //获取登录用户的信息
         $user = User::getVisitUserInfo($this->_uid);
-        $favrates = Collection::getCollectionList($this->_uid,config('app.web_config.pageSize'));
-        return view('auth.collection',[
+        $favrates = Collection::getCollectionList($this->_uid, config('app.web_config.pageSize'));
+        return view('auth.collection', [
             'favrates' => $favrates,
             'user' => $user,
             'current_uid' => $this->_uid
@@ -134,7 +155,7 @@ class UserController extends Controller
         $notices = MessageUser::getSystemMessageData($this->_uid, config('app.web_config.pageSize'));
         //获取登录用户的信息
         $user = User::getVisitUserInfo($this->_uid);
-        return view('auth.notice',[
+        return view('auth.notice', [
             'notices' => $notices,
             'user' => $user,
             'current_uid' => $this->_uid

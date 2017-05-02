@@ -43,10 +43,18 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">QQ号码</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="qqnum" lay-verify="qq" autocomplete="off" value="{{ $user->qqnum }}" class="layui-input">
+                        <input type="tel" name="qqnum" lay-verify="qq|number" autocomplete="off" value="{{ $user->qqnum }}" class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">{{ $errors->first('qqnum') ? $errors->first('qqnum') :'请填写您常用的QQ号码' }}</div>
                 </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">旧密码</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="oldpassword" lay-verify="required|oldpass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux" style="color: #f60">{{ $errors->first('password') ? $errors->first('password') :'必填, 用于身份验证' }}</div>
             </div>
 
             <div class="layui-form-item">
@@ -60,18 +68,10 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">确认密码</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="repassword" lay-verify="pass" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="repassword" lay-verify="repass" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-form-mid layui-word-aux">{{ $errors->first('repassword') ? $errors->first('repassword') :'请填写6到18位密码' }}</div>
             </div>
-
-            {{--<div class="layui-form-item">--}}
-                {{--<label class="layui-form-label">性别</label>--}}
-                {{--<div class="layui-input-block">--}}
-                    {{--<input type="radio" name="user[sex]" value="男" title="男" checked="">--}}
-                    {{--<input type="radio" name="user[sex]" value="女" title="女">--}}
-                {{--</div>--}}
-            {{--</div>--}}
 
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">个性签名</label>
@@ -113,7 +113,19 @@
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
 <script>
-layui.use(['form'], function(){ var form = layui.form(); });
+layui.use(['form'], function(){
+    var form = layui.form();
+    form.verify({
+        oldpass: [/^[\S]{6,18}$/,'密码必须6到18位，且不能出现空格'],
+        qq: [/^[\S]{5,10}$/,'QQ号码只能是5-10位数字'],
+        repass:function (value) {
+            var newPass = $('input[name=password]').val();
+            if (value != newPass) {
+                return '确认密码与新密码不一致';
+            }
+        }
+    });
+});
 layui.use('upload', function(){
     layui.upload({
         url: "{{ url('attachment/upload') }}",

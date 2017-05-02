@@ -42,8 +42,8 @@ class User extends Model implements AuthenticatableContract,
     public static $rules = [
         'mobile'=>'required|regex:/^1[3578]\d{9}$/',
         'qqnum'=>'regex:/^\d{5,10}$/',
-        'password'=>'min:6',
-        'repassword'=>'same:password',
+        'password'=>'min:6|max:18',
+        'repassword'=>'same:password|min:6|max:18',
         'signature'=>'max:100'
     ];
     public static $messages = [
@@ -116,6 +116,16 @@ class User extends Model implements AuthenticatableContract,
         return self::select('uid','name','email','mobile','qqnum','score','grade','avstar','isadmin','status','signature')
             ->where('status',1)
             ->find($uid);
+    }
+
+    /**
+     * 获取需要修改的用户数据
+     * @param $uid
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public static function getUpdateUserData($uid){
+        //验证会员是否存在
+        return self::where('status',1)->find($uid);
     }
 
 }
