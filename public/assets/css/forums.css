@@ -40,7 +40,7 @@
 .nav-tag .tag-cur {border-bottom: 2px solid #ff6c45; height: 42px;}
 
 /*main-block*/
-.forum-content{padding-bottom: 90px;}
+.forum-content{padding-bottom: 50px;}
 .forum-content:after, .comment-bar:after{content: ''; display: block; height: 0; line-height: 0; font-size: 0;clear: both}
 .forum-content-left{ width: 736px; float: left;box-sizing: border-box;}
 .forum-content-right{float: right; width: 250px;box-sizing: border-box;}
