@@ -1,5 +1,3 @@
-
-
 <div class="side-container">
     <div class="box-title">社区公告</div>
     <div class="box-brief announcement">
@@ -21,7 +19,7 @@
 <div class="side-container">
     <div class="box-title">微信关注</div>
     <div class="box-brief code-content">
-        <img src="http://pic.kuaizhan.com/g2/M01/56/EE/CgpQVFiz0XiAUsvOAAFj0jOqtlE644.jpg">
+        <img src="{{ asset('assets/img/wechat.jpg') }}">
         <span>关注收取回复提醒</span>
     </div>
 </div>

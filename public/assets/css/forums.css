@@ -129,8 +129,8 @@
 .side-container .hotopic li{position: relative; margin-bottom: 10px; padding-left:10px;}
 .side-container .hotopic li:before {content: "";position: absolute; left:0; top: 8px; background: #8c8c8c;width: 4px;height: 4px;display: inline-block;vertical-align: middle;}
 
-.side-container .code-content {padding: 30px 55px; text-align: center}
-.side-container .code-content img {height: 120px;width: 120px;margin-bottom: 6px;}
+.side-container .code-content {padding: 10px 0 30px; text-align: center}
+.side-container .code-content img {height: 150px;width: 150px;margin-bottom: 6px;}
 .side-container .code-content span {display: block;text-align: center;font-size: 14px;color: #333;}
 
 .footer {clear: both;line-height: 22px;text-align: center;padding:0 0 30px;margin: 0 auto;display: block;    color: #999; font-size: 12px; text-align: center}

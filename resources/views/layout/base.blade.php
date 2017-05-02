@@ -27,7 +27,7 @@
             <a class="cut-off">|</a>
             <a href="{{url('user/register')}}">注册</a>
             @else
-            <a href="javascript:void(0)" class="header-im-show"><i class="kz-e-envelope"></i></a>
+            <a href="{{ url('user/letters') }}" class="header-im-show"><i class="kz-e-envelope"></i></a>
             <a href="{{ url('user/notice') }}" class="header-notice-show" title="系统消息"><i class="k-i-remind"></i></a>
             <div class="header-user-content" id="user-status">
                 <div class="header-avatar-content"><img src="{{ Auth::user()->avstar ? Auth::user()->avstar : asset('assets/img/default.jpg') }}" /></div>

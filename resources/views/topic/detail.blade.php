@@ -158,7 +158,7 @@
             </div>
             <div class="publisher-button">
                 <a href="{{ url('space/'.$user->uid) }}" class="go-page">他的主页</a>
-                <a href="{{ url('sendmsg/'.$user->uid) }}" class="send-message">给他私信</a>
+                <a href="javascript:;" onclick="window.open('{{ url('user/letters?toid='.$user->uid) }}', '_self')" class="send-message">给他私信</a>
             </div>
         </div>
     </div>
