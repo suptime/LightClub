@@ -23,25 +23,14 @@
     </div>
 
     <li class="layui-nav-item" style="width: 150px; text-align: center">豆萌社区管理面板</li>
-    <li class="layui-nav-item layui-this">
+    {{--<li class="layui-nav-item layui-this">
         <a href="javascript:;">菜单</a>
         <dl class="layui-nav-child">
             <dd><a href="">选项1</a></dd>
             <dd><a href="">选项2</a></dd>
             <dd><a href="">选项3</a></dd>
         </dl>
-    </li>
-    <li class="layui-nav-item"><a href="">菜单</a></li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">菜单</a>
-        <dl class="layui-nav-child">
-            <dd><a href="">移动模块</a></dd>
-            <dd><a href="">后台模版</a></dd>
-            <dd class="layui-this"><a href="">菜单</a></dd>
-            <dd><a href="">电商平台</a></dd>
-        </dl>
-    </li>
-    <li class="layui-nav-item"><a href="">菜单</a></li>
+    </li>--}}
 </ul>
 </div>
 @show
@@ -55,11 +44,11 @@
                 <a href="javascript:;"><i class="layui-icon">&#xe629;</i> 文档管理</a>
                 <dl class="layui-nav-child">
                     <dd><a href="{{ url('admin/category/list') }}" class="{{ Request::getPathInfo() != '/admin/category/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe622;</i> 栏目分类</a></dd>
-                    <dd><a href="{{ url('admin/topic/list') }}" class="{{ Request::getPathInfo() != '/admin/topic/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe621;</i> 主题贴管理</a></dd>
+                    <dd><a href="{{ url('admin/topic/list') }}" class="{{ Request::getPathInfo() != '/admin/topic/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe621;</i> 帖子管理</a></dd>
                     <dd><a href=""><i class="layui-icon">&#xe611;</i> 回帖管理</a></dd>
                     <dd><a href=""><i class="layui-icon">&#xe600;</i> 收藏管理</a></dd>
                     <dd><a href=""><i class="layui-icon">&#xe613;</i> 用户管理</a></dd>
-                    <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe63a;</i> 消息通知管理</a></dd>
+                    <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe63a;</i> 站内通知</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
@@ -67,7 +56,6 @@
                 <dl class="layui-nav-child">
                     <dd><a href="">基本信息</a></dd>
                     <dd><a href="">邮件设置</a></dd>
-                    <dd><a href="">附件设置</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="javascript:;"><i class="layui-icon">&#xe60b;</i> 关于系统</a></li>

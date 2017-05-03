@@ -50,7 +50,10 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::any('comment/add', ['uses' => 'CommentController@addReply']);
     Route::get('comment/remove/{id}', ['uses' => 'CommentController@remove'])->where('id', '[0-9]+');   //删除回帖
     Route::post('comment/upvote', ['uses' => 'CommentController@upvote']);  //点赞
+});
 
+//后台路由控制
+Route::group(['middleware' => 'verifyIsAdmin'], function (){
     Route::get('admin/topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+'); //后台删除帖子
     Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where(['tid' => '[0-9]+', 'operate' => '[a-z]+' ]);     //后台审核,加精,置顶操作
     Route::get('admin/topic/list', ['uses' => 'TopicController@adminTopicList']);   //后台帖子列表
@@ -62,5 +65,4 @@ Route::group(['middleware' => 'verifyLogin'], function () {
 
     Route::any('admin/message/add', ['uses' => 'MessageMainController@add']);
     Route::any('admin/message/list', ['uses' => 'MessageMainController@index']);
-
 });
