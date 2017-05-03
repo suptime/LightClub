@@ -32,6 +32,7 @@ class TopicController extends Controller
         if (Auth::check()) {
             //获取用户id
             $this->_uid = Auth::id();
+            User::getMsgStatus();
         } else {
             $this->_uid = false;
         }

@@ -23,6 +23,7 @@ class UserController extends Controller
         //获取登录用户id
         if (Auth::check()) {
             $this->_uid = Auth::id();
+            User::getMsgStatus();
         } else {
             $this->_uid = false;
         }

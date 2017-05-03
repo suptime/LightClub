@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Auth;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -128,4 +129,17 @@ class User extends Model implements AuthenticatableContract,
         return self::where('status',1)->find($uid);
     }
 
+    /**
+     * 获取已登录用户的消息通知状态
+     */
+    public static function getMsgStatus(){
+        //获取当前登录用户的id
+        $uid = Auth::id();
+        //判断是否有未读系统通知
+        $hasMsg = MessageUser::whereRaw('receive_uid = ? AND `read` = ?', [$uid, 0])->count();
+        $hasLetter = Letter::whereRaw('receive_uid = ? AND `read` = ?', [$uid, 0])->count();
+
+        //分享数据到所有视图
+        view()->share('msgStatus', ['hasMsg' => $hasMsg, 'hasLetter' => $hasLetter]);
+    }
 }

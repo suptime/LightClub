@@ -71,6 +71,4 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::any('admin/message/add', ['uses' => 'MessageMainController@add']);
     Route::any('admin/message/list', ['uses' => 'MessageMainController@index']);
 
-
-
 });

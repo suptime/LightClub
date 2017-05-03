@@ -68,36 +68,55 @@ class Topic extends Model
                 ->paginate($pageSize);
         }
 
-        if (!$cid) {
-            //首页主题帖查询结果
-            $data =  $this->join('categories', function ($join) use ($cid){
+        //主题帖查询结果
+        return $this->join('categories', function ($join) use ($cid){
+                        if ($cid){
+                            $join->on('topics.cid', '=', 'categories.cid')
+                                    ->where('topics.cid','=',$cid)
+                                    ->where('topics.islook','=',1)
+                                    ->where('topics.isshow', '=',1);
+                        }else{
+                            $join->on('topics.cid', '=', 'categories.cid')
+                                ->where('topics.islook','=',1)
+                                ->where('topics.isshow', '=',1);
+                    }
+            })
+            ->join('users', 'topics.uid', '=', 'users.uid')
+            ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
+            ->orderBy($istop,'desc')
+            ->orderBy($orderBy,'desc')
+            ->paginate($pageSize);
+    }
+
+    /**
+     * 按回复时间排序
+     * @param $pageSize
+     * @param string $cid
+     * @param string $orderBy
+     * @param string $platform
+     */
+    public function getReplySortList($pageSize, $cid){
+        $data =  $this->join('categories', function ($join) use ($cid){
+                if ($cid){
+                    $join->on('topics.cid', '=', 'categories.cid')
+                        ->where('topics.cid','=',$cid)
+                        ->where('topics.islook','=',1)
+                        ->where('topics.isshow', '=',1);
+                }else{
                     $join->on('topics.cid', '=', 'categories.cid')
                         ->where('topics.islook','=',1)
                         ->where('topics.isshow', '=',1);
-                })
-                ->join('users', 'topics.uid', '=', 'users.uid')
-                ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
-                ->orderBy($istop,'desc')
-                ->orderBy($orderBy,'desc')
-                ->paginate($pageSize);
-        }else{
-            //列表页主题查询结果,带指定条件的查询
-            $data =  $this->join('categories', function ($join) use ($cid){
-                                                $join->on('topics.cid', '=', 'categories.cid')
-                                                ->where('topics.cid','=',$cid)
-                                                ->where('topics.islook','=',1)
-                                                ->where('topics.isshow', '=',1);
-                                            })
-                ->join('users', 'topics.uid', '=', 'users.uid')
-                ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
-                ->orderBy($istop,'desc')
-                ->orderBy($orderBy,'desc')
-                ->paginate($pageSize);
-        }
+                }
+            })
+            ->join('users', 'topics.uid', '=', 'users.uid')
+            ->leftjoin('comments', 'topics.tid', '=', 'comments.com_tid')
+            ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar', 'comments.id', 'comments.com_tid')
+            ->groupBy('comments.com_tid', 'topics.tid')
+            ->orderBy('comments.id','desc')
+            ->paginate($pageSize);
+
         return $data;
     }
-
-
     /**
      * 根据主键与条件获取一条主题帖
      * @param $tid

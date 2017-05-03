@@ -78,7 +78,7 @@
 .topic-person {color: #8c8c8c;float: left;padding-right: 10px}
 .topic-time {color: #b5b5b5;padding: 0 10px;float: left;border-left: 1px solid #e3e3e3}
 .topic-info div {display: inline-block}
-.topic-tags a {color: #a5a5a5;margin-right: 9px; background: #eee; padding: 2px 5px; border-radius: 3px;}
+.topic-tags a {color: #a5a5a5;margin-right: 9px; padding: 2px 5px; border-radius: 3px;}
 .topic-operation {color: #b5b5b5;float: right}
 .topic-operation span {vertical-align: middle}
 .topic-operation i {color: #e3e3e3; padding-right: 4px;font-size: 14px}

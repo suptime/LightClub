@@ -29,11 +29,15 @@
             @else
             <a href="{{ url('user/letters') }}" class="header-im-show" title="我的私信">
                 <i class="kz-e-envelope"></i>
+                @if($msgStatus['hasLetter'])
                 <span class="header-notice-point"></span>
+                @endif
             </a>
             <a href="{{ url('user/notice') }}" class="header-notice-show" title="系统通知">
                 <i class="k-i-remind"></i>
-                <span class="header-notice-point"></span>
+                @if($msgStatus['hasMsg'])
+                    <span class="header-notice-point"></span>
+                @endif
             </a>
             <div class="header-user-content" id="user-status">
                 <div class="header-avatar-content"><img src="{{ Auth::user()->avstar ? Auth::user()->avstar : asset('assets/img/default.jpg') }}" /></div>

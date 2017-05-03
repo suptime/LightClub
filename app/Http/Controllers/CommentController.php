@@ -8,8 +8,6 @@ use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -47,7 +45,7 @@ class CommentController extends Controller
 
             //接收数据
             $comment->comment = preg_replace('/^@(.*):/i', '', $request->comment);  //回帖内容
-            $comment->tid = $request->tid;  //主题贴id
+            $comment->tid = $comment->com_tid = $request->tid;  //主题贴id
             $comment->uid = $uid;       //当前评论用户id
             $comment->at_uid = $request->at_uid ? $request->at_uid : 0; //回复对象用户id
             $comment->pid = $request->pid ? $request->pid : 0;  //上级回帖id

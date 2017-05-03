@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Topic;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -31,12 +30,14 @@ class CategoryController extends Controller
      */
     public function homeList(Request $request, $catdir = '')
     {
-        $orderBy = 'created_at';    //指定默认排序参数
+        $orderBy = 'tid';    //指定默认排序参数
         $type_arg = $cid = '';  //指定默认分页参数和默认分类id
         $type = $request->type;    //获取请求排序参数
 
+        User::getMsgStatus();
+
         //判断请求参数是否合法    排序参数为time,repley,hot,只有满足这三个参数才可以定义排序
-        $orderTypes = ['time' => 'created_at', 'reply' => 'reply_num', 'hot' => 'reply_total'];
+        $orderTypes = ['reply' => 'replyTime', 'hot' => 'reply_total'];
         $keys = array_keys($orderTypes);    //将key取出来
         if (isset($type) && in_array($type, $keys)) {
             $orderBy = $orderTypes[$type];
@@ -63,7 +64,11 @@ class CategoryController extends Controller
         //查询主题贴,创建Topic对象
         $topicModel = new Topic();
         //将符合条件的主题贴查询出来
-        $topics = $topicModel->getAllTopic(config('app.web_config.pageSize'), $cid, $orderBy);
+        if ($orderBy == 'replyTime'){
+            $topics = $topicModel->getReplySortList(config('app.web_config.pageSize'), $cid, $orderBy);
+        }else{
+            $topics = $topicModel->getAllTopic(config('app.web_config.pageSize'), $cid, $orderBy);
+        }
 
         //查询侧栏热帖
         $hotTopics = $topicModel->getCustomTopics('click', 8);

@@ -7,8 +7,7 @@ window.onload = function(){
 	  var layedit = layui.layedit;
         layedit.set({
             uploadImage: {
-                url: '/attachment/upload',
-                type: 'post'
+                url: '/attachment/upload'
             }
         });
       var editor_status = $('#single').attr('long');
@@ -79,7 +78,9 @@ $(function () {
             $(place).html(str);
             /*loading editor*/
             layui.use('layedit', function(){ var layedits = layui.layedit;
-			 layedits.set({ uploadImage: { url: '/attachment/upload', type: 'post'}
+			 layedits.set({uploadImage: {
+				 url: '/attachment/upload'
+				 }
 			 });
 			 layedits.build('editor-content-'+comid,{ height: 140 });
             });
