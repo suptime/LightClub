@@ -76,4 +76,20 @@ class CollectionController extends Controller
         }
         return redirect('user/collection')->with('error', '删除收藏失败');
     }
+
+    /**
+     * 后台收用户收藏管理列表
+     */
+    public function adminCollectionList(){
+
+        //获取所有收藏列表
+        $collections = Collection::select('collections.*','users.name','topics.title')
+            ->join('topics','topics.tid','=','collections.tid')
+            ->join('users','users.uid','=','collections.uid')
+            ->paginate(config('app.web_config.pageSize'));
+
+        return view('admin.collections_list',[
+            'collections' => $collections
+        ]);
+    }
 }

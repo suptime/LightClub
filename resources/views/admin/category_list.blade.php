@@ -31,8 +31,8 @@
                     <td class="text-center">{{ $cate['parent_id'] ? $cate['parent_id'] : '无' }}</td>
                     <td class="text-center">{{ $cateModel->getStatus('channel', $cate['ischannel']) }}</td>
                     <td class="text-center">
-                        <a href="{{ url('admin/category/update', ['cid' => $cate['cid']]) }}" class="btn btn-success btn-sm">编辑</a>
-                        <a href="{{ url('admin/category/remove', ['cid' => $cate['cid']]) }}" class="btn btn-danger btn-sm">删除</a>
+                        <a href="{{ url('admin/category/update', ['cid' => $cate['cid']]) }}" class="layui-btn layui-btn-mini layui-btn-normal">编辑</a>
+                        <a href="{{ url('admin/category/remove', ['cid' => $cate['cid']]) }}" class="layui-btn layui-btn-mini layui-btn-danger">删除</a>
                     </td>
                 </tr>
             @endforeach

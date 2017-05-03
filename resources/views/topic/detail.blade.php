@@ -7,7 +7,7 @@
 <div class="topic-content">
         <div class="topic-type detail-nav">
             <a href="{{url('topic/add')}}" class="pub-button"><i class="k-i-edit"></i><span class="pub-text">发布话题</span></a>
-            <div class="detail-menu"><span><a href="{{ url('/') }}">社区首页</a> &gt;</span> <span><a href="{{ url('category/'.$topic['catdir']) }}">{{ $topic['catname'] }}</a></span></div>
+            <div class="detail-menu"><span><a href="{{ url('/') }}">社区首页</a> &gt;</span> <span><a href="{{ url($topic['catdir']) }}">{{ $topic['catname'] }}</a></span></div>
         </div>
         <div class="topic-detail-main">
             <div class="topic-detail-title">

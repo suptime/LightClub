@@ -31,7 +31,7 @@
                             <p style="padding: 20px; line-height: 26px;">{{ $row['msg_content'] }}</p>
                         </div>
                     </td>
-                    <td class="text-center">{!!  $row['isall'] ? '<i class="layui-icon" style="color:#5FB878">&#x1005;</i>' : '<i class="layui-icon" style="color:#FF5722">&#x1007;</i>' !!}</td>
+                    <td class="text-center">{!!  $row['isall'] ? '<i class="layui-icon" style="color:#5FB878">&#xe618;</i>' : '<i class="layui-icon" style="color:#FF5722">&#x1006;</i>' !!}</td>
                     <td class="text-center">{{ date('Y-m-d', $row['created_at']) }}</td>
                     <td class="text-center">
                         <a href="javascript:;" class="view-msg layui-btn layui-btn-mini layui-btn-normal"><i class="layui-icon">&#xe615;</i> 详细</a>

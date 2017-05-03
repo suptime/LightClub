@@ -38,7 +38,6 @@ class TopicController extends Controller
         }
     }
 
-
     /**
      * 后台主题贴列表
      */
@@ -95,16 +94,17 @@ class TopicController extends Controller
         if (!$topic = Topic::find($tid)) {
             return abort(404);
         }
+
         //查询当前登录用户是否是管理员
         $user = User::select('uid', 'isadmin')->find($this->_uid);
         //判断是否有权限执行删除
         if ($this->_uid == $topic->uid || $user->isadmin) {
             $rs = Topic::deleteTopicAboutData($topic, $tid);
             if ($rs) {
-                return redirect('/')->with('success', '删帖成功');
+                return redirect()->back()->with('success', '删帖成功');
             }
         }
-        return redirect('/')->with('error', '删帖失败');
+        return redirect()->back()->with('error', '删帖失败');
     }
 
     /**
@@ -331,4 +331,5 @@ class TopicController extends Controller
             'hotTopics' => $hotTopics,
         ]);
     }
+
 }

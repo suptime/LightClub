@@ -44,10 +44,14 @@
                 <a href="javascript:;"><i class="layui-icon">&#xe629;</i> 文档管理</a>
                 <dl class="layui-nav-child">
                     <dd><a href="{{ url('admin/category/list') }}" class="{{ Request::getPathInfo() != '/admin/category/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe622;</i> 栏目分类</a></dd>
+
                     <dd><a href="{{ url('admin/topic/list') }}" class="{{ Request::getPathInfo() != '/admin/topic/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe621;</i> 帖子管理</a></dd>
-                    <dd><a href=""><i class="layui-icon">&#xe611;</i> 回帖管理</a></dd>
-                    <dd><a href=""><i class="layui-icon">&#xe600;</i> 收藏管理</a></dd>
+
+                    <dd><a href="{{ url('admin/comments/list') }}" class="{{ Request::getPathInfo() != '/admin/comments/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe611;</i> 回帖管理</a></dd>
+
+                    <dd><a href="{{ url('admin/collections/list') }}" class="{{ Request::getPathInfo() != '/admin/collections/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe600;</i> 收藏管理</a></dd>
                     <dd><a href=""><i class="layui-icon">&#xe613;</i> 用户管理</a></dd>
+
                     <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe63a;</i> 站内通知</a></dd>
                 </dl>
             </li>

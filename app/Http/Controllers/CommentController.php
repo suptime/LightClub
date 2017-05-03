@@ -78,15 +78,15 @@ class CommentController extends Controller
         if (!$comment = Comment::select('id', 'tid', 'uid')->where('id', $id)->first()) {
             return redirect('/')->with('error', '没有这条回复');
         }
-//        dd(Comment::deleteSonComment($comment->id));
+
         //判断当前用户登录id是否与回帖用户id一致,一致就删除记录
         if ($uid == $comment->uid) {
             if ($comment->delete()) {
                 Comment::deleteSonComment($comment->id);    //删除子评论
                 Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
-                return redirect('topic/' . $comment->tid);
+                return redirect()->back()->with('success', '删除回帖成功');
             } else {
-                return redirect('topic/' . $comment->tid)->with('error', '删除失败 (｀・ω・´)');
+                return redirect()->back()->with('error', '删除失败 (｀・ω・´)');
             }
         }
 
@@ -96,9 +96,9 @@ class CommentController extends Controller
                 if ($comment->delete()) {
                     Comment::deleteSonComment($comment->id);    //删除子评论
                     Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
-                    return redirect('topic/' . $comment->tid);
+                    return redirect()->back()->with('success', '删除回帖成功');
                 } else {
-                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 （￣へ￣）');
+                    return redirect()->back()->with('error', '删除失败 （￣へ￣）');
                 }
             }
         }
@@ -109,9 +109,9 @@ class CommentController extends Controller
                 if ($comment->delete()) {
                     Comment::deleteSonComment($comment->id);    //删除子评论
                     Comment::getCountComment($comment->tid);    //统计当前帖子的回复数量
-                    return redirect('topic/' . $comment->tid);
+                    return redirect()->back()->with('success', '删除回帖成功');
                 } else {
-                    return redirect('topic/' . $comment->tid)->with('error', '删除失败 (〜￣△￣)〜');
+                    return redirect()->back()->with('error', '删除失败 (〜￣△￣)〜');
                 }
             }
         }
@@ -176,4 +176,38 @@ class CommentController extends Controller
         }
     }
 
+    /**
+     * 后台回帖里列表管理
+     */
+    public function adminCommentList(){
+        $comments = Comment::select('comments.*','users.name')
+            ->join('users', 'comments.uid', '=','users.uid')
+            ->orderBy('created_at', 'desc')
+            ->paginate(config('app.web_config.pageSize'));
+        return view('admin.comments_list',[
+            'comments' => $comments,
+        ]);
+    }
+
+    /**
+     * 更改指定数据状态.
+     * @param $id
+     */
+    public function adminShow($id){
+        //查找符合条件的数据
+        $comment = Comment::find($id);
+
+        if ($comment->is_show == 1){
+            $status = 0;
+        }else{
+            $status = 1;
+        }
+
+        //更新数据
+        if (Comment::where('id', '=', $id)->update(['is_show' => $status])) {
+            return redirect()->back()->with('success', '显示状态更改成功');
+        }else{
+            return redirect()->back()->with('error', '显示状态更改失败');
+        }
+    }
 }
