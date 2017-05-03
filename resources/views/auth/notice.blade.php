@@ -11,12 +11,12 @@
 
     <div class="layui-collapse" style=" border: none; font-size:14px;border-radius: 0" lay-accordion>
     @forelse($notices as $val)
-        <div class="layui-colla-item">
+        <div class="layui-colla-item {{ $val['read'] ? 'readed-class' : '' }}">
             <h2 class="layui-colla-title" style="background: none">{{ $val['msg_title'] }}</h2>
             <div class="msg-time">
                 <i class="layui-icon">&#xe60e;</i> {{ date('m月d日 H:i',$val['created_at']) }}
                 {!! $val['read'] ? '' : '<a class="layui-btn layui-btn-mini is-read" data-mid="'.$val['id'].'">标为已读</a>' !!}
-                <a href="javascript:;" onclick="window.open('{{ url("user/notice/".$val['id']) }}', '_self');" class="layui-btn layui-btn-mini layui-btn-danger">删除</a>
+                <a href="javascript:;" onclick="window.open('{{ url("user/notice/".$val['id']) }}', '_self');" style="margin-left: 10px" title="删除通知消息"><i class="layui-icon del-msg">&#x1007;</i></a>
             </div>
 
             <div class="layui-colla-content">
@@ -62,6 +62,8 @@ layui.use(['element', 'layer'], function(){
         $.post('{{ url('user/notice') }}', {mid:$(this).attr('data-mid')}, function(data){
             if (data.status) {
                 btn.remove();
+                console.log($(btn).closest('.layui-colla-item'));
+                $(btn).closest('.layui-colla-item').addClass('readed-class');
             }
             layer.msg(data.msg);
         },'json');

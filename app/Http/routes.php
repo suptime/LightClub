@@ -86,6 +86,7 @@ Route::group(['middleware' => 'verifyIsAdmin'], function (){
     //后台系统消息管理
     Route::any('admin/message/add', ['uses' => 'MessageMainController@add']);
     Route::any('admin/message/list', ['uses' => 'MessageMainController@index']);
+    Route::any('admin/message/remove/{id}', ['uses' => 'MessageMainController@adminMessageDelete'])->where('cid', '[0-9]+');
 
     //后台回帖管理
     Route::get('admin/comments/list',['uses' => 'CommentController@adminCommentList']);
@@ -94,5 +95,9 @@ Route::group(['middleware' => 'verifyIsAdmin'], function (){
 
     //后台收藏夹管理
     Route::get('admin/collections/list',['uses' => 'CollectionController@adminCollectionList']);
-    Route::get('user/collections/remove/{tid}&{id}', ['uses' => 'CollectionController@remove'])->where(['tid'=>'[0-9]+','id','[0-9]+']);
+    Route::get('admin/collections/remove/{id}', ['uses' => 'CollectionController@removeCollectionData'])->where(['tid'=>'[0-9]+']);
+
+    //后台用户管理
+    Route::get('admin/users/list', ['uses' => 'UserController@adminUserList']);
+    Route::any('admin/users/edit/{uid}', ['uses' => 'UserController@editOneUserInfo'])->where(['tid'=>'[0-9]+']);
 });

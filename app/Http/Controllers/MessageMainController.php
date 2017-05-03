@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\MessageMain;
+use App\MessageUser;
 use Illuminate\Http\Request;
 
 
@@ -45,9 +46,23 @@ class MessageMainController extends Controller
         return view('admin.message_post');
     }
 
-    public function edit($id)
+
+    /**
+     * 根据条件删除系统消息
+     * @param $id
+     */
+    public function adminMessageDelete($id)
     {
-        //
+        //删除消息主表内容
+        $mainMessage = MessageMain::where('id', '=', $id)->delete();
+        if (!$mainMessage) {
+            return redirect()->back()->with('error', '删除系统消息失败');
+        }
+
+        //删除用户消息表里的内容
+        MessageUser::where('msg_id','=', $id)->delete();
+
+        return redirect()->back()->with('success', '成功删除系统消息');
     }
 
 }

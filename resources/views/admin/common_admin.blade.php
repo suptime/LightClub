@@ -50,7 +50,8 @@
                     <dd><a href="{{ url('admin/comments/list') }}" class="{{ Request::getPathInfo() != '/admin/comments/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe611;</i> 回帖管理</a></dd>
 
                     <dd><a href="{{ url('admin/collections/list') }}" class="{{ Request::getPathInfo() != '/admin/collections/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe600;</i> 收藏管理</a></dd>
-                    <dd><a href=""><i class="layui-icon">&#xe613;</i> 用户管理</a></dd>
+
+                    <dd><a href="{{ url('admin/users/list') }}" class="{{ Request::getPathInfo() != '/admin/users/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe612;</i> 用户管理</a></dd>
 
                     <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe63a;</i> 站内通知</a></dd>
                 </dl>
@@ -79,16 +80,11 @@
 
 @show
 </div>
-<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript">
 layui.use('element', function(){
     var element = layui.element(); //导航的hover效果、二级菜单等功能，需要依赖element模块
-    //监听导航点击
-//    element.on('nav(demo)', function(elem){
-//        //console.log(elem)
-//        layer.msg(elem.text());
-//    });
 });
 </script>
 

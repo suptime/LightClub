@@ -162,4 +162,49 @@ class UserController extends Controller
             'current_uid' => $this->_uid
         ]);
     }
+
+    /**
+     * 后台用户列表
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function adminUserList(){
+        $users = User::paginate(config('app.web_config.pageSize'));
+        return view('admin.user_list', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * 后台修改指定用户的状态资料
+     * @param Request $request
+     * @param $uid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function editOneUserInfo(Request $request,$uid){
+        $user = User::find($uid);
+        if ($request->isMethod('POST')) {
+            $data = $request->except('_token');
+
+            foreach ($data as $k => $v){
+                if (trim($v) == $user[$k]){
+                    unset($data[$k]);
+                }
+            }
+            //如果没有修改任何数据
+            if (!$data){
+                return redirect('admin/users/list')->with('error', '未修改任何内容,无需保存');
+            }
+
+            //修改用户的状态信息
+            if (User::where('uid',$uid)->update($data)) {
+                return redirect('admin/users/list')->with('success', '修改成功');
+            }
+            return redirect()->back()->with('error', '修改失败');
+        }
+
+        //载入视图
+        return view('admin.user_edit',[
+            'user' => $user
+        ]);
+    }
 }

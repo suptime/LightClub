@@ -154,7 +154,7 @@
     <a class="ueg_feedback-link" href="" target="_blank">意见反馈</a> |
     <a href="" target="_blank">网络谣言警示</a>
 </div>
-<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
     <script type="text/javascript">

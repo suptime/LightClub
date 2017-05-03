@@ -65,7 +65,7 @@ class CollectionController extends Controller
 
 
     /**
-     * 根据条件删除收藏夹数据
+     * 前台根据条件删除收藏夹数据
      * @param $tid
      * @param $id
      */
@@ -91,5 +91,17 @@ class CollectionController extends Controller
         return view('admin.collections_list',[
             'collections' => $collections
         ]);
+    }
+
+    /**
+     * 后台根据条件删除用户收藏夹
+     */
+    public function removeCollectionData($id){
+        if ($colletion = Collection::find($id)) {
+            if (!$rs = $colletion->delete()) {
+                return redirect()->back()->with('error', '删除收藏失败');
+            }
+        }
+        return redirect()->back()->with('success', '删除收藏成功');
     }
 }
