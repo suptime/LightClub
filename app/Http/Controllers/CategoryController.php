@@ -79,7 +79,6 @@ class CategoryController extends Controller
             'type_arg' => $type_arg,
             'hotTopics' => $hotTopics,
             'classInfo' => $classInfo,
-            'type_arg' => $type_arg,
         ]);
     }
 

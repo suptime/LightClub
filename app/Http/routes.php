@@ -1,18 +1,11 @@
 <?php
+/**
+ * 应用程序路由规则
+ */
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
-//Route::get('/', ['uses' => 'CategoryController@homePage']);
 Route::get('/{catdir?}', ['uses' => 'CategoryController@homeList'])->where('catdir', '[a-zA-Z0-9]*');
+//帖子搜索
+Route::get('/search/{keyword?}', ['uses' => 'TopicController@topicSearch']);
 
 /******************************************************************************************/
 
@@ -32,7 +25,6 @@ Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', 
 
 Route::get('topic/add', ['uses' => 'TopicController@add']);
 Route::get('topic/{tid}', ['uses' => 'TopicController@detail'])->where('tid', '[0-9]+');
-
 
 //需要验证用户登录后操作的路由
 Route::group(['middleware' => 'verifyLogin'], function () {

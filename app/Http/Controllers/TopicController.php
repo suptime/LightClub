@@ -233,11 +233,11 @@ class TopicController extends Controller
         $user = User::getVisitUserInfo($topic['uid']);
 
         //获取当前登录用户的判断信息
-        if ($this->_uid){
+        if ($this->_uid) {
             //uid存在,就去查询获取数据
             $userInfo = User::getVisitUserInfo($this->_uid);
             $currentUser['isadmin'] = $userInfo->isadmin;
-        }else{
+        } else {
             $currentUser['isadmin'] = false;
         }
         $currentUser['uid'] = $this->_uid;
@@ -309,5 +309,26 @@ class TopicController extends Controller
             'pageName' => 'page',
         ]);
         return $topComments;
+    }
+
+    /**
+     * 根据关键字搜索帖子标题
+     * @param $keyword
+     */
+    public function topicSearch($keyword)
+    {
+        $topicModel = new Topic();
+        //过滤非法字符
+        $keyword = strip_tags(trim($keyword));
+        $keyword = str_replace(' ', '', $keyword);
+        //根据关键字查询数据
+        $topics = $topicModel->getSearchData(config('app.web_config.pageSize'), $keyword);
+        //查询侧栏热帖
+        $hotTopics = $topicModel->getCustomTopics('click', 8);
+        //引入数据到视图
+        return view('topic.search', [
+            'searchTopics' => $topics,
+            'hotTopics' => $hotTopics,
+        ]);
     }
 }

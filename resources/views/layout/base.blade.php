@@ -68,8 +68,8 @@
             <!--search s-->
             <div class="search-section">
                 <div class="search-form">
-                    <div class="search-pop-form"><input type="text" placeholder="请输入搜索内容" value=""></div>
-                    <a href="javascript:void(0)"><i class="k-i-search search-icon"></i></a>
+                    <div class="search-pop-form"><input type="text" id="topic-search" name="keyword" placeholder="请输入搜索内容" value=""></div>
+                    <a href="javascript:void(0)" class="serach-btn"><i class="k-i-search search-icon"></i></a>
                 </div>
             </div>
             <!--search e-->
@@ -157,6 +157,16 @@
 <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
+    <script type="text/javascript">
+$('.serach-btn').click(function () {
+    var keyword = $('#topic-search').val();
+    if (keyword == '' || keyword.length < 2){
+        layer.msg('搜索词不能为空');
+        return false;
+    }
+    window.location = '{{ url('search') }}/'+keyword;
+});
+    </script>
 @show
 @section('script')
 @show

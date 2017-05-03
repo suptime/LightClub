@@ -48,43 +48,44 @@ class Topic extends Model
     /**
      * 列表页获取主题信息
      * @param integer $pageSize 每页显示数量
-     * @param string $cid   分类id
-     * @param string $orderBy   排序方式
+     * @param string $cid 分类id
+     * @param string $orderBy 排序方式
      * @return array & object mixed    对象或数组
      */
-    public function getAllTopic($pageSize, $cid='', $orderBy = 'tid', $platform=''){
-        if ($orderBy == 'reply_total'){
+    public function getAllTopic($pageSize, $cid = '', $orderBy = 'tid', $platform = '')
+    {
+        if ($orderBy == 'reply_total') {
             $istop = 'reply_total';
-        }else{
+        } else {
             $istop = 'topics.istop';
         }
         //后台管理列表
-        if ($platform == 'admin'){
+        if ($platform == 'admin') {
             return $this->join('categories', 'topics.cid', '=', 'categories.cid')
                 ->join('users', 'topics.uid', '=', 'users.uid')
                 ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
-                ->orderBy($istop,'desc')
-                ->orderBy($orderBy,'desc')
+                ->orderBy($istop, 'desc')
+                ->orderBy($orderBy, 'desc')
                 ->paginate($pageSize);
         }
 
         //主题帖查询结果
-        return $this->join('categories', function ($join) use ($cid){
-                        if ($cid){
-                            $join->on('topics.cid', '=', 'categories.cid')
-                                    ->where('topics.cid','=',$cid)
-                                    ->where('topics.islook','=',1)
-                                    ->where('topics.isshow', '=',1);
-                        }else{
-                            $join->on('topics.cid', '=', 'categories.cid')
-                                ->where('topics.islook','=',1)
-                                ->where('topics.isshow', '=',1);
-                    }
-            })
+        return $this->join('categories', function ($join) use ($cid) {
+            if ($cid) {
+                $join->on('topics.cid', '=', 'categories.cid')
+                    ->where('topics.cid', '=', $cid)
+                    ->where('topics.islook', '=', 1)
+                    ->where('topics.isshow', '=', 1);
+            } else {
+                $join->on('topics.cid', '=', 'categories.cid')
+                    ->where('topics.islook', '=', 1)
+                    ->where('topics.isshow', '=', 1);
+            }
+        })
             ->join('users', 'topics.uid', '=', 'users.uid')
             ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
-            ->orderBy($istop,'desc')
-            ->orderBy($orderBy,'desc')
+            ->orderBy($istop, 'desc')
+            ->orderBy($orderBy, 'desc')
             ->paginate($pageSize);
     }
 
@@ -95,33 +96,36 @@ class Topic extends Model
      * @param string $orderBy
      * @param string $platform
      */
-    public function getReplySortList($pageSize, $cid){
-        $data =  $this->join('categories', function ($join) use ($cid){
-                if ($cid){
-                    $join->on('topics.cid', '=', 'categories.cid')
-                        ->where('topics.cid','=',$cid)
-                        ->where('topics.islook','=',1)
-                        ->where('topics.isshow', '=',1);
-                }else{
-                    $join->on('topics.cid', '=', 'categories.cid')
-                        ->where('topics.islook','=',1)
-                        ->where('topics.isshow', '=',1);
-                }
-            })
+    public function getReplySortList($pageSize, $cid)
+    {
+        $data = $this->join('categories', function ($join) use ($cid) {
+            if ($cid) {
+                $join->on('topics.cid', '=', 'categories.cid')
+                    ->where('topics.cid', '=', $cid)
+                    ->where('topics.islook', '=', 1)
+                    ->where('topics.isshow', '=', 1);
+            } else {
+                $join->on('topics.cid', '=', 'categories.cid')
+                    ->where('topics.islook', '=', 1)
+                    ->where('topics.isshow', '=', 1);
+            }
+        })
             ->join('users', 'topics.uid', '=', 'users.uid')
             ->leftjoin('comments', 'topics.tid', '=', 'comments.com_tid')
             ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar', 'comments.id', 'comments.com_tid')
             ->groupBy('comments.com_tid', 'topics.tid')
-            ->orderBy('comments.id','desc')
+            ->orderBy('comments.id', 'desc')
             ->paginate($pageSize);
 
         return $data;
     }
+
     /**
      * 根据主键与条件获取一条主题帖
      * @param $tid
      */
-    public function getOnceTopic($tid){
+    public function getOnceTopic($tid)
+    {
         return $this->join('categories', 'topics.cid', '=', 'categories.cid')
             ->join('users', 'topics.uid', '=', 'users.uid')
             ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar', 'users.isadmin')
@@ -131,11 +135,12 @@ class Topic extends Model
     /**
      * 获取指定排序的主题帖
      * @param $sortBy   排序字段
-     * @param int $num  条数
+     * @param int $num 条数
      * @return mixed    返回的数据
      */
-    public function getCustomTopics($sortBy,$num = 5){
-        $datas = $this->take($num)->orderBy($sortBy,'desc')->get();
+    public function getCustomTopics($sortBy, $num = 5)
+    {
+        $datas = $this->take($num)->orderBy($sortBy, 'desc')->get();
         return self::objectToArray($datas);
     }
 
@@ -144,7 +149,8 @@ class Topic extends Model
      * @param $content  正文内容
      * @return bool
      */
-    public function isAssetImage($content){
+    public function isAssetImage($content)
+    {
         return preg_match('/<img(.*)src=(.*)>/', $content);
     }
 
@@ -154,10 +160,11 @@ class Topic extends Model
      * @param $objectData   查询出的对象数据
      * @return array    返回的二维数组
      */
-    public static function objectToArray($objectData){
+    public static function objectToArray($objectData)
+    {
         $arr = [];
         //二维
-        foreach($objectData as $row){
+        foreach ($objectData as $row) {
             $arr[] = $row->attributes;
         };
         return $arr;
@@ -166,14 +173,15 @@ class Topic extends Model
     /**
      * 获取当前用户帖子
      */
-    public static function getCurrentUserTopics($uid, $pageSize){
-        $data =  self::join('categories', 'topics.cid', '=', 'categories.cid')
+    public static function getCurrentUserTopics($uid, $pageSize)
+    {
+        $data = self::join('categories', 'topics.cid', '=', 'categories.cid')
             ->join('users', 'topics.uid', '=', 'users.uid')
-            ->select('topics.*', 'categories.catname', 'categories.catdir','users.name')
-            ->where('topics.islook','=',1)
-            ->where('topics.isshow', '=',1)
-            ->where('topics.uid', '=',$uid)
-            ->orderBy('tid','desc')
+            ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name')
+            ->where('topics.islook', '=', 1)
+            ->where('topics.isshow', '=', 1)
+            ->where('topics.uid', '=', $uid)
+            ->orderBy('tid', 'desc')
             ->paginate($pageSize);
         return $data;
     }
@@ -184,19 +192,43 @@ class Topic extends Model
      * @param $tid  integer     帖子id
      * @return bool  boolen     返回状态值
      */
-    public static function deleteTopicAboutData($topic, $tid){
+    public static function deleteTopicAboutData($topic, $tid)
+    {
         //删除主表数据
         $topicRs = $topic->delete();
         //删除附表数据
         $topicDetailRs = DB::table('topic_details')->where('tid', $tid)->delete();
         //删除tid的回帖
-        $commentRs = Comment::where('tid',$tid)->delete();
+        $commentRs = Comment::where('tid', $tid)->delete();
         //删除收藏夹数据
-        $collectionRs = \App\Collection::where('tid',$tid)->delete();
-        if ($topicRs == true && $topicDetailRs == true && $commentRs == true && $collectionRs ==true){
+        $collectionRs = \App\Collection::where('tid', $tid)->delete();
+        if ($topicRs == true && $topicDetailRs == true && $commentRs == true && $collectionRs == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
+    /**
+     * 根据关键词查询数据
+     * @param $pageSize
+     * @param $cid
+     * @return mixed
+     */
+    public function getSearchData($pageSize, $keyword)
+    {
+        //主题帖查询结果
+        return $this->where('topics.title', 'like', '%' . $keyword . '%')
+            ->join('categories', function ($join) {
+                $join->on('topics.cid', '=', 'categories.cid')
+                    ->where('topics.islook', '=', 1)
+                    ->where('topics.isshow', '=', 1);
+            })
+            ->join('users', 'topics.uid', '=', 'users.uid')
+            ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar')
+            ->orderBy('tid', 'desc')
+            ->paginate($pageSize);
+    }
+
+
 }
