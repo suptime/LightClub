@@ -5,9 +5,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<title>@yield('title','laravel轻社区')</title>
-<meta name="keywords" content="@yield('keywords','laravel轻社区')">
-<meta name="description" content="@yield('description','laravel轻社区')">
+<title>@yield('title')</title>
+<meta name="keywords" content="@yield('keywords')">
+<meta name="description" content="@yield('description')">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/layout.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/ui.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/plugs/layui/css/layui.css') }}" />
@@ -20,7 +20,7 @@
 <!--top s-->
 <div class="top">
     <div class="content mini-bar">
-        <a href=""><i class="k-i-home"></i> <span>欢迎来到豆萌社区</span></a>
+        <a href=""><i class="k-i-home"></i> <span>欢迎来到{{ $configs['site_name'] }}</span></a>
         <div class="right-user">
             @if(!Auth::check())
             <a href="{{url('user/login')}}">登录</a>
@@ -151,7 +151,9 @@
 <!--forumContent e-->
 
 @section('footer')
-<div class="footer content">© 2017 豆萌社区</div>
+<div class="footer content">
+    {!! $configs['copyright'] !!}
+</div>
 <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
@@ -159,7 +161,7 @@
 $('.serach-btn').click(function () {
     var keyword = $('#topic-search').val();
     if (keyword == '' || keyword.length < 2){
-        layer.msg('搜索词不能为空');
+        layer.msg('搜索词为空或太短');
         return false;
     }
     window.location = '{{ url('search') }}/'+keyword;

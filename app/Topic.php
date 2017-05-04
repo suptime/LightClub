@@ -155,10 +155,18 @@ class Topic extends Model
      */
     public function getOnceTopic($tid)
     {
-        return $this->join('categories', 'topics.cid', '=', 'categories.cid')
+        $data =  $this->join('categories', 'topics.cid', '=', 'categories.cid')
             ->join('users', 'topics.uid', '=', 'users.uid')
             ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar', 'users.isadmin')
-            ->find($tid)->attributes;
+            ->find($tid);
+
+        //是否存在数据
+        if ($data) {
+            return $data->attributes;
+        }else{
+            return false;
+        }
+
     }
 
     /**
@@ -225,17 +233,26 @@ class Topic extends Model
     {
         //删除主表数据
         $topicRs = $topic->delete();
-        //删除附表数据
-        $topicDetailRs = DB::table('topic_details')->where('tid', $tid)->delete();
-        //删除tid的回帖
-        $commentRs = Comment::where('tid', $tid)->delete();
-        //删除收藏夹数据
-        $collectionRs = \App\Collection::where('tid', $tid)->delete();
-        if ($topicRs == true && $topicDetailRs == true && $commentRs == true && $collectionRs == true) {
-            return true;
-        } else {
+        if ($topicRs === false) {
             return false;
         }
+        //删除附表数据
+        $topicDetailRs = DB::table('topic_details')->where('tid', $tid)->delete();
+        if ($topicDetailRs === false) {
+            return false;
+        }
+        //删除tid的回帖
+        $commentRs = Comment::where('tid', $tid)->delete();
+        if ($commentRs === false) {
+            return false;
+        }
+        //删除收藏夹数据
+        $collectionRs = \App\Collection::where('tid', $tid)->delete();
+        if ($collectionRs === false) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

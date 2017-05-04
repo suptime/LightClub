@@ -101,10 +101,10 @@ class TopicController extends Controller
         if ($this->_uid == $topic->uid || $user->isadmin) {
             $rs = Topic::deleteTopicAboutData($topic, $tid);
             if ($rs) {
-                return redirect()->back()->with('success', '删帖成功');
+                return redirect('/')->with('success', '删帖成功');
             }
         }
-        return redirect()->back()->with('error', '删帖失败');
+        return redirect('/')->with('error', '删帖失败');
     }
 
     /**
@@ -246,7 +246,9 @@ class TopicController extends Controller
     public function detail($tid)
     {
         //查询详情数据
-        $topic = $this->model->getOnceTopic($tid);
+        if (!$topic = $this->model->getOnceTopic($tid)) {
+            return abort(404);
+        }
 
         //转换标签
         if ($topic['tags']) {

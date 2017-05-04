@@ -168,8 +168,10 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function adminUserList(){
-        $users = User::paginate(config('app.web_config.pageSize'));
+        $userModel = new User();
+        $users = $userModel->paginate(config('app.web_config.pageSize'));
         return view('admin.user_list', [
+            'userModel' => $userModel,
             'users' => $users,
         ]);
     }

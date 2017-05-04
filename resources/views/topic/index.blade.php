@@ -1,8 +1,8 @@
 @extends('layout.base')
 
-@section('title') {{ $classInfo['title'] }} @stop
-@section('keywords') {{ $classInfo['keywords'] }} @stop
-@section('description') {{ $classInfo['description'] }} @stop
+@section('title') {{ $classInfo['title'] ? $classInfo['title'] .' - ' : '' }}{{ $configs['site_name'] }} @stop
+@section('keywords') {{ $classInfo['keywords'] ? $classInfo['keywords'] : $configs['keywords'] }} @stop
+@section('description') {{ $classInfo['description'] ? $classInfo['description'] : $configs['description'] }} @stop
 
 @section('left')
     <div class="topic-content">

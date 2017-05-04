@@ -1,78 +1,77 @@
 @extends('admin.common_admin')
 @section('content')
     <div class="mbnav">
-        <span class="layui-breadcrumb"><a href="{{ url('admin/index') }}">首页</a> <a><cite>添加 / 修改分类</cite></a></span>
+        <span class="layui-breadcrumb"><a href="{{ url('admin/index') }}">首页</a> <a><cite>系统设置</cite></a></span>
     </div>
 
     @include('layout.message')
 <form class="layui-form" method="post" action="">
     {{ csrf_field() }}
-
+    <input type="hidden" name="id" value="{{ $system_config->id }}">
     <div class="layui-form-item">
-        <label class="layui-form-label">上级分类</label>
+        <label class="layui-form-label">域名</label>
         <div class="layui-input-inline">
-            <select name="parent_id" lay-filter="category">
-                <option value="0">顶级分类</option>
-                @foreach($cates as $k => $v)
-                    <option value="{{ $k }}"
-                            {{ isset($category['parent_id']) && $category['parent_id']==$k ? 'selected' : ''}}
-                    >{{ $v }}</option>
-                @endforeach
-            </select>
+            <input type="text" name="domain" lay-verify="required" value="{{ $system_config->domain }}" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">{{ $errors->first('parent_id') }}</div>
+        <div class="layui-form-mid layui-word-aux">网站域名,需要加上 http:// 或 https://</div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">分类名称</label>
+        <label class="layui-form-label">网站名称</label>
         <div class="layui-input-inline">
-            <input type="text" name="catname" lay-verify="title" autocomplete="off"  class="layui-input" id="catname" value="{{ isset($category['catname']) ? $category['catname'] : ''}}" />
+            <input type="text" name="site_name" lay-verify="required" value="{{ $system_config->site_name }}" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">{{ $errors->first('catname') }}</div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label">分类路径</label>
-        <div class="layui-input-inline">
-            <input type="text" name="catdir" class="layui-input" id="catdir" autocomplete="off" value="{{ isset($category['catdir']) ? $category['catdir'] : ''}}" />
-        </div>
-        <div class="layui-form-mid layui-word-aux">{{ $errors->first('catdir') }}</div>
+        <div class="layui-form-mid layui-word-aux">当前网站的名称</div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">关键词</label>
-        <div class="layui-input-inline">
-            <input type="text" name="keywords" class="layui-input" autocomplete="off" id="keywords" value="{{ isset($category['keywords']) ? $category['keywords'] : ''}}"  />
+        <div class="layui-input-block">
+            <input type="text" name="keywords" value="{{ $system_config->keywords }}" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-form-mid layui-word-aux">关键词以英文,隔开 不设置请留空</div>
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label">分类描述</label>
+        <label class="layui-form-label">网站描述</label>
         <div class="layui-input-block">
-            <textarea name="description" class="layui-textarea" id="description">{{ isset($category['description']) ? $category['description'] : ''}}</textarea>
+            <textarea name="description" class="layui-textarea" id="description">{{ $system_config->description }}</textarea>
         </div>
     </div>
 
-    <div class="layui-form-item" pane="">
-        <label class="layui-form-label">显示状态</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label">社区公告</label>
         <div class="layui-input-block">
-            @foreach( $cateModel->getStatus('status') as $key => $val)
-            <input type="radio" name="status" value="{{ $key }}"  title="{{ $val }}"
-                    {{ isset($category['status']) && $category['status'] == $key ? 'checked' : '' }}
-            />
-            @endforeach
+            <textarea name="announcement" class="layui-textarea" id="announcement">{{ $system_config->announcement }}</textarea>
         </div>
     </div>
 
-    <div class="layui-form-item" pane="">
-        <label class="layui-form-label">分类属性</label>
+    <div class="layui-form-item">
+        <label class="layui-form-label">网站版权</label>
         <div class="layui-input-block">
-            @foreach( $cateModel->getStatus('channel') as $key => $val)
-        <input type="radio" name="ischannel" value="{{ $key }}" title="{{ $val }}"
-                {{ isset($category['ischannel']) && $category['ischannel'] == $key ? 'checked' : '' }} />
-            @endforeach
+            <textarea name="copyright" class="layui-textarea" id="copyright">{{ $system_config->copyright }}</textarea>
         </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">分页大小</label>
+        <div class="layui-input-inline">
+            <input type="text" name="pagesize" lay-verify="required|number" value="{{ $system_config->pagesize }}" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">请填写数字</div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">运营状态</label>
+        <div class="layui-input-inline">
+            @if($system_config->site_status)
+                <input type="radio" name="site_status" value="1" title="开启" checked>
+                <input type="radio" name="site_status" value="0" title="关闭">
+            @else
+                <input type="radio" name="site_status" value="1" title="开启">
+                <input type="radio" name="site_status" value="0" title="关闭" checked>
+            @endif
+        </div>
+        <div class="layui-form-mid layui-word-aux">请慎重选择,否则网站无法正常访问</div>
     </div>
 
     <div class="layui-form-item">
@@ -87,21 +86,17 @@
 
 @section('script')
 <script>
-    @if(!isset($category))
-    $('input[name="status"]').val([1]);
-    $('input[name="ischannel"]').val([0]);
-    @endif
-    layui.use(['form'], function(){
-        var form = layui.form()
-            ,layer = layui.layer;
-        //自定义验证规则
-        form.verify({
-            title: function(value){
-                if(value.length < 5){
-                    return '标题至少得5个字符啊';
-                }
+layui.use(['form'], function(){
+    var form = layui.form()
+        ,layer = layui.layer;
+    //自定义验证规则
+    form.verify({
+        title: function(value){
+            if(value.length < 5){
+                return '标题至少得5个字符啊';
             }
-        });
+        }
     });
+});
 </script>
 @stop

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title')</title>
+    <title>@yield('title','后台控制面板')</title>
     <link rel="stylesheet" href="{{ asset('assets/plugs/layui/css/layui.admin.min.css') }}">
     @section('style')
 
@@ -35,7 +35,7 @@
 </div>
 @show
 <!-- 中间内容区局 -->
-<div class="layui-main" style="width: auto; margin-top: 62px">
+<div class="layui-main">
     <div class="layui-bg-black layui-side" style="position: fixed;width: 150px;">
     @section('leftmenu')
         <div class="layui-side-scroll">
@@ -56,11 +56,13 @@
                     <dd><a href="{{ url('admin/message/list') }}" class="{{ Request::getPathInfo() != '/admin/message/list' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe63a;</i> 站内通知</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item">
+
+            <li class="layui-nav-item layui-nav-itemed">
                 <a href="javascript:;"><i class="layui-icon">&#xe614;</i> 系统设置</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本信息</a></dd>
-                    <dd><a href="">邮件设置</a></dd>
+                    <dd><a href="{{ url('admin/config') }}" class="{{ Request::getPathInfo() != '/admin/config' ? '' : 'layui-this'}}"><i class="layui-icon">&#xe631;</i> 基本信息</a></dd>
+                    <dd><a href=""><i class="layui-icon">&#xe609;</i> 邮件设置</a></dd>
+                    <dd><a href=""><i class="layui-icon">&#xe63a;</i> 微信公众号</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="javascript:;"><i class="layui-icon">&#xe60b;</i> 关于系统</a></li>

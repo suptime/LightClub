@@ -75,6 +75,9 @@ Route::group(['middleware' => 'verifyIsAdmin'], function (){
     //后台首页
     Route::get('admin/index', ['uses' => 'UserController@adminIndex']);
 
+    //系统配置
+    Route::any('admin/config', ['uses' => 'ConfigController@index']);
+
     //后台帖子操作
     Route::get('admin/topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+');
     Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where(['tid' => '[0-9]+', 'operate' => '[a-z]+' ]);     //后台审核,加精,置顶操作

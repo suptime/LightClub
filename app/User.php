@@ -71,22 +71,36 @@ class User extends Model implements AuthenticatableContract,
      */
     public static function getUserLevel($grade){
         //用户等级规则
-        //0-100 LV1  100-500 LV2  500-1500 LV3  1500-3000 LV4  5000+ VL5
         switch ($grade){
-            case $grade >= 0 && $grade <= 100:
+            case $grade >= 0 && $grade < 100:
                 return 1;
                 break;
-            case $grade >= 100 && $grade <= 500:
+            case $grade >= 100 && $grade < 500:
                 return 2;
                 break;
-            case $grade >= 500 && $grade <= 1500:
+            case $grade >= 500 && $grade < 1500:
                 return 3;
                 break;
-            case $grade >= 1500 && $grade <= 3000:
+            case $grade >= 1500 && $grade < 3000:
                 return 4;
                 break;
-            case $grade >= 5000:
+            case $grade >= 5000 && $grade < 7000:
                 return 5;
+                break;
+            case $grade >= 5000 && $grade < 7000:
+                return 6;
+                break;
+            case $grade >= 7000 && $grade < 9000:
+                return 7;
+                break;
+            case $grade >= 9000 && $grade < 15000:
+                return 8;
+                break;
+            case $grade >= 15000 && $grade < 30000:
+                return 9;
+                break;
+            case $grade >= 30000:
+                return 10;
                 break;
             default:
                 return 1;

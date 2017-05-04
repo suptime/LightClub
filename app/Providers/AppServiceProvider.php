@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Category;
+use App\Config;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -26,10 +27,19 @@ class AppServiceProvider extends ServiceProvider
         $pathArr = explode('/', $request->path());
         //判断是否是admin
         if (!in_array('admin', $pathArr)){
+
+            //获取站点配置信息
+            $configs = Config::first()->toArray();
+            if ($configs['site_status'] == 0){
+                exit('网站暂停运营');
+            }
+
             //获取所有分类
             $data = Category::select('cid','catname','catdir')->where('status', '=', 1)->get()->toArray();
+
             //共享视图数据
             view()->share('navs', $data);
+            view()->share('configs', $configs);
         }
     }
 

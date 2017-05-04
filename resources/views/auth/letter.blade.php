@@ -1,7 +1,6 @@
 @extends('layout.base')
-@section('title'){{$user->name}}的个人主页@stop
-@section('keywords') 个人主页 @stop
-@section('description') 个人主页 @stop
+@section('title'){{$user->name}}私信 - {{ $configs['site_name'] }} @stop
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/plugs/layui/css/imui.css') }}">
 @stop

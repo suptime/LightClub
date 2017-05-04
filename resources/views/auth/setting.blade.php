@@ -1,7 +1,5 @@
 @extends('layout.base')
-@section('title'){{$user->name}}的个人主页@stop
-@section('keywords') 个人主页 @stop
-@section('description') 个人主页 @stop
+@section('title')个人资料设置 - {{ $configs['site_name'] }} @stop
 
 @section('left')
 <div class="topic-content">

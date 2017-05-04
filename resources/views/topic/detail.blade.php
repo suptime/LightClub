@@ -1,5 +1,5 @@
 @extends('layout.base')
-@section('title') {{ $topic['title'] }} @stop
+@section('title') {{ $topic['title'] }} - {{ $configs['site_name'] }} @stop
 @section('keywords') {{ $topic['tags'] }} @stop
 @section('description') {{str_limit(strip_tags($topic['content']), 200)}} @stop
 

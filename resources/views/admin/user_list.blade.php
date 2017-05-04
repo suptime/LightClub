@@ -40,7 +40,7 @@
                     </td>
                     <td class="text-center">{{ $row['score'] }}</td>
                     <td class="text-center">{{ $row['grade'] }}</td>
-                    <td class="text-center">1</td>
+                    <td class="text-center"><span class="user-rank-{{ $userModel->getUserLevel($row['grade']) }} publisher-level"></span></td>
                     <td class="text-center">
                         @if($row['avstar'])
                         <a href="javascript:;" class="view-avatar" data-img="{{ $row['avstar'] }}"><i class="layui-icon">&#xe64a;</i></a>

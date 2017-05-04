@@ -30,7 +30,14 @@
                 <div class="topic-info">
                     <span class="topic-person">{{ $val['name'] }}</span>
                     <span class="topic-time">{{ date('Y年m月d日', strtotime($val['created_at'])) }}</span>
-                    {{ $val['tags'] ? '<div class="topic-tags"><a href="">'.$val['tags'].'</a></div>' : ''}}
+                    <?php
+                    $tags = unserialize($val['tags']);
+                    if ($tags){
+                        foreach ($tags as $v){
+                            echo '<div class="topic-tags"><a href="javascript:;">#'.$v.'</a></div>';
+                        }
+                    }?>
+
                     <div class="topic-operation">
                         <div class="watch"><i class="kz-e-scan"></i><span>{{ $val['click'] }}</span></div>
                         <div class="reply"><i class="kz-e-comment"></i><span>{{ $val['reply_total'] }}</span></div>
