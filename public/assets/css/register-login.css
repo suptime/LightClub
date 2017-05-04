@@ -1,10 +1,10 @@
 *{padding: 0;margin: 0;list-style: none;text-decoration: none;font-family: 'Microsoft Yahei';}
-html,body{height: 100%;width: 100%;font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif;color: #555;font-size: 15px;line-height: 1.7;}
+html,body{font-family: 'Helvetica Neue',Helvetica,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',Arial,sans-serif;color: #555;font-size: 15px;line-height: 1.7;}
 input:focus{outline: none;}
 canvas{display:block;vertical-align:bottom;}
 #box{width: 100%;height: 100%;background-color: #F7FAFC;background-size: cover;background-position: 50% 50%;background-repeat: no-repeat;position: fixed;top: 0;left: 0;right: 0;bottom: 0;z-index: 1;}
-.cent-box{width: 300px;height: 440px;vertical-align: middle;white-space: normal;margin: 120px auto 0;position: relative;z-index: 9999; }
-.register-box{height: 490px;margin-top: 60px;}
+.cent-box{width: 300px;vertical-align: middle;white-space: normal;margin: 120px auto 0;position: relative;z-index: 9999;overflow: hidden}
+.register-box{margin-top: 60px;}
 .cent-box-header{text-align: center;}
 .hide{font: 0/0 a;color: transparent;text-shadow: none;background-color: transparent;border: 0;}
 .cent-box-header .main-title{width: 111px;height: 33px;margin: 0 auto;background: url('../img/logo.png') no-repeat; cursor: pointer}

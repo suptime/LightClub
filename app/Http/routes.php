@@ -81,29 +81,29 @@ Route::group(['middleware' => 'verifyIsAdmin'], function (){
     //后台帖子操作
     Route::get('admin/topic/remove/{tid}', ['uses' => 'TopicController@adminTopicRemove'])->where('tid', '[0-9]+');
     Route::get('admin/topic/examine/{tid}/{operate}', ['uses' => 'TopicController@adminTopicExamine'])->where(['tid' => '[0-9]+', 'operate' => '[a-z]+' ]);     //后台审核,加精,置顶操作
-    Route::get('admin/topic/list', ['uses' => 'TopicController@adminTopicList']);   //后台帖子列表
+    Route::get('admin/topic', ['uses' => 'TopicController@adminTopicList']);   //后台帖子列表
 
     //后台分类操作
-    Route::get('admin/category/list', ['uses' => 'CategoryController@index']);
+    Route::get('admin/category', ['uses' => 'CategoryController@index']);
     Route::any('admin/category/add', ['uses' => 'CategoryController@add']);
     Route::any('admin/category/update/{cid}', ['uses' => 'CategoryController@update'])->where('cid', '[0-9]+');
     Route::get('admin/category/remove/{cid}', ['uses' => 'CategoryController@remove'])->where('cid', '[0-9]+');
 
     //后台系统消息管理
     Route::any('admin/message/add', ['uses' => 'MessageMainController@add']);
-    Route::any('admin/message/list', ['uses' => 'MessageMainController@index']);
+    Route::any('admin/message', ['uses' => 'MessageMainController@index']);
     Route::any('admin/message/remove/{id}', ['uses' => 'MessageMainController@adminMessageDelete'])->where('cid', '[0-9]+');
 
     //后台回帖管理
-    Route::get('admin/comments/list',['uses' => 'CommentController@adminCommentList']);
+    Route::get('admin/comments',['uses' => 'CommentController@adminCommentList']);
     Route::get('admin/comments/remove/{id}',['uses' => 'CommentController@remove'])->where('cid', '[0-9]+');
     Route::get('admin/comments/show/{id}',['uses' => 'CommentController@adminShow'])->where('cid', '[0-9]+');
 
     //后台收藏夹管理
-    Route::get('admin/collections/list',['uses' => 'CollectionController@adminCollectionList']);
+    Route::get('admin/collections',['uses' => 'CollectionController@adminCollectionList']);
     Route::get('admin/collections/remove/{id}', ['uses' => 'CollectionController@removeCollectionData'])->where(['tid'=>'[0-9]+']);
 
     //后台用户管理
-    Route::get('admin/users/list', ['uses' => 'UserController@adminUserList']);
+    Route::get('admin/users', ['uses' => 'UserController@adminUserList']);
     Route::any('admin/users/edit/{uid}', ['uses' => 'UserController@editOneUserInfo'])->where(['tid'=>'[0-9]+']);
 });

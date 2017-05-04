@@ -56,7 +56,7 @@
 </div>
 
 <div class="footer">
-    <p>&copy; 2017 豆萌社区</p>
+    <p>{!! $configs['copyright'] !!}</p>
 </div>
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/particles.min.js') }}"></script>
