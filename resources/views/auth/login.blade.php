@@ -42,13 +42,14 @@
             </div>
         </div>
         <div class="button"><button type="submit" class="login-btn register-btn" id="button">登录</button></div>
-        </form>
+
 
         <div class="remember clearfix">
             <label class="remember-me"><span class="icon"><span class="zt"></span></span>
                 <input type="checkbox" name="remember-me" id="remember-me" class="remember-mecheck" checked>记住我</label>
-            <label class="forgot-password"><a href="#">忘记密码？</a></label>
+            <span class="forgot-password"><a href="#">忘记密码？</a></span>
         </div>
+        </form>
     </div>
 </div>
 
