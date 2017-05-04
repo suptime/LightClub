@@ -26,8 +26,9 @@
                         {{$errors->first('content')}}
                         <textarea class="tinyce-editor" name="content" id="editor-content" style="display: none;">{{$topic->content}}</textarea>
                     </div>
-
-                    <input type="hidden" id="tags" name="tags" value="" />
+                    <div class="editor-tags">
+                        <input type="text" name="tags" placeholder="标签: (非必填) 以英文空格隔开,最多3个,每个最多8个字" id="tags" value="{{$topic->tags}}">
+                    </div>
                     <button class="editor-pub-button" type="submit"><i class="k-i-edit"></i><span class="pub-text"> 立即修改 </span></button>
                 </form>
             </div>

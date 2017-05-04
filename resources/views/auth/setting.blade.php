@@ -101,40 +101,31 @@
     {{--会员资料卡--}}
     @include('layout.user_info')
 @stop
-@section('footer')
-<div class="footer content">
-    <span>© 2017 豆萌社区</span>
-    <a href="" target="_blank">注册协议</a> |
-    <a href="" target="_blank">关于我们</a> |
-    <a class="ueg_feedback-link" href="" target="_blank">意见反馈</a> |
-    <a href="" target="_blank">网络谣言警示</a>
-</div>
-<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.js"></script>
-<script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
-<script>
-layui.use(['form'], function(){
-    var form = layui.form();
-    form.verify({
-        oldpass: [/^[\S]{6,18}$/,'密码必须6到18位，且不能出现空格'],
-        qq: [/^[\S]{5,10}$/,'QQ号码只能是5-10位数字'],
-        repass:function (value) {
-            var newPass = $('input[name=password]').val();
-            if (value != newPass) {
-                return '确认密码与新密码不一致';
-            }
-        }
-    });
-});
-layui.use('upload', function(){
-    layui.upload({
-        url: "{{ url('attachment/upload') }}",
-        ext: 'jpg|png|gif',
-        success: function(data){
-            $('#avstar').val(data.data.src);
-            $('#show-avstar').prop('src', data.data.src);
-        }
-    });
-});
-</script>
-@stop
+
+@section('script')
+    <script>
+        layui.use(['form'], function(){
+            var form = layui.form();
+            form.verify({
+                oldpass: [/^[\S]{6,18}$/,'密码必须6到18位，且不能出现空格'],
+                qq: [/^[\S]{5,10}$/,'QQ号码只能是5-10位数字'],
+                repass:function (value) {
+                    var newPass = $('input[name=password]').val();
+                    if (value != newPass) {
+                        return '确认密码与新密码不一致';
+                    }
+                }
+            });
+        });
+        layui.use('upload', function(){
+            layui.upload({
+                url: "{{ url('attachment/upload') }}",
+                ext: 'jpg|png|gif',
+                success: function(data){
+                    $('#avstar').val(data.data.src);
+                    $('#show-avstar').prop('src', data.data.src);
+                }
+            });
+        });
+    </script>
+    @stop

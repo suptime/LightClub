@@ -19,12 +19,11 @@
             <div class="topic-detail-info">
                 <span>{{ $topic['name'] }} 发表于</span>
                 <span>{{ date('Y年m月d日 H:i:s', strtotime($topic['created_at'])) }}</span>
-                {{--{{ dd(Auth::user()) }}--}}
+                <span class="topic-tag">{!! $topic['tags'] !!}</span>
                 <span>
                 @if( $topic['uid'] == $currentUser['uid'] || $currentUser['isadmin'] )<a href="{{url('topic/update/'.$topic['tid'])}}" class="update-topic">编辑本帖</a>
-                @endif
+                    @endif
                 </span>
-                <span class="topic-tag">{{ $topic['tags'] }}</span>
                 <div class="topic-watch">
                     <i class="kz-e-scan"></i><span>{{ $topic['click'] }}</span>
                 </div>
@@ -177,6 +176,7 @@ $(function () {
         var num = span.text() || 0;
         var comid = This.attr('data-sid');
         var type = This.attr('data-type');
+        @if($currentUser['uid'])
         $.post("{{url('comment/upvote')}}",{commentid:comid,type:type,num:num},function (data) {
             if (data.status == 1) {
                 layer.msg(data.msg);
@@ -185,13 +185,17 @@ $(function () {
             }else {
                 layer.msg(data.msg);
             }
-        },'json')
+        },'json');
+        @else
+            layer.msg('请登录后点赞');
+        @endif
     });
 
     //添加删除收藏
     $('#change-favorite').on('click', function () {
         var icon = $(this).find('i');
         var ispan = $(this).find('span');
+        @if($currentUser['uid'])
         $.post("{{ url('collection/change') }}",{tid:"{{ $topic['tid'] }}"},function (data) {
             if (data.status){
                 if (data.type == 'add') {
@@ -208,6 +212,9 @@ $(function () {
                 layer.msg(data.msg);
             }
         },'json');
+        @else
+            layer.msg('请登录后再收藏');
+        @endif
     })
 })
 </script>

@@ -118,11 +118,20 @@ class TopicController extends Controller
             //验证数据
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
 
-            //获取数据
-            $this->model->title = $request->title;
-            $this->model->cid = $request->cid;
+            //获取基本数据
             $this->model->uid = $this->_uid;
+            $this->model->title = trim($request->title);
+            $this->model->cid = $request->cid;
 
+            //验证用户输入的标签合法性
+            $tags = $this->model->verifyTags(trim($request->tags));
+            if ($tags){
+                $this->model->tags = $tags;
+            }else{
+                return redirect()->back()->with('error', '单个标签最多8个字,标签个数最多3个,标签以空格隔开');
+            }
+
+            //获取正文内容
             $content = $request->input('content');
 
             //判断是否为图文贴
@@ -173,13 +182,30 @@ class TopicController extends Controller
             return redirect('topic/' . $tid)->with('error', '对不起,您无权限编辑此贴');
         }
 
-        //判断请求类型
+        //转换标签
+        if ($topic->tags) {
+            $topic->tags = unserialize($topic->tags);
+            $topic->tags = implode(' ', $topic->tags);
+        }
+
+        //开始修改数据判断请求类型
         if ($request->isMethod('POST')) {
             //验证数据合法性
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
             //准备模型数据
             $topic->title = $request->title;
             $topic->cid = $request->cid;
+
+            //验证用户输入的标签合法性
+            $tags = $this->model->verifyTags(trim($request->tags));
+
+            //如果标签验证合法就赋值,否则跳转并提示错误
+            if ($tags){
+                $topic->tags = $tags;
+            }else{
+                return redirect()->back()->with('error', '单个标签最多8个字,标签个数最多3个,标签以空格隔开');
+            }
+
             //获取修改后的内容
             $content = $request->input('content');
             //判断是否为图文贴
@@ -221,6 +247,19 @@ class TopicController extends Controller
     {
         //查询详情数据
         $topic = $this->model->getOnceTopic($tid);
+
+        //转换标签
+        if ($topic['tags']) {
+            $topic['tags'] = unserialize($topic['tags']);
+
+            //循环出来标签
+            $tags = '';
+            foreach ($topic['tags'] as $v){
+                $tags .= ' #'.$v;
+            }
+            $topic['tags'] = $tags;
+        }
+
         //获取主题帖内容
         $topic['content'] = DB::table('topic_details')->where('tid', $tid)->value('content');
 

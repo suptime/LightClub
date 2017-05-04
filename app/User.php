@@ -142,4 +142,5 @@ class User extends Model implements AuthenticatableContract,
         //分享数据到所有视图
         view()->share('msgStatus', ['hasMsg' => $hasMsg, 'hasLetter' => $hasLetter]);
     }
+
 }

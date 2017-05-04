@@ -3,7 +3,7 @@
 @section('content')
 @include('layout.message')
 <div class="mbnav">
-    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>分类列表</cite></a></span>
+    <span class="layui-breadcrumb"><a href="{{ url('admin/index') }}">首页</a> <a><cite>分类列表</cite></a></span>
 </div>
 
 <div style="">

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="mbnav">
-    <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>消息 / 通知 / 私信列表</cite></a></span>
+    <span class="layui-breadcrumb"><a href="{{ url('admin/index') }}">首页</a> <a><cite>消息 / 通知 / 私信列表</cite></a></span>
 </div>
 
 @include('layout.message')

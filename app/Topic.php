@@ -12,7 +12,7 @@ class Topic extends Model
 
     protected $primaryKey = 'tid';
 
-    protected $fillable = ['title', 'content', 'tags',];
+    protected $fillable = ['title', 'content', 'tags'];
 
     public $timestamps = true;
 
@@ -44,6 +44,35 @@ class Topic extends Model
         return $value;
     }
 
+    /**
+     * 验证用户输入的标签是否合法
+     * @param $tags
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function verifyTags($tags){
+        //如果标签为空,删除tags属性
+        $tagStr = str_replace(' ', '', $tags);
+        if (!$tagStr){
+            unset($this->model->tags);
+        }
+
+        //格式化标签,以|分割标签保存到数据表中
+        $tags = explode(' ', $tags);
+
+        //验证标签填写个数是否合法
+        if (count($tags) > 3){
+            return false;
+        }
+
+        //判断单个标签长度
+        foreach ($tags as $v){
+            if (strlen($v) > 26){
+                return false;
+            }
+        }
+
+        return serialize($tags);
+    }
 
     /**
      * 列表页获取主题信息

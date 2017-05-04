@@ -1,7 +1,7 @@
 @extends('admin.common_admin')
 @section('content')
     <div class="mbnav">
-        <span class="layui-breadcrumb"><a href="{{ url('admin') }}">首页</a> <a><cite>帖子列表</cite></a></span>
+        <span class="layui-breadcrumb"><a href="{{ url('admin/index') }}">首页</a> <a><cite>帖子列表</cite></a></span>
     </div>
 
     @include('layout.message')

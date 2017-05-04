@@ -37,7 +37,14 @@
                 <div class="topic-info">
                     <span class="topic-person">{{ $row['name'] }}</span>
                     <span class="topic-time">{{ date('m月d日', strtotime($row['created_at'])) }}</span>
-                    <div class="topic-tags"><a href="">#二手交易</a></div>
+                    <div class="topic-tags">
+                        <?php  $tags = unserialize($row['tags']);
+                        if ($tags){
+                            foreach ($tags as $val){
+                                echo '<a href="javascript:;">#'.$val.'</a>';
+                            }
+                        }?>
+                    </div>
                     <div class="topic-operation">
                         <div class="watch"><i class="kz-e-scan"></i><span>{{$row['click']}}</span></div>
                         <div class="reply"><i class="kz-e-comment"></i><span>{{ $row['reply_total'] }}</span></div>

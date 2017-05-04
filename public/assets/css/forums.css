@@ -78,7 +78,7 @@
 .topic-person {color: #8c8c8c;float: left;padding-right: 10px}
 .topic-time {color: #b5b5b5;padding: 0 10px;float: left;border-left: 1px solid #e3e3e3}
 .topic-info div {display: inline-block}
-.topic-tags a {color: #a5a5a5;margin-right: 9px; padding: 2px 5px; border-radius: 3px;}
+.topic-tags a {color: #a5a5a5; padding: 0 3px;}
 .topic-operation {color: #b5b5b5;float: right}
 .topic-operation span {vertical-align: middle}
 .topic-operation i {color: #e3e3e3; padding-right: 4px;font-size: 14px}
@@ -104,6 +104,7 @@
 .editor-content{ padding:0 20px;}
 .editor-content input, .editor-content .tinyce-editor {font-family: microsoft yahei; width: 98.3%;height: 38px;padding-left: 10px; margin-bottom:14px;outline: 0;background: #fff;border: 1px solid #d2d2d2;border-radius: 3px;resize: none}
 .editor-content input{ text-indent: 100px;}
+.editor-main .editor-tags input{ text-indent: 0; margin: 14px 0 0;}
 
 .put-select{ position: relative}
 #form-category{position: absolute; left: 1px; top: 1px; width: 100px; height: 38px; text-align: center; font-size: 15px;z-index: 200;background: #fff;}

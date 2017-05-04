@@ -207,4 +207,12 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
+
+
+    /**
+     * 网站后台首页
+     */
+    public function adminIndex(){
+        return view('admin.index');
+    }
 }

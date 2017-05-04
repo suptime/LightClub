@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class VerifyLogin
 {
+    public $excludePath = [
+        'attachment/upload',
+    ];
     /**
      * Handle an incoming request.
      *
@@ -21,8 +24,7 @@ class VerifyLogin
         //全局验证用户是否登录
         if (!Auth::check()) {
             //获取当前页面的路由规则
-            $name = $request->path();
-            if ($name == 'attachment/upload'){
+            if (in_array($request->path(), $this->excludePath)){
                 return response()->json([
                     'code' => 1,
                     'msg' => '请登录后再使用此功能',

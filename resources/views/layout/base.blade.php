@@ -27,6 +27,9 @@
             <a class="cut-off">|</a>
             <a href="{{url('user/register')}}">注册</a>
             @else
+                @if(Auth::user()->isadmin == 1)
+                <a href="{{ url('admin/index') }}" class="header-im-show" style="font-size: 12px">后台管理</a>
+                @endif
             <a href="{{ url('user/letters') }}" class="header-im-show" title="我的私信">
                 <i class="kz-e-envelope"></i>
                 @if($msgStatus['hasLetter'])
@@ -119,15 +122,16 @@
                                 @endforeach
                             </div>
                         </div>
-                        <input class="topic-title-input" type="text" name="title" placeholder="填写将要发布的主题标题" />
+                        <input class="topic-title-input" type="text" name="title" placeholder="填写将要发布的帖子主题" required />
                         {{$errors->first('cid')}} {{$errors->first('title')}}
                     </div>
                     <div class="editor-pub-content">
                         {{$errors->first('content')}}
                         <textarea class="tinyce-editor" name="content" id="editor-content" style="display: none;"></textarea>
                     </div>
-
-                    <input type="hidden" id="tags" name="tags" value="" />
+                    <div class="editor-tags">
+                        <input type="text" name="tags" placeholder="标签: (非必填) 以英文空格隔开,最多3个,每个最多8个字" id="tags">
+                    </div>
                     <button class="editor-pub-button" type="submit"><i class="k-i-edit"></i><span class="pub-text">发表新话题</span></button>
                 </form>
             </div>
@@ -147,17 +151,11 @@
 <!--forumContent e-->
 
 @section('footer')
-<div class="footer content">
-    <span>© 2017 豆萌社区</span>
-    <a href="" target="_blank">注册协议</a> |
-    <a href="" target="_blank">关于我们</a> |
-    <a class="ueg_feedback-link" href="" target="_blank">意见反馈</a> |
-    <a href="" target="_blank">网络谣言警示</a>
-</div>
+<div class="footer content">© 2017 豆萌社区</div>
 <script type="text/javascript" src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/plugs/layui/layui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/common.js') }}"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
 $('.serach-btn').click(function () {
     var keyword = $('#topic-search').val();
     if (keyword == '' || keyword.length < 2){
@@ -166,7 +164,7 @@ $('.serach-btn').click(function () {
     }
     window.location = '{{ url('search') }}/'+keyword;
 });
-    </script>
+</script>
 @show
 @section('script')
 @show
