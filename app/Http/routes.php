@@ -33,6 +33,9 @@ Route::get('topic/add', ['uses' => 'TopicController@add']);
 //帖子详情页
 Route::get('topic/{tid}', ['uses' => 'TopicController@detail'])->where('tid', '[0-9]+');
 
+Route::get('auth/geetest','ConfigController@getGeetest');
+
+
 //需要验证用户登录后操作的路由
 Route::group(['middleware' => 'verifyLogin'], function () {
 

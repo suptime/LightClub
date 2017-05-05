@@ -115,7 +115,7 @@ class TopicController extends Controller
     {
         //判断请求类型
         if ($request->isMethod('POST')) {
-            //验证数据
+            $this->validateGeeTest($request);
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
 
             //获取基本数据
@@ -163,7 +163,19 @@ class TopicController extends Controller
         return view('topic.add');
     }
 
-
+    /**
+     * 验证极验证验证码
+     * @param $request
+     */
+    private function validateGeeTest($request){
+        $capcha = session()->get('challenge');
+        //验证数据
+        $this->validate($request, [
+            'geetest_challenge' => 'required|regex:/'.$capcha.'.*/',
+        ], [
+            'regex'=> config('geetest.server_fail_alert'),
+        ]);
+    }
     /**
      * 用户编辑主题帖
      * @param Request $request
@@ -190,6 +202,7 @@ class TopicController extends Controller
 
         //开始修改数据判断请求类型
         if ($request->isMethod('POST')) {
+            $this->validateGeeTest($request);
             //验证数据合法性
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
             //准备模型数据

@@ -36,6 +36,10 @@ class VerifyLogin
             return redirect('user/login');
         }
 
+        $thisUser = User::getOnceUser();
+        if ($thisUser->status == 0){
+            return redirect('user/active');
+        }
         //分配消息状态变量
         User::getMsgStatus();
         //判断是否有未读私信

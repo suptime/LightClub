@@ -245,6 +245,8 @@ i.k-i-like-o{color: #ff6c45}
 .del-msg{ color: #aaa; font-size: 18px;}
 .del-msg:hover{ color: #f60}
 
-
+.geetest_holder.geetest_wind{ width: 100%!important;}
+.geetest_holder.geetest_wind .geetest_btn{ margin-top: 14px;}
+.geetest_holder.geetest_wind .geetest_radar_btn{ background: #fff!important;}
 
 

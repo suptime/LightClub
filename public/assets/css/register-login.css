@@ -6,7 +6,7 @@ canvas{display:block;vertical-align:bottom;}
 .cent-box{width: 300px;vertical-align: middle;white-space: normal;margin: 120px auto 0;position: relative;z-index: 9999;overflow: hidden}
 .register-box{margin-top: 60px;}
 .cent-box-header{text-align: center;}
-.hide{font: 0/0 a;color: transparent;text-shadow: none;background-color: transparent;border: 0;}
+.hidelis{font: 0/0 a;color: transparent;text-shadow: none;background-color: transparent;border: 0;}
 .cent-box-header .main-title{width: 111px;height: 33px;margin: 0 auto;background: url('../img/logo.png') no-repeat; cursor: pointer}
 .cent-box-header .sub-title{margin: 30px 0 20px;font-weight: 400;font-size: 15px;line-height: 1;}
 .clearfix:before{content: '';display: table;}
@@ -40,3 +40,6 @@ canvas{display:block;vertical-align:bottom;}
 label.error {position: absolute;top: 0;right: 8px; padding: 0 8px; line-height: 43px; color: #c33; cursor: text; visibility: hidden; opacity: 0; -ms-filter: "alpha(Opacity=0)"; -webkit-transform: translate(20px,0); -ms-transform: translate(20px,0); transform: translate(20px,0); -webkit-transition: .25s ease-out; transition: .25s ease-out;
 }
 label.error.is-visible { visibility: visible; opacity: 1; -ms-filter: "alpha(Opacity=100)"; -webkit-transform: translate(0,0); -ms-transform: translate(0,0);  transform: translate(0,0);}
+.geetest_holder.geetest_wind .geetest_btn{ margin-top: 2px;}
+.geetest_holder.geetest_wind .geetest_radar_btn{ background: #fff!important;}
+.geetest_holder.geetest_wind .geetest_logo, .geetest_holder.geetest_wind .geetest_success_logo{ display: none!important;}

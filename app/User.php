@@ -157,4 +157,8 @@ class User extends Model implements AuthenticatableContract,
         view()->share('msgStatus', ['hasMsg' => $hasMsg, 'hasLetter' => $hasLetter]);
     }
 
+
+    public static function getOnceUser(){
+        return self::find(Auth::id());
+    }
 }

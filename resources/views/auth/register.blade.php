@@ -11,7 +11,7 @@
 <div id="box"></div>
 <div class="cent-box register-box">
     <div class="cent-box-header">
-        <h1 class="main-title hide" onclick="window.open('{{ url('/') }}', '_self')">SimpleBBS</h1>
+        <h1 class="main-title hidelis" onclick="window.open('{{ url('/') }}', '_self')"></h1>
         <h2 class="sub-title">生活热爱分享 - I have a dream</h2>
     </div>
 
@@ -44,10 +44,10 @@
                     <div class="group-ipt password"><input type="password" id="repassword" name="repassword" lay-verify="required" class="ipt input-border" placeholder="确认密码" required>
                         <label class="error is-visible">{{ $errors->first('repassword') }}</label>
                     </div>
-                    <div class="group-ipt verify"><input type="text" id="verify" name="verify" class="ipt input-border" placeholder="输入验证码"><img src="{{ url('assets/img/captcha.gif') }}" class="imgcode">
-                    </div>
                 </div>
             </div>
+            {{ $errors->first('geetest_challenge') }}
+            {!! Geetest::render() !!}
             <div class="button">
                 <button type="submit" class="login-btn register-btn" id="button">新用户注册</button>
             </div>

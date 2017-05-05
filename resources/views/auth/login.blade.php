@@ -11,7 +11,7 @@
 <div id="box"></div>
 <div class="cent-box">
     <div class="cent-box-header">
-        <h1 class="main-title hide" onclick="window.open('{{ url('/') }}', '_self')">SimpleBBS</h1>
+        <h1 class="main-title hidelis" onclick="window.open('{{ url('/') }}', '_self')">SimpleBBS</h1>
         <h2 class="sub-title">生活热爱分享 - I have a dream</h2>
     </div>
 
@@ -36,13 +36,16 @@
                     <input type="password" id="password" name="password" lay-verify="required" class="ipt input-border" placeholder="登录密码" required>
                     <label class="error is-visible">{{ $errors->first('password') ? '密码不正确' : '' }}</label>
                 </div>
-                <div class="group-ipt verify">
-                    <input type="text" id="verify" name="verify" class="ipt input-border" placeholder="输入验证码"><img src="{{ url('assets/img/captcha.gif') }}" class="imgcode">
-                </div>
+                {{--<div class="group-ipt verify">--}}
+                    {{--<input type="text" id="verify" name="verify" class="ipt input-border" placeholder="输入验证码"><img src="{{ url('assets/img/captcha.gif') }}" class="imgcode">--}}
+                    {{----}}
+                {{--</div>--}}
             </div>
         </div>
-        <div class="button"><button type="submit" class="login-btn register-btn" id="button">登录</button></div>
+        {{ $errors->first('geetest_challenge') }}
+        {!! Geetest::render() !!}
 
+        <div class="button"><button type="submit" class="login-btn register-btn" id="button">登录</button></div>
 
         <div class="remember clearfix">
             <label class="remember-me"><span class="icon"><span class="zt"></span></span>

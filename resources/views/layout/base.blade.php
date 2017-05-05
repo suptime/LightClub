@@ -110,6 +110,14 @@
         <div class="editor-main">
             <div class="box-title">发布话题</div>
             <div class="editor-content">
+                @if(count($errors))
+                    @foreach($errors->all() as $error)
+                        <div class="content message-tips">
+                            <div class="Huialert Huialert-danger"><span class="icon-remove">×</span>{{ $error }}</div>
+                        </div>
+                    @endforeach
+                @endif
+
                 <form action="{{ url('topic/add') }}" method="post">
                     {{ csrf_field() }}
                     <div class="put-select">
@@ -123,15 +131,14 @@
                             </div>
                         </div>
                         <input class="topic-title-input" type="text" name="title" placeholder="填写将要发布的帖子主题" required />
-                        {{$errors->first('cid')}} {{$errors->first('title')}}
                     </div>
                     <div class="editor-pub-content">
-                        {{$errors->first('content')}}
                         <textarea class="tinyce-editor" name="content" id="editor-content" style="display: none;"></textarea>
                     </div>
                     <div class="editor-tags">
                         <input type="text" name="tags" placeholder="标签: (非必填) 以英文空格隔开,最多3个,每个最多8个字" id="tags">
                     </div>
+                    {!! Geetest::render() !!}
                     <button class="editor-pub-button" type="submit"><i class="k-i-edit"></i><span class="pub-text">发表新话题</span></button>
                 </form>
             </div>
