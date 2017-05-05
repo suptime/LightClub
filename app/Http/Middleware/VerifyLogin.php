@@ -36,10 +36,13 @@ class VerifyLogin
             return redirect('user/login');
         }
 
-        $thisUser = User::getOnceUser();
-        if ($thisUser->status == 0){
-            return redirect('user/active');
+        //如果用户未激活,跳转到激活页面
+        if (Auth::user()->status == 0){
+            if ($request->path() != 'user/activation'){
+                return redirect('user/activation');
+            }
         }
+
         //分配消息状态变量
         User::getMsgStatus();
         //判断是否有未读私信

@@ -89,8 +89,7 @@ class AuthController extends Controller
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'password' => bcrypt($data['password']),
-            'repassword' => bcrypt($data['repassword']),
-            'active_token' => str_random(32),
+            'repassword' => bcrypt($data['repassword'])
         ]);
     }
 }

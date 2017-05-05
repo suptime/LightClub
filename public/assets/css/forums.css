@@ -249,4 +249,10 @@ i.k-i-like-o{color: #ff6c45}
 .geetest_holder.geetest_wind .geetest_btn{ margin-top: 14px;}
 .geetest_holder.geetest_wind .geetest_radar_btn{ background: #fff!important;}
 
+.active-main{ padding:80px 100px 0; font-size: 15px; text-align: center; line-height: 40px;}
+.active-main p span{ color: #f60;}
+.active-main p.tips{ color: #00aa00}
+.active-main .active-mail{ color: #fff; margin: 50px auto;}
+.active-main .active-mail.layui-btn-disabled{ color: #aaa;}
+
 

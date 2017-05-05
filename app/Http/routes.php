@@ -27,14 +27,14 @@ Route::get('space/{uid}', ['uses' => 'UserController@userSpace'])->where('uid', 
 //用户个人收藏
 Route::get('reply/{uid}', ['uses' => 'UserController@userReply'])->where('uid', '[0-9]+');
 
-//添加帖子独立表单页
-Route::get('topic/add', ['uses' => 'TopicController@add']);
-
 //帖子详情页
 Route::get('topic/{tid}', ['uses' => 'TopicController@detail'])->where('tid', '[0-9]+');
 
+//验证码
 Route::get('auth/geetest','ConfigController@getGeetest');
 
+//激活地址
+Route::get('user/active', ['uses' => 'UserController@activeUserAccountOfToken']);
 
 //需要验证用户登录后操作的路由
 Route::group(['middleware' => 'verifyLogin'], function () {
@@ -44,6 +44,7 @@ Route::group(['middleware' => 'verifyLogin'], function () {
 
     //个人资料设置
     Route::any('user/setting', ['uses' => 'UserController@userInfoSetting']);
+    Route::any('user/activation', ['uses' => 'UserController@activationAccount']);
 
     //系统消息
     Route::get('user/notice', ['uses' => 'UserController@systemMessages']);
@@ -70,6 +71,9 @@ Route::group(['middleware' => 'verifyLogin'], function () {
     Route::any('comment/add', ['uses' => 'CommentController@addReply']);
     Route::get('comment/remove/{id}', ['uses' => 'CommentController@remove'])->where('id', '[0-9]+');   //删除回帖
     Route::post('comment/upvote', ['uses' => 'CommentController@upvote']);  //点赞
+
+    //添加帖子独立表单页
+    Route::get('topic/add', ['uses' => 'TopicController@add']);
 });
 
 //后台路由控制

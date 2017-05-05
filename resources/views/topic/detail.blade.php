@@ -127,12 +127,21 @@
 <div class="editor-main">
     <div class="box-title">发表回复<a name="comment"></a></div>
     <div class="editor-content">
+        @if(count($errors))
+            @foreach($errors->all() as $error)
+                <div class="content message-tips">
+                    <div class="Huialert Huialert-danger"><span class="icon-remove">×</span>{{ $error }}</div>
+                </div>
+            @endforeach
+        @endif
         <form action="{{url('comment/add')}}" method="post">
             {{ csrf_field() }}
-            @if(count($errors))@foreach($errors->all() as $error){{ $error }}; @endforeach @endif
             <div class="editor-pub-content">
                 <input type="hidden" name="tid" value="{{$topic['tid']}}" />
                 <textarea class="tinyce-editor" name="comment" id="editor-content"></textarea>
+            </div>
+            <div id="geetest_div">
+                {!! Geetest::render() !!}
             </div>
             <button class="editor-pub-button" type="submit" id="send-editor-content"><i class="k-i-edit"></i><span class="pub-text">发表回复</span></button>
         </form>
@@ -165,7 +174,7 @@
     @include('topic.side')
 @parent
 @stop
-
+<style>.reply-editor .geetest_holder.geetest_wind:nth-of-type(1){display: none;}</style>
 @section('script')
 <script>
 $(function () {
@@ -216,6 +225,6 @@ $(function () {
             layer.msg('请登录后再收藏');
         @endif
     })
-})
+});
 </script>
 @stop

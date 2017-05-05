@@ -71,8 +71,9 @@ $(function () {
         var comid = place.attr('data-comid');
         var sendUrl = $('.editor-main form').prop('action');
         var _token = $('.editor-main input[name=_token]').val();
+        var geetest = $('#geetest_div').html();
 
-        var str = '<div class="editor-content" style="padding: 20px 0 0;"><form action="' + sendUrl + '" method="post"><input type="hidden" name="_token" value="' + _token + '"><div class="editor-pub-content"><input type="hidden" name="tid" value="' + tid + '" /><input type="hidden" class="usid" name="at_uid" value="' + usid + '" /><input type="hidden" class="comid" name="pid" value="' + comid + '" /><textarea class="tinyce-editor" name="comment" id="editor-content-' + comid + '">' + username + '</textarea></div><button class="editor-pub-button" type="submit" id="send-editor-content"><i class="k-i-edit"></i><span class="pub-text">发表回复</span></button></form></div>';
+        var str = '<div class="editor-content" style="padding: 20px 0 0;"><form action="' + sendUrl + '" method="post"><input type="hidden" name="_token" value="' + _token + '"><div class="editor-pub-content"><input type="hidden" name="tid" value="' + tid + '" /><input type="hidden" class="usid" name="at_uid" value="' + usid + '" /><input type="hidden" class="comid" name="pid" value="' + comid + '" /><textarea class="tinyce-editor" name="comment" id="editor-content-' + comid + '">' + username + '</textarea></div>'+geetest+'<button class="editor-pub-button" type="submit" id="send-editor-content"><i class="k-i-edit"></i><span class="pub-text">发表回复</span></button></form></div>';
 
         if (openVal == 'off') {
             $('.reply-editor').empty();

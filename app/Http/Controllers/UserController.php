@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Http\Controllers\Controller;
+use Mail;
 
 class UserController extends Controller
 {
@@ -216,5 +217,71 @@ class UserController extends Controller
      */
     public function adminIndex(){
         return view('admin.index');
+    }
+
+    /**
+     * 发送激活邮件页面
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    public function activationAccount(Request $request){
+        //获取登录用户的信息
+        $user = $request->user();
+        //判断用户是否已激活,已激活不允许访问此页面
+        if ($user->status != 0) {
+            return redirect('/');
+        }
+
+        //ajax请求发送邮件
+        if ($request->ajax()) {
+            //生成一个激活active_token并保存到数据库
+            $active_token = str_random(64);
+            User::where('uid',$user->uid)->update(['active_token' => $active_token]);
+            //生成激活地址
+            $url = url('user/active/?active_token='.$active_token.'&email='.$user->email.'&name='.$user->name);
+            //发送邮件
+            $result = Mail::send('auth.mail_tmp',[
+                'sitename' => '豆萌社区',
+                'url' => $url,
+            ], function ($message) use ($user){
+                $message->from('ucasp@qq.com', '豆萌社区');
+                $message->to($user->email);
+                $message->subject('用户账号激活邮件');
+            });
+
+            //判断邮件发送结果
+            if ($result){
+                $status = 'success';
+            }else{
+                $status = 'fail';
+            }
+            return response()->json([$status]);
+        }
+
+        return view('auth.activation',[
+            'user' => $user,
+        ]);
+    }
+
+
+    public function activeUserAccountOfToken(Request $request){
+        //根据接收到的参数查询数据
+        $active_token = $request->active_token;
+        $email = $request->email;
+        $name = $request->name;
+
+        //根据条件查询一条数据
+        $user = User::whereRaw('active_token = ? and status = ? and email = ? and name = ?',[$active_token, 0, $email, $name])->first();
+        if ($user) {
+            //存在数据,更改数据并载入视图.
+            $user->update(['status' => 1]);
+
+            //载入视图
+            return view('auth.activation',[
+                'user' => $user,
+            ]);
+        }else{
+            return redirect('/')->with('');
+        }
     }
 }

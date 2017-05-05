@@ -158,6 +158,7 @@ class Topic extends Model
         $data =  $this->join('categories', 'topics.cid', '=', 'categories.cid')
             ->join('users', 'topics.uid', '=', 'users.uid')
             ->select('topics.*', 'categories.catname', 'categories.catdir', 'users.name', 'users.avstar', 'users.isadmin')
+            ->where('users.status','=',1)
             ->find($tid);
 
         //是否存在数据

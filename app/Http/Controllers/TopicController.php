@@ -263,6 +263,12 @@ class TopicController extends Controller
             return abort(404);
         }
 
+        //获取发布者的用户信息
+        $user = User::getVisitUserInfo($topic['uid']);
+        if (!$user) {
+            return redirect('/')->with('error','帖子发布用户账号异常');
+        }
+
         //转换标签
         if ($topic['tags']) {
             $topic['tags'] = unserialize($topic['tags']);
@@ -282,9 +288,6 @@ class TopicController extends Controller
         if ($topic['isshow'] != 1 || $topic['islook'] != 1) {
             return redirect('/')->with('error', '当前帖子无法查看');
         }
-
-        //获取发布者的用户信息
-        $user = User::getVisitUserInfo($topic['uid']);
 
         //获取当前登录用户的判断信息
         if ($this->_uid) {
