@@ -46,6 +46,7 @@ class Collection extends Model
      * @return mixed
      */
     public static function deletCollection($tid, $uid=''){
+		//用户是否存在,存在就查询并删除
         if ($uid){
             $data = Collection::whereRaw('tid = ? AND uid = ?',[$tid, $uid])->first();
         }else{
