@@ -1,7 +1,8 @@
 /* CSS Document */
 .top{position: relative;background-color: #3a9bf5;}
 .mini-bar{height: 30px; line-height: 30px; margin: 0 auto}
-.mini-bar a{font-size: 14px; float: left; color: #fff;}
+.mini-bar a{font-size: 14px; float: left;height: 30px; line-height: 30px; color: #fff;}
+.mini-bar i{height: 30px; line-height: 30px; color: #fff;}
 .right-user { float: right; font-size: 12px;}
 .right-user a { color: #fff; position: relative; }
 .right-user .cut-off{ margin: 0 10px; }

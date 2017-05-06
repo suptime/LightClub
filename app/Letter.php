@@ -18,11 +18,17 @@ class Letter extends Model
      * @return array
      */
     public static function getLettersList($uid){
-        $data = self::where('receive_uid','=', $uid)->orderBy('created_at')->lists('send_uid')->toArray();
-
-        $sendUserIds = array_unique($data);
+        $data = self::where('receive_uid','=', $uid)->orWhere('send_uid', '=', $uid)->orderBy('created_at')->lists('send_uid','receive_uid')->toArray();
+        $data = array_merge(array_keys($data), array_values($data));
+        $data = array_unique($data);
+        //删除自己
+        foreach ($data as $k => $v){
+            if ($v == $uid){
+                unset($data[$k]);
+            }
+        }
         //查询对应的用户信息
-        $data = User::select('uid', 'name', 'avstar')->where('status','=', 1)->whereIn('uid', $sendUserIds)->get();
+        $data = User::select('uid', 'name', 'avstar')->where('status','=', 1)->whereIn('uid', $data)->get();
         return $data;
     }
 
@@ -55,7 +61,9 @@ class Letter extends Model
     }
 
     /**
-     *
+     * 将数据库消息设置为已读
+     * @param $uids
+     * @return mixed
      */
     public static function markReaded($uids){
         return self::whereIn('send_uid',$uids)->whereIn('receive_uid',$uids)->where('read','<>',1)->update(['read'=> 1]);

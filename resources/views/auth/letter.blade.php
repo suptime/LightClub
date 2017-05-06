@@ -14,10 +14,17 @@
                 </li>
             @endif
             @foreach($sendUsers as $sendUser)
-                <li class="letter-send-user" data-uid="{{ $sendUser->uid }}"><img
-                            src="{{ $sendUser->avstar ? $sendUser->avstar : asset('assets/img/default.jpg')  }}"><span>{{ $sendUser->name }}</span>
-                    <i class="layui-icon remove-send-user" data-uid="{{ $sendUser->uid }}">&#x1007;</i>
-                </li>
+                @if($toid == $sendUser->uid)
+                        <li class="letter-send-user layim-this" data-uid="{{ $sendUser->uid }}"><img
+                                    src="{{ $sendUser->avstar ? $sendUser->avstar : asset('assets/img/default.jpg')  }}"><span>{{ $sendUser->name }}</span>
+                            <i class="layui-icon remove-send-user" data-uid="{{ $sendUser->uid }}">&#x1007;</i>
+                        </li>
+                    @else
+                        <li class="letter-send-user" data-uid="{{ $sendUser->uid }}"><img
+                                    src="{{ $sendUser->avstar ? $sendUser->avstar : asset('assets/img/default.jpg')  }}"><span>{{ $sendUser->name }}</span>
+                            <i class="layui-icon remove-send-user" data-uid="{{ $sendUser->uid }}">&#x1007;</i>
+                        </li>
+                    @endif
             @endforeach
         </ul>
         <div class="layim-chat-box" style="margin-left: 200px;">
@@ -39,6 +46,7 @@
                                     <div class="layim-chat-text">当前没有会话,试试给其他人发消息吧</div>
                                 </li>
                             @endif
+
                         @endif
                         <a id="msg_bottom"></a>
                     </ul>
@@ -87,6 +95,35 @@
                 }, 'json');
             });
 
+            @if($toid)
+            var thisDom = $('.layim-chat-list .layim-this');
+            if (thisDom) {
+                var avatar = thisDom.find('img').prop('src');
+                var username = thisDom.find('span').text();
+                var send_uid = thisDom.attr('data-uid');
+                //将得到的消息输出到页面
+                $.post('{{ url('user/letters/messages') }}', {send_uid: send_uid}, function (data) {
+                    if (data.status) {
+                        var html = '';
+                        avatar = thisDom.find('img').prop('src');
+                        username = thisDom.find('span').text();
+                        $.each(data.letters, function (i, v) {
+                            if (v.send_uid == '{{$user->uid}}') {
+                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar}}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
+                            } else {
+                                html += '<li><div class="layim-chat-user"><img src="' + avatar + '"><cite>' + username + '<i>' + v.created_at + '</i></cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
+                            }
+                        });
+                        $('#letter-content').html(html);
+                        $(".layim-chat-main").scrollTop($(".layim-chat-main")[0].scrollHeight);
+            }else {
+                        $('#letter-content').html('');
+                    }
+                }, 'json');
+            }
+            @endif
+
+
             //定义全局变量
             var send_uid = null;
             var avatar = null;
@@ -114,17 +151,21 @@
                             }
                         });
                         $('#letter-content').html(html);
+                        $(".layim-chat-main").scrollTop($(".layim-chat-main")[0].scrollHeight);
+                    }else {
+                        $('#letter-content').html('');
                     }
-                    /* else {
-                     layer.msg(data.msg);
-                     }*/
                 }, 'json');
             });
 
             //发送新消息给指定用户
             $('.layim-chat-send').on('click', function () {
                 var letter = $('textarea[name=letter]').val();
-                var receive_uid = send_uid;
+                if (!send_uid){
+                    var receive_uid = $('.layim-chat-list .layim-this').attr('data-uid');
+                }else {
+                    var receive_uid = send_uid;
+                }
 
                 //验证发送对象与消息是否为空
                 if (receive_uid == null) {
@@ -148,6 +189,7 @@
                             }
                         });
                         $('#letter-content').html(html);
+                        $(".layim-chat-main").scrollTop($(".layim-chat-main")[0].scrollHeight);
                     } else {
                         layer.msg(data.msg);
                     }
@@ -165,6 +207,7 @@
                     //if (data.status) {
                     var html = '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="/assets/img/default.jpg"><cite>社区管理员</cite></div><div class="layim-chat-text">当前没有会话,试试给其他人发消息吧</div></li>';
                     $('#letter-content').html(html);
+                    $(".layim-chat-main").scrollTop($(".layim-chat-main")[0].scrollHeight);
                     //layer.msg(data.msg);
                     //}
                     convObj.remove();
@@ -204,6 +247,7 @@
                             }
                         });
                         $('#letter-content').html(html);
+                        $(".layim-chat-main").scrollTop($(".layim-chat-main")[0].scrollHeight);
                     }
                     /* else {
                      layer.msg(data.msg);

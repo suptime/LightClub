@@ -263,7 +263,11 @@ class UserController extends Controller
         ]);
     }
 
-
+    /**
+     * 通过激活邮件中的链接跳转到网站激活验证请求
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function activeUserAccountOfToken(Request $request){
         //根据接收到的参数查询数据
         $active_token = $request->active_token;
@@ -281,7 +285,8 @@ class UserController extends Controller
                 'user' => $user,
             ]);
         }else{
-            return redirect('/')->with('');
+            //用户已激活,查无此账号则跳转到首页
+            return redirect('/');
         }
     }
 }

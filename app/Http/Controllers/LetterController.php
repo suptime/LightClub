@@ -27,13 +27,23 @@ class LetterController extends Controller
      */
     public function index(Request $request)
     {
-        //获得传递的参数
-        $sendTo = null;
+        //获取当前登录用户资料
+        $user = User::getVisitUserInfo($this->_uid);
+        //获取当前登录用户的消息列表
+        $sendUsers = Letter::getLettersList($this->_uid);
+        $sendTo = $toid = $letter_list = false;
+
+        //判断创建对话用户是否已传递
         if (isset($request->toid)) {
-            $uids = [$request->toid, $this->_uid];
-            //判断消息表中是否有此会话用户数据,如果有,不查询数据出来
-            $letter = Letter::whereIn('send_uid',$uids)->whereIn('receive_uid',$uids)->count();
-            if (!$letter) {
+            if ($request->toid == $this->_uid){
+                return redirect('user/letters')->with('error', '不能给自己发送消息');
+            }
+
+            //查询数据库中拥有此用户与当前登录用户的消息记录,如果没有,创建新会话
+            $uids = [$this->_uid, $request->toid];
+            $toid =  $request->toid;
+            $speak = Letter::whereIn('send_uid',$uids)->whereIn('receive_uid',$uids)->count();
+            if (!$speak){
                 //查询用户数据
                 $sendTo = User::select('uid', 'name', 'avstar')->where('uid', $request->toid)->where('status',1)->first();
                 if (!$sendTo) {
@@ -42,14 +52,11 @@ class LetterController extends Controller
             }
         }
 
-        //获取登录用户的信息
-        $user = User::getVisitUserInfo($this->_uid);
-        //获取发送给本用户的用户信息
-        $sendUsers = Letter::getLettersList($this->_uid);
         return view('auth.letter', [
             'user' => $user,
             'sendUsers' => $sendUsers,
             'sendTo' => $sendTo,
+            'toid' => $toid
         ]);
     }
 
