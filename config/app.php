@@ -3,7 +3,7 @@
 return [
 
     'web_config' =>[
-        'pageSize' => 5,
+        'pageSize' => 20,
 
     ],
 
