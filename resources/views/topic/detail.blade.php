@@ -71,7 +71,7 @@
                                 <a class="commentListItem-reply top-reply" data-uid="{{$val['uid']}}" data-tid="{{$val['tid']}}" isopen="off" title="回帖"><i class="k-i-com"></i></a>
                 @if($currentUser['uid'] == $val['uid'] || $currentUser['uid'] == $topic['uid'] || $currentUser['isadmin'])
                 <a href="{{url('comment/remove/'.$val['id'])}}" class="commentListItem-manage" title="删除此回帖" onclick="return confirm('确定要删除吗?')"><i class="kz-e-del-new"></i></a>
-                @endif
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -174,8 +174,8 @@
     @include('topic.side')
 @parent
 @stop
-<style>.reply-editor .geetest_holder.geetest_wind:nth-of-type(1){display: none;}</style>
 @section('script')
+    <style>.reply-editor .geetest_holder.geetest_wind:nth-of-type(1){display: none;}</style>
 <script>
 $(function () {
     //点赞

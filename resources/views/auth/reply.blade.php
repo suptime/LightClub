@@ -17,7 +17,7 @@
             <div class="topic-item home-reply">
                 <div class="comment-base-info"><span>{{ date('Y年m月d日', $val->created_at) }}</span> 在<a href="{{ url('topic/'.$val->tid) }}" target="_blank">{{ $val->title }}</a>中回复到：</div>
                 <div class="home-dacontent">
-                    {!! str_limit(strip_tags($val->comment),250) !!}
+                    {!! str_limit(strip_tags(preg_replace('/<img(.*)>/', '[图片]', $val->comment)),250) !!}
                 </div>
             </div>
             @empty
