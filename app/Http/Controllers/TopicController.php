@@ -115,7 +115,9 @@ class TopicController extends Controller
     {
         //判断请求类型
         if ($request->isMethod('POST')) {
+            //验证码检测
             $this->validateGeeTest($request);
+            //验证数据合法性
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);
 
             //获取基本数据
@@ -202,6 +204,7 @@ class TopicController extends Controller
 
         //开始修改数据判断请求类型
         if ($request->isMethod('POST')) {
+            //验证码检测
             $this->validateGeeTest($request);
             //验证数据合法性
             $this->validate($request, $this->model->rules, $this->model->messages, $this->model->attrs);

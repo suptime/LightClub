@@ -53,7 +53,7 @@ class Topic extends Model
         //如果标签为空,删除tags属性
         $tagStr = str_replace(' ', '', $tags);
         if (!$tagStr){
-            unset($this->model->tags);
+            unset($this->tags);
         }
 
         //格式化标签,以|分割标签保存到数据表中
