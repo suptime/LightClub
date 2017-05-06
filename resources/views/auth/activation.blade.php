@@ -19,10 +19,15 @@
 
     @if($user['status'] == 1)
     <div class="active-main">
-        <p>尊敬的用户: <span>{{ $user['name'] }}</span> ,恭喜您的账户激活成功</p>
+        <p>尊敬的用户: <span>{{ $user['name'] }}</span> ,恭喜您的账户激活成功. 5秒后自动跳转...</p>
         <button class="active-mail layui-btn layui-btn-big" style="background: #139e31!important;" onclick="window.open('{{ url('user/setting') }}', '_self')">已激活, 注册完成</button>
         <p>感谢您注册我站账号,您现在可以尽情浏览使用本站所提供的服务了!</p>
     </div>
+        <script type="text/javascript">
+            setTimeout(function () {
+              window.location = '{{ url('user/setting') }}';
+            },5000);
+        </script>
     @endif
 </div>
 @stop

@@ -26,7 +26,7 @@ class AuthController extends Controller
     //字段配合登陆的字段
     protected $username = 'name';
     //登陆成功后的跳转方向
-    protected $redirectPath = '/';
+    protected $redirectPath = 'user/collection';
     //默认退出后跳转页
     protected $redirectAfterLogout = '/';
     //默认登陆 URL

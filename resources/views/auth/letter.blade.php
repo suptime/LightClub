@@ -109,7 +109,7 @@
                         username = thisDom.find('span').text();
                         $.each(data.letters, function (i, v) {
                             if (v.send_uid == '{{$user->uid}}') {
-                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar}}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
+                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             } else {
                                 html += '<li><div class="layim-chat-user"><img src="' + avatar + '"><cite>' + username + '<i>' + v.created_at + '</i></cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             }
@@ -145,7 +145,7 @@
                         var html = '';
                         $.each(data.letters, function (i, v) {
                             if (v.send_uid == '{{$user->uid}}') {
-                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar}}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
+                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             } else {
                                 html += '<li><div class="layim-chat-user"><img src="' + avatar + '"><cite>' + username + '<i>' + v.created_at + '</i></cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             }
@@ -183,7 +183,7 @@
                         var html = '';
                         $.each(data.letters, function (i, v) {
                             if (v.send_uid == '{{$user->uid}}') {
-                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar}}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
+                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             } else {
                                 html += '<li><div class="layim-chat-user"><img src="' + avatar + '"><cite>' + username + '<i>' + v.created_at + '</i></cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             }
@@ -241,7 +241,7 @@
                         var html = '';
                         $.each(data.letters, function (i, v) {
                             if (v.send_uid == '{{$user->uid}}') {
-                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar}}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
+                                html += '<li class="layim-chat-mine"><div class="layim-chat-user"><img src="{{$user->avstar ? $user->avstar : asset('assets/img/default.jpg') }}"><cite><i>' + v.created_at + '</i>{{$user->name}}</cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             } else {
                                 html += '<li><div class="layim-chat-user"><img src="' + avatar + '"><cite>' + username + '<i>' + v.created_at + '</i></cite></div><div class="layim-chat-text">' + v.letter + '</div></li>';
                             }
