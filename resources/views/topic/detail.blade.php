@@ -129,7 +129,7 @@
     <div class="editor-content">
         @if(count($errors))
             @foreach($errors->all() as $error)
-                <div class="content message-tips">
+                <div class="message-tips">
                     <div class="Huialert Huialert-danger"><span class="icon-remove">×</span>{{ $error }}</div>
                 </div>
             @endforeach

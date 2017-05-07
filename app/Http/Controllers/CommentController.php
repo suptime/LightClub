@@ -30,14 +30,17 @@ class CommentController extends Controller
         $tids = Topic::lists('tid')->toArray();
         $tids = implode(',', $tids);
         if ($request->isMethod('POST')) {
+            $capcha = session()->get('challenge');
             //验证数据合法性
             $this->validate($request, [
                 'comment' => 'required|min:10',
                 'tid' => 'required|in:' . $tids,
+                'geetest_challenge' => 'required|regex:/'.$capcha.'.*/',
             ], [
                 'required' => ':attribute不能为空',
                 'min' => ':attribute太短',
                 'in' => ':attribute不合法',
+                'regex'=> config('geetest.server_fail_alert'),
             ], [
                 'comment' => '回帖内容',
                 'tid' => '贴子不存在',
