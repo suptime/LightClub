@@ -24,7 +24,7 @@
                     <input type="file" name="userface" class="layui-upload-file">
                     <input type="hidden" name="avstar" id="avstar" value="" />
                 </div>
-                <div class="layui-form-mid layui-word-aux">头像尺寸比例为1:1,最大130x130,请保持长宽比</div>
+                <div class="layui-form-mid layui-word-aux">头像最大300x300而且不超过500kb,比例为1:1</div>
             </div>
 
             <div class="layui-form-item">

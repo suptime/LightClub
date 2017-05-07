@@ -4,7 +4,7 @@ return [
 
     'web_config' =>[
         'pageSize' => 15,
-
+        'picSize' => 500,
     ],
 
 

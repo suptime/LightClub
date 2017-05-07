@@ -12,6 +12,7 @@ use Storage;
 class UploadController extends Controller
 {
     private $mimeType = ['image/jpeg', 'image/png', 'image/gif'];
+
     /**
      * 编辑器ajax请求上传图片
      * @param Request $request
@@ -35,6 +36,7 @@ class UploadController extends Controller
             if ($file->isValid()) {
                 $mime = $file->getClientMimeType();
                 $ext = $file->getClientOriginalExtension();
+                $size = $file->getClientSize();
                 $realPath = $file->getRealPath();    //临时文件的绝对路径
 
                 //验证mime类型是否合法
@@ -42,9 +44,16 @@ class UploadController extends Controller
                     return response()->json([
                         'code' => 1,
                         'msg' => '文件类型不合法',
-                        'data' => [
-                            'src' => ''
-                        ]
+                        'data' => ['src' => '']
+                    ]);
+                }
+
+                //验证图片大小是否合法
+                if (($size/1024) > config('app.web_config.picSize')){
+                    return response()->json([
+                        'code' => 1,
+                        'msg' => '文件不能超过500kb',
+                        'data' => ['src' => '']
                     ]);
                 }
 
@@ -58,17 +67,13 @@ class UploadController extends Controller
                     return response()->json([
                         'code' => 0,
                         'msg' => '',
-                        'data' => [
-                            'src' => '/uploads/' . $fileName
-                        ]
+                        'data' => ['src' => '/uploads/' . $fileName]
                     ]);
                 } else {
                     return response()->json([
                         'code' => 1,
                         'msg' => '文件上传失败',
-                        'data' => [
-                            'src' => ''
-                        ]
+                        'data' => ['src' => '']
                     ]);
                 }
             }

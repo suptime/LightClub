@@ -27,10 +27,8 @@ class VerifyLogin
             if (in_array($request->path(), $this->excludePath)){
                 return response()->json([
                     'code' => 1,
-                    'msg' => '请登录后再使用此功能',
-                    'data' => [
-                        'src' => ''
-                    ]
+                    'msg' => '登录后使用此功能',
+                    'data' => ['src' => '']
                 ]);
             }
             return redirect('user/login');
