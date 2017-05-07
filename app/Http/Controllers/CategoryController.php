@@ -111,7 +111,7 @@ class CategoryController extends Controller
             $data = $request->only(['catname', 'parent_id', 'catdir', 'keywords', 'description', 'status', 'ischannel']);
             //插入数据
             if ($this->model->create($data)) {
-                return redirect('admin/category/list')->with('success', '新增分类成功');
+                return redirect('admin/category')->with('success', '新增分类成功');
             } else {
                 return redirect()->back()->with('error', '新增失败');
             }
@@ -139,7 +139,7 @@ class CategoryController extends Controller
             $data = $request->only(['catname', 'parent_id', 'catdir', 'keywords', 'description', 'status', 'ischannel']);
             //修改数据
             if ($this->model->where('cid', $cid)->update($data)) {
-                return redirect('admin/category/list')->with('success', '分类修改成功');
+                return redirect('admin/category')->with('success', '分类修改成功');
             } else {
                 return redirect()->back()->with('error', '修改失败');
             }
@@ -174,8 +174,8 @@ class CategoryController extends Controller
         }
         //删除符合条件的数据,并判断执行结果
         if (!$category->delete()) {
-            return redirect('admind/category/list')->with('error', '删除失败');
+            return redirect('admin/category')->with('error', '删除失败');
         }
-        return redirect('admind/category/list')->with('success', '成功删除分类,ID为' . $cid);
+        return redirect('admin/category')->with('success', '成功删除分类,ID为' . $cid);
     }
 }

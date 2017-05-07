@@ -67,9 +67,9 @@ class TopicController extends Controller
             //修改数据对应的状态
             if ($topic[$operate]) {
                 if (Topic::where('tid', $topic['tid'])->update([$operate => 0])) {
-                    return redirect('admin/topic/list')->with('success', $operate . '状态修改成功');
+                    return redirect('admin/topic')->with('success', $operate . '状态修改成功');
                 } else {
-                    return redirect('admin/topic/list')->with('success', $operate . '状态修改失败');
+                    return redirect('admin/topic')->with('success', $operate . '状态修改失败');
                 }
             }
             if (Topic::where('tid', $topic['tid'])->update([$operate => 1])) {
@@ -77,9 +77,9 @@ class TopicController extends Controller
                 if ($operate == 'isgood' && $operate == 'istop') {
                     User::setUserScore($topic['uid']);
                 }
-                return redirect('admin/topic/list')->with('success', $operate . '状态修改成功');
+                return redirect('admin/topic')->with('success', $operate . '状态修改成功');
             } else {
-                return redirect('admin/topic/list')->with('success', $operate . '状态修改失败');
+                return redirect('admin/topic')->with('success', $operate . '状态修改失败');
             }
         }
     }

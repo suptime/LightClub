@@ -37,7 +37,7 @@ class MessageMainController extends Controller
 
             //新增消息
             if ($rs = $messageMain->addOneMessage($data)) {
-                return redirect('admin/message/list')->with('success', '消息推送成功');
+                return redirect('admin/message')->with('success', '消息推送成功');
             }else{
                 return redirect('admin/message/add')->with('error', '消息推送失败');
             }

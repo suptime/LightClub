@@ -42,7 +42,6 @@ class VerifyLogin
                 return redirect('user/activation');
             }
         }
-
         //分配消息状态变量
         User::getMsgStatus();
         //判断是否有未读私信

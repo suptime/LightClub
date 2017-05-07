@@ -195,12 +195,12 @@ class UserController extends Controller
             }
             //如果没有修改任何数据
             if (!$data){
-                return redirect('admin/users/list')->with('error', '未修改任何内容,无需保存');
+                return redirect('admin/users')->with('error', '未修改任何内容,无需保存');
             }
 
             //修改用户的状态信息
             if (User::where('uid',$uid)->update($data)) {
-                return redirect('admin/users/list')->with('success', '修改成功');
+                return redirect('admin/users')->with('success', '修改成功');
             }
             return redirect()->back()->with('error', '修改失败');
         }
@@ -244,7 +244,7 @@ class UserController extends Controller
                 'sitename' => '豆萌社区',
                 'url' => $url,
             ], function ($message) use ($user){
-                $message->from('ucasp@qq.com', '豆萌社区');
+                $message->from('net@mius.me', '豆萌社区');
                 $message->to($user->email);
                 $message->subject('用户账号激活邮件');
             });
